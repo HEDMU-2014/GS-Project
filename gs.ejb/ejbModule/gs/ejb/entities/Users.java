@@ -107,7 +107,7 @@ public class Users implements Serializable {
 		user.setLastlogin(lastlogin.toLocalDateTime());
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
-			user.getRoles().add(new Role(role.getRoleid(), role.getRole()));
+			user.getRoles().add(role.map(new Role()));
 		}
 		return user;
 	}
