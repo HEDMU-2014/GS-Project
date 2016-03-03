@@ -1,4 +1,4 @@
-package gs.ejb;
+package gs.ejb.entities;
 
 import java.io.Serializable;
 import java.lang.Integer;
@@ -15,34 +15,34 @@ public class Roles implements Serializable {
 
 	   
 	@Id
-	private Integer RoleID;
-	private Integer TypeID;
-	private String Role;
+	private Integer roleID;
+	private Integer typeID;
+	private String role;
 	private static final long serialVersionUID = 1L;
 
 	public Roles() {
 		super();
 	}   
 	public Integer getRoleID() {
-		return this.RoleID;
+		return this.roleID;
 	}
 
-	public void setRoleID(Integer RoleID) {
-		this.RoleID = RoleID;
+	public void setRoleID(Integer roleID) {
+		this.roleID = roleID;
 	}   
 	public Integer getTypeID() {
-		return this.TypeID;
+		return this.typeID;
 	}
 
-	public void setTypeID(Integer TypeID) {
-		this.TypeID = TypeID;
+	public void setTypeID(Integer typeID) {
+		this.typeID = typeID;
 	}   
 	public String getRole() {
-		return this.Role;
+		return this.role;
 	}
 
-	public void setRole(String Role) {
-		this.Role = Role;
+	public void setRole(String role) {
+		this.role = role;
 	}
    
 }
