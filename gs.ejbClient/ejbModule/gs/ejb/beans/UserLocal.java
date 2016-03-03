@@ -21,4 +21,6 @@ public interface UserLocal {
 
 	List<User> listMembers();
 
+	List<User> searchUsers(String search);
+
 }

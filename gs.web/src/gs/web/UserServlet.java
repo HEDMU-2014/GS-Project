@@ -25,7 +25,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<User> users = userejb.listMembers();
+		List<User> users = userejb.searchUsers("EAMV");
 //		user.setEmail("hi@eamv.dk");
 //		user.setFirstname("Hans");
 //		user.setLastname("Iversen");

@@ -65,4 +65,17 @@ public class UserBean implements UserRemote, UserLocal {
 		}
 		return users;
 	}
+
+	@Override
+	public List<User> searchUsers(String search) {
+		List<User> users = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<Users> userse = em.createNamedQuery("searchUsers")
+				.setParameter("search", "%" + search.toUpperCase() + "%")
+				.getResultList();
+		for (Users u : userse) {
+			users.add(u.map(new User()));
+		}
+		return users;
+	}
 }

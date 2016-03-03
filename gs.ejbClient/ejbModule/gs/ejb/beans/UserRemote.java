@@ -19,4 +19,6 @@ public interface UserRemote {
 
 	List<User> listMembers();
 
+	List<User> searchUsers(String search);
+
 }
