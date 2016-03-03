@@ -39,6 +39,10 @@ public class Organizations implements Serializable {
 		super();
 	} 
 	
+	public Organizations(Organization org) {
+		update(org);
+	} 
+	
 	public Organizations update(Organization org) {
 		this.orgId = org.getOrgId();
 		this.name = org.getName();

@@ -6,18 +6,18 @@ public class Organization implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	   
-	private int OrgId;
+	private int orgId;
 	private String name;
 	private String address;
 	private int zip;
 	private String city;
 
 	public int getOrgId() {
-		return this.OrgId;
+		return this.orgId;
 	}
 
-	public void setOrgId(int OrgId) {
-		this.OrgId = OrgId;
+	public void setOrgId(int orgId) {
+		this.orgId = orgId;
 	}
 	
 	public String getName() {
@@ -51,7 +51,7 @@ public class Organization implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Organization [OrgId=" + OrgId + ", name=" + name + ", address=" + address + ", zip=" + zip + ", city="
+		return "Organization [OrgId=" + orgId + ", name=" + name + ", address=" + address + ", zip=" + zip + ", city="
 				+ city + "]";
 	}
    
