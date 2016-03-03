@@ -13,10 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
+import gs.ejb.domain.Organization;
 import gs.ejb.domain.Role;
 import gs.ejb.domain.User;
 
@@ -61,8 +63,9 @@ public class Users implements Serializable {
 	
 	private Timestamp lastlogin;
 	
-	@Column(length=50, nullable=false)
-	private String organization;
+	@ManyToOne
+	@JoinColumn(name="organization")
+	private Organizations organization;
 	
 	@ManyToMany
 	@JoinTable(name = "AssignedRoles", joinColumns=
@@ -84,7 +87,7 @@ public class Users implements Serializable {
 		this.lastname = user.getLastname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = user.getOrganization();
+		this.organization = new Organizations().update(user.getOrganization());
 		this.createddate = Timestamp.valueOf(user.getCreateddate());
 		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
 		this.roles = new ArrayList<>();
@@ -99,7 +102,7 @@ public class Users implements Serializable {
 		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setOrganization(organization);
+		user.setOrganization(organization.map(new Organization()));
 		user.setCreateddate(createddate.toLocalDateTime());
 		user.setLastlogin(lastlogin.toLocalDateTime());
 		user.setRoles(new ArrayList<>());
@@ -138,10 +141,10 @@ public class Users implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getOrganization() {
+	public Organizations getOrganization() {
 		return organization;
 	}
-	public void setOrganization(String organization) {
+	public void setOrganization(Organizations organization) {
 		this.organization = organization;
 	}
 	public Timestamp getCreateddate() {

@@ -1,7 +1,7 @@
 package gs.web;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gs.ejb.beans.UserLocal;
+import gs.ejb.domain.Role;
 import gs.ejb.domain.User;
 
 /**
@@ -25,12 +26,15 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<User> users = userejb.searchUsers("EAMV");
-//		user.setEmail("hi@eamv.dk");
-//		user.setFirstname("Hans");
-//		user.setLastname("Iversen");
-//		userejb.createUser(user);
-		response.getWriter().append("Users: " + users);
+//		List<User> users = userejb.searchUsers("EAMV");
+		User user = userejb.getUser(2).get();
+		user.setEmail("fkj@eamv.dk");
+		user.setFirstname("Flemming Koch");
+		user.setLastname("Jensen");
+		user.setRoles(new ArrayList<>());
+		user.getRoles().add(new Role(2, "?"));
+		userejb.createUser(user);
+		response.getWriter().append("Users: " + user);
 	}
 
 	/**
