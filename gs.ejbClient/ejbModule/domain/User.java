@@ -1,23 +1,11 @@
-package entities;
+package domain;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
-@Entity
-public class Users implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userid;
 	private String firstname;
 	private String lastname;
@@ -26,21 +14,18 @@ public class Users implements Serializable {
 	private Timestamp createddate;
 	private Timestamp lastlogin;
 	private String organization;
-
-	@ManyToMany
-	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
-	private Collection<Roles> roles;
-
-	public Users() {
-		super();
-	}
+	private Collection<Role> roles;
 
 	public int getUserid() {
-		return this.userid;
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
 	public String getFirstname() {
-		return this.firstname;
+		return firstname;
 	}
 
 	public void setFirstname(String firstname) {
@@ -71,14 +56,6 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public String getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-
 	public Timestamp getCreateddate() {
 		return createddate;
 	}
@@ -95,8 +72,21 @@ public class Users implements Serializable {
 		this.lastlogin = lastlogin;
 	}
 
-	public Collection<Roles> getRoles() {
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+
+	public Collection<Role> getRoles() {
 		return roles;
 	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
 
 }

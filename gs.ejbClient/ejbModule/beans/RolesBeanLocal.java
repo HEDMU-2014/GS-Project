@@ -1,12 +1,16 @@
 package beans;
 
+import java.util.Optional;
+
 import javax.ejb.Local;
+
+import domain.Role;
 
 @Local
 public interface RolesBeanLocal {
 
-	public void create(String role);
-	public String read(int roleId);
-	public void update(int roleId, String role);
-	public void delete(int roleId);
+	public void create(Role role);
+	public Optional<Role> read(int roleId);
+	public void update(Role role);
+	public void delete(Role role);
 }
