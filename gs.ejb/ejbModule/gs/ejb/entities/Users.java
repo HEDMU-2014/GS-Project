@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class Users implements Serializable {
 	@Column(length=50, nullable=false, unique=true)
 	private String email;
 	
-	@Column(length=50, nullable=false)
+	@Column(length=128, nullable=false)
 	private String password;
 	
 	@NotNull
@@ -63,11 +64,11 @@ public class Users implements Serializable {
 	
 	private Timestamp lastlogin;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="organization")
 	private Organizations organization;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "AssignedRoles", joinColumns=
 	@JoinColumn(name="userid", referencedColumnName="userid"),
 	inverseJoinColumns=

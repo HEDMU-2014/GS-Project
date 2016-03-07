@@ -20,6 +20,7 @@ public class Roles implements Serializable {
 	   
 	@Id
 	private int roleid;
+	
 	@Column(length=10, nullable=false)
 	private String role;
 
