@@ -17,45 +17,28 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 
 	@Override
 	public void create(User user) {
-		Users jpaUsers = new Users();
-		jpaUsers.setFirstname(user.getFirstname());
-		jpaUsers.setLastname(user.getLastname());
-		jpaUsers.setEmail(user.getEmail());
-		jpaUsers.setCreateddate(user.getCreateddate());
-		jpaUsers.setLastlogin(user.getLastlogin());
-		jpaUsers.setOrganization(user.getOrganization());
-		jpaUsers.setPassword(user.getPassword());
+		Users jpaUsers = new Users(user);
 		em.persist(jpaUsers);
 	}
 
 	@Override
 	public Optional<User> read(int userId) {
-		Users jpaUsers = em.find(Users.class, userId);
-		if (jpaUsers != null) {
-			User user = new User();
-			user.setFirstname(jpaUsers.getFirstname());
-			user.setLastname(jpaUsers.getLastname());
-			user.setEmail(jpaUsers.getEmail());
-			user.setCreateddate(jpaUsers.getCreateddate());
-			user.setLastlogin(jpaUsers.getLastlogin());
-			user.setOrganization(jpaUsers.getOrganization());
-			user.setPassword(jpaUsers.getPassword());
-			return Optional.of(user);
-		}
-		else
+		Users user = em.find(Users.class, userId); 
+		if (user != null) {
+			return Optional.of(user.map(new User()));
+		} else {
 			return Optional.empty();
+		}
 	}
 
 	@Override
 	public void update(User user) {
-		Users jpaUsers = em.find(Users.class, user.getUserid());
-		jpaUsers.setFirstname(user.getFirstname());
-		jpaUsers.setLastname(user.getLastname());
-		jpaUsers.setEmail(user.getEmail());
-		jpaUsers.setCreateddate(user.getCreateddate());
-		jpaUsers.setLastlogin(user.getLastlogin());
-		jpaUsers.setOrganization(user.getOrganization());
-		jpaUsers.setPassword(user.getPassword());
+		Users jpaUsers = em.find(Users.class, user.getUserid()); 
+		if (jpaUsers != null) {
+			jpaUsers.update(user);
+		} else {
+			throw new RuntimeException("User with id " + user.getUserid() + " not found");
+		}
 	}
 
 	@Override

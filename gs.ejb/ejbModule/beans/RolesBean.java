@@ -17,30 +17,34 @@ public class RolesBean implements RolesBeanRemote, RolesBeanLocal {
 	@PersistenceContext EntityManager em;
 
     public void create(Role role) {
-    	Roles roles = new Roles();
-    	roles.setRole(role.getRole());
-    	em.persist(roles);
+    	Roles entity = new Roles(role);
+		em.persist(entity);
     }
     
     public Optional<Role> read(int roleId) {
-    	Roles jpaRoles = em.find(Roles.class, roleId);
-    	if (jpaRoles != null) {
-    		Role role = new Role();
-        	role.setRole(jpaRoles.getRole());
-        	role.setRoleId(jpaRoles.getRoleId());
-        	return Optional.of(role);
-    	}
-    	else
-    		return Optional.empty();
+    	Roles role = em.find(Roles.class, roleId); 
+		if (role != null) {
+			return Optional.of(role.map(new Role()));
+		} else {
+			return Optional.empty();
+		}
     }
     
     public void update(Role role) {
-    	Roles roles = em.find(Roles.class, role.getRoleId());
-    	roles.setRole(role.getRole());
+    	Roles roles = em.find(Roles.class, role.getRoleId()); 
+		if (roles != null) {
+			roles.update(role);
+		} else {
+			throw new RuntimeException("Role with id " + role.getRoleId() + " not found");
+		}
     }
     
     public void delete(Role role) {
-    	Roles roles = em.find(Roles.class, role.getRoleId());
-    	em.remove(roles);
+    	Roles roles = em.find(Roles.class, role.getRoleId()); 
+		if (roles != null) {
+			em.remove(roles);
+		} else {
+			throw new RuntimeException("Role with id " + role.getRoleId() + " not found");
+		}
     }
 }

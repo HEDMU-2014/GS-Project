@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -26,10 +27,9 @@ public class CRUDTest extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Role role = new Role();
 		role.setRole("Moderator");
+		role.setRoleId(1);
 		rbl.create(role);
-		Collection<Role> roleList = new ArrayList<Role>();
-		roleList.add(role);
-		response.getWriter().append("Rolle: ").append(rbl.read(1).toString());
+		response.getWriter().append("Rolle: ").append(rbl.read(1).toString() + "\n");
 		
 		User user = new User();
 		user.setFirstname("Tom");
@@ -37,9 +37,12 @@ public class CRUDTest extends HttpServlet {
 		user.setEmail("uninet@live.no");
 		user.setOrganization("n/a");
 		user.setPassword("abcdefg");
-		user.setCreateddate(new Timestamp(123));
-		user.setLastlogin(new Timestamp(234));
-		user.setRoles(roleList);
+		Date date = new Date();
+		user.setCreateddate(new Timestamp(date.getTime()));
+		user.setLastlogin(new Timestamp(date.getTime()));
+		user.setRoles(new ArrayList<>());
+		user.getRoles().add(role);
+		
 		ubl.create(user);
 		response.getWriter().append("User: ").append(ubl.read(1).toString());
 	}
