@@ -57,8 +57,7 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public List<User> listMembers() {
 		List<User> users = new ArrayList<>();
-		@SuppressWarnings("unchecked")
-		List<Users> userse = em.createNamedQuery("listMembers")
+		List<Users> userse = em.createNamedQuery("listMembers", Users.class)
 				.getResultList();
 		for (Users u : userse) {
 			users.add(u.map(new User()));
@@ -69,8 +68,7 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public List<User> searchUsers(String search) {
 		List<User> users = new ArrayList<>();
-		@SuppressWarnings("unchecked")
-		List<Users> userse = em.createNamedQuery("searchUsers")
+		List<Users> userse = em.createNamedQuery("searchUsers", Users.class)
 				.setParameter("search", "%" + search.toUpperCase() + "%")
 				.getResultList();
 		for (Users u : userse) {
