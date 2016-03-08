@@ -1,11 +1,17 @@
 package gs.ejb.entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
 import java.sql.Date;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
+
+import gs.ejb.domain.User;
 
 /**
  * Entity implementation class for Entity: Users
@@ -17,8 +23,8 @@ public class Users implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userID;
-	private Integer roleID;
+	private int userID;
+	private int roleID;
 	@Column(length=50, nullable=false)
 	private String firstName;
 	@Column(length=50, nullable=false)
@@ -30,28 +36,42 @@ public class Users implements Serializable {
 	private String email;
 	@Column(length=50, nullable=false)
 	private String password;
-	private Date createdDate;
-	private Date lastLogin;
+	private LocalDateTime createdDate;
+	private LocalDateTime lastLogin;
 	private String organisation;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Users() {
-		super();
 	}
-
-	public Integer getUserID() {
+	public Users(User user){
+		getEntityUsers(user);
+	}
+	public Users getEntityUsers(User user){
+		Users u = new Users();
+		u.setCreatedDate(user.getCreateddate());
+		u.setEmail(user.getEmail());
+		u.setFirstName(user.getFirstname());
+		u.setLastLogin(user.getLastlogin());
+		u.setLastName(user.getLastname());
+		u.setOrganisation(user.getOrganization());
+		u.setPassword(user.getPassword());
+		u.setUserID(user.getUserid());
+		return u;
+	}
+	public int getUserID() {
 		return this.userID;
 	}
 
-	public void setUserID(Integer userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
-	public Integer getRoleID() {
+	public int getRoleID() {
 		return this.roleID;
 	}
 
-	public void setRoleID(Integer roleID) {
+	public void setRoleID(int roleID) {
 		this.roleID = roleID;
 	}
 
@@ -87,19 +107,19 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public Date getCreatedDate() {
+	public LocalDateTime getCreatedDate() {
 		return this.createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public Date getLastLogin() {
+	public LocalDateTime getLastLogin() {
 		return this.lastLogin;
 	}
 
-	public void setLastLogin(Date lastLogin) {
+	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 
@@ -109,6 +129,19 @@ public class Users implements Serializable {
 
 	public void setOrganisation(String organisation) {
 		this.organisation = organisation;
+	}
+
+	public User getDomUser() {
+		User domUser = new User();
+		domUser.setUserid(this.userID);
+		domUser.setFirstname(this.firstName);
+		domUser.setLastname(this.lastName);
+		domUser.setPassword(this.password);
+		domUser.setCreateddate(this.createdDate);
+		domUser.setEmail(this.email);
+		domUser.setOrganization(this.organisation);
+		domUser.setLastlogin(this.lastLogin);
+		return domUser;
 	}
 
 }

@@ -3,6 +3,6 @@ package gs.ejb.beans;
 import javax.ejb.Local;
 
 @Local
-public interface RoleBeanLocal {
+public interface RoleBeanLocal extends RoleBeanSuper {
 
 }
