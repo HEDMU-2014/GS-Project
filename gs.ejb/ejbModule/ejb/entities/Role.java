@@ -1,4 +1,4 @@
-package ejb.Entities;
+package ejb.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 
-public class Roles implements Serializable {
+public class Role implements Serializable {
 	
 	@Id
 	private String roleId;
@@ -20,7 +20,7 @@ public class Roles implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Roles() {
+	public Role() {
 		super();
 	}
 

@@ -1,4 +1,4 @@
-package ejb.DataAccess;
+package ejb.beans;
 
 import java.util.Optional;
 
@@ -7,25 +7,25 @@ import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ejb.CRUD.RolesDataAccessLocal;
-import ejb.CRUD.RolesDataAccessRemote;
-import ejb.Entities.Roles;
+import ejb.beans.RoleLocal;
+import ejb.beans.RoleRemote;
+import ejb.entities.Role;
 
 /**
  * Session Bean implementation class RolesDataAccess
  */
 @Stateless
 @WebService
-public class RolesDataAccess implements RolesDataAccessRemote, RolesDataAccessLocal {
+public class RoleBean implements RoleRemote, RoleLocal {
 	
 	@PersistenceContext private EntityManager em;
 
-    public RolesDataAccess() {
+    public RoleBean() {
         // TODO Auto-generated constructor stub
     }
     
     public String greeting(String key) {
-    	Roles role = em.find(Roles.class, key);
+    	Role role = em.find(Role.class, key);
     	if (role != null)
     		return "Hi " + role.getRole();
     	else
@@ -33,14 +33,14 @@ public class RolesDataAccess implements RolesDataAccessRemote, RolesDataAccessLo
     }
     
     public void create(String key, String value) {
-    	Roles role = new Roles();
+    	Role role = new Role();
     	role.setRoleId(key);
     	role.setRole(value);
     	em.persist(role);
     }
     
     public Optional<String> read(String key) {
-    	Roles role = em.find(Roles.class, key);
+    	Role role = em.find(Role.class, key);
     	if (role != null)
     		return Optional.of(role.getRole());
     	else
@@ -48,12 +48,12 @@ public class RolesDataAccess implements RolesDataAccessRemote, RolesDataAccessLo
     }
     
     public void update(String key, String value) {
-    	Roles role = em.find(Roles.class, key);
+    	Role role = em.find(Role.class, key);
     	role.setRole(value);
     }
     
     public void delete(String key) {
-    	Roles role = em.find(Roles.class, key);
+    	Role role = em.find(Role.class, key);
     	em.remove(role);
     }
 

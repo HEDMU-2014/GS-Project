@@ -1,11 +1,11 @@
-package ejb.CRUD;
+package ejb.beans;
 
 import java.util.Optional;
 
 import javax.ejb.Local;
 
 @Local
-public interface RolesDataAccessLocal {
+public interface RoleLocal {
 	
 	String greeting(String key);
 	

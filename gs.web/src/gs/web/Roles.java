@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ejb.CRUD.RolesDataAccessLocal;
+import ejb.beans.RoleLocal;
 
 /**
  * Servlet implementation class Roles
@@ -17,7 +17,7 @@ import ejb.CRUD.RolesDataAccessLocal;
 @WebServlet("/Roles")
 public class Roles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB private RolesDataAccessLocal ejb;
+	@EJB private RoleLocal ejb;
        
     /**
      * @see HttpServlet#HttpServlet()

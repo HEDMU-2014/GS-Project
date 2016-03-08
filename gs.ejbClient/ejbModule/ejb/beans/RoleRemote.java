@@ -1,11 +1,11 @@
-package ejb.CRUD;
+package ejb.beans;
 
 import java.util.Optional;
 
 import javax.ejb.Remote;
 
 @Remote
-public interface RolesDataAccessRemote {
+public interface RoleRemote {
 	
 	String greeting(String key);
 	
