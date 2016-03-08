@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 
-public class Role implements Serializable {
+public class Roles implements Serializable {
 	
 	@Id
 	private String roleId;
@@ -20,7 +20,7 @@ public class Role implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Role() {
+	public Roles() {
 		super();
 	}
 

@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import ejb.beans.RoleLocal;
 import ejb.beans.RoleRemote;
-import ejb.entities.Role;
+import ejb.entities.Roles;
 
 /**
  * Session Bean implementation class RolesDataAccess
@@ -25,7 +25,7 @@ public class RoleBean implements RoleRemote, RoleLocal {
     }
     
     public String greeting(String key) {
-    	Role role = em.find(Role.class, key);
+    	Roles role = em.find(Roles.class, key);
     	if (role != null)
     		return "Hi " + role.getRole();
     	else
@@ -33,14 +33,14 @@ public class RoleBean implements RoleRemote, RoleLocal {
     }
     
     public void create(String key, String value) {
-    	Role role = new Role();
+    	Roles role = new Roles();
     	role.setRoleId(key);
     	role.setRole(value);
     	em.persist(role);
     }
     
     public Optional<String> read(String key) {
-    	Role role = em.find(Role.class, key);
+    	Roles role = em.find(Roles.class, key);
     	if (role != null)
     		return Optional.of(role.getRole());
     	else
@@ -48,12 +48,12 @@ public class RoleBean implements RoleRemote, RoleLocal {
     }
     
     public void update(String key, String value) {
-    	Role role = em.find(Role.class, key);
+    	Roles role = em.find(Roles.class, key);
     	role.setRole(value);
     }
     
     public void delete(String key) {
-    	Role role = em.find(Role.class, key);
+    	Roles role = em.find(Roles.class, key);
     	em.remove(role);
     }
 
