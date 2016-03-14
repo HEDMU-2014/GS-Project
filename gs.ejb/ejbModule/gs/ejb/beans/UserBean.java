@@ -20,12 +20,12 @@ public class UserBean implements UserRemote, UserLocal {
 
 	@Override
 	public Optional<User> getUser(int userid) {
+		Optional<User> opt = Optional.empty();
 		Users user = em.find(Users.class, userid); 
 		if (user != null) {
-			return Optional.of(user.map(new User()));
-		} else {
-			return Optional.empty();
+			opt = Optional.of(user.map(new User()));
 		}
+		return opt;
 	}
 	
 	@Override

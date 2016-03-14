@@ -18,12 +18,12 @@ public class OrganizationBean implements OrganizationRemote, OrganizationLocal {
 
 	@Override
 	public Optional<Organization> getOrganization(int orgid) {
+		Optional<Organization> opt = Optional.empty();
 		Organizations org = em.find(Organizations.class, orgid); 
 		if (org != null) {
-			return Optional.of(org.map(new Organization()));
-		} else {
-			return Optional.empty();
+			opt = Optional.of(org.map(new Organization()));
 		}
+		return opt;
 	}
 	
 	@Override

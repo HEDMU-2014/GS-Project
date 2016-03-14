@@ -18,12 +18,12 @@ public class RoleBean implements RoleRemote, RoleLocal {
 
 	@Override
 	public Optional<Role> getRole(int roleid) {
+		Optional<Role> opt = Optional.empty();
 		Roles role = em.find(Roles.class, roleid); 
 		if (role != null) {
-			return Optional.of(role.map(new Role()));
-		} else {
-			return Optional.empty();
+			opt = Optional.of(role.map(new Role()));
 		}
+		return opt;
 	}
 	
 	@Override
