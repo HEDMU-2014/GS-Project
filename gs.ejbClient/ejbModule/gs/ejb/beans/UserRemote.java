@@ -17,7 +17,7 @@ public interface UserRemote {
 
 	void deleteUser(User user);
 
-	List<User> listMembers();
+	List<User> listMembers(String organization);
 
 	List<User> searchUsers(String search);
 

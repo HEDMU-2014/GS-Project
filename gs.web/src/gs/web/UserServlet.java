@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<User> users = userejb.searchUsers("EAMV");
+		List<User> users = userejb.listMembers("eamv");
 		response.getWriter().append("Users : " + users);
 //		User user = userejb.getUser(2).get();
 //		user.setEmail("fkj@eamv.dk");

@@ -3,6 +3,7 @@ package gs.ejb.beans;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import gs.ejb.domain.Role;
 import gs.ejb.entities.Roles;
@@ -41,11 +42,12 @@ public class Util {
 	public String hash(String txt) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] mdbytes = md.digest(txt.getBytes());
+		return Base64.getEncoder().encodeToString(mdbytes);
 		//convert the byte to hex format method 1
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < mdbytes.length; i++) {
-          sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-        }
-		return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        for (int i = 0; i < mdbytes.length; i++) {
+//          sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+//        }
+//		return sb.toString();
 	}
 }

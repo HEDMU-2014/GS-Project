@@ -8,7 +8,7 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int userid;
+	private long userid;
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -18,10 +18,10 @@ public class User implements Serializable {
 	private Organization organization;
 	private Collection<Role> roles;
 	
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 	public String getFirstname() {

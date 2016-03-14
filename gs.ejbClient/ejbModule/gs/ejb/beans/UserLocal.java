@@ -19,8 +19,8 @@ public interface UserLocal {
 
 	void deleteUser(User user);
 
-	List<User> listMembers();
-
 	List<User> searchUsers(String search);
+
+	List<User> listMembers(String organization);
 
 }

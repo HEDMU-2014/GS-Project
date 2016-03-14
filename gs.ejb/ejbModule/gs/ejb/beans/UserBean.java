@@ -55,9 +55,10 @@ public class UserBean implements UserRemote, UserLocal {
 	}
 	
 	@Override
-	public List<User> listMembers() {
+	public List<User> listMembers(String organization) {
 		List<User> users = new ArrayList<>();
 		List<Users> userse = em.createNamedQuery("listMembers", Users.class)
+				.setParameter("organization", "%" + organization.toUpperCase() + "%")
 				.getResultList();
 		for (Users u : userse) {
 			users.add(u.map(new User()));

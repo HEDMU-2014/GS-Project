@@ -34,10 +34,12 @@ import gs.ejb.domain.User;
 			+ "WHERE UPPER(u.firstname) LIKE :search "
 			+ "OR UPPER(u.lastname) LIKE :search "
 			+ "OR UPPER(u.email) LIKE :search "
+			+ "OR UPPER(u.organization.name) LIKE :search "
 			+ "ORDER BY u.lastname"),
 	@NamedQuery(name = "listMembers", 
 		query = "SELECT u FROM Users u, IN (u.roles) r "
-			+ "WHERE r.role = 'Member'")})
+			+ "WHERE r.role = 'Member' " 
+			+ "AND u.organization.name LIKE :organization")})
 
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +47,7 @@ public class Users implements Serializable {
 	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int userid;
+	private long userid;
 	
 	@Column(length=50, nullable=false)
 	private String firstname;
@@ -56,7 +58,7 @@ public class Users implements Serializable {
 	@Column(length=50, nullable=false, unique=true)
 	private String email;
 	
-	@Column(length=128, nullable=false)
+	@Column(length=50, nullable=false)
 	private String password;
 	
 	@NotNull
@@ -112,7 +114,7 @@ public class Users implements Serializable {
 		return user;
 	}
 	
-	public int getUserid() {
+	public long getUserid() {
 		return this.userid;
 	}
 
