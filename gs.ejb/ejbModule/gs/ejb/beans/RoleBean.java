@@ -30,7 +30,7 @@ public class RoleBean implements RoleBeanRemote, RoleBeanLocal {
 	@Override
 	public Role readRole(int roleID) {
 		Roles entityRole = em.find(Roles.class, roleID);
-		Role domRole = entityRole.getDomRole();
+		Role domRole = entityRole.getDomRole(new Role());
 		return domRole;
 	}
 

@@ -3,6 +3,6 @@ package gs.ejb.beans;
 import javax.ejb.Remote;
 
 @Remote
-public interface UserBeanRemote {
+public interface UserBeanRemote extends UserBeanSuper{
 
 }

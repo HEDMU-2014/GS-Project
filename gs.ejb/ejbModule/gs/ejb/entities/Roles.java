@@ -8,24 +8,29 @@ import javax.persistence.Id;
 
 import gs.ejb.domain.Role;
 
-/**
- * Entity implementation class for Entity: Roles
- *
- */
 @Entity
 
 public class Roles implements Serializable {
 
-	   
 	@Id
 	private int roleID;
-	@Column(length=50, nullable=false)
+	@Column(length = 50, nullable = false)
 	private String role;
 	private static final long serialVersionUID = 1L;
 
 	public Roles() {
-		super();
-	}   
+	}
+
+	public Roles(Role role) {
+		getEntityRoles(role);
+	}
+
+	public Roles getEntityRoles(Role role) {
+		this.setRoleID(role.getRoleid());
+		this.setRole(role.getRole());
+		return this;
+	}
+
 	public int getRoleID() {
 		return this.roleID;
 	}
@@ -33,6 +38,7 @@ public class Roles implements Serializable {
 	public void setRoleID(int roleID) {
 		this.roleID = roleID;
 	}
+
 	public String getRole() {
 		return this.role;
 	}
@@ -40,10 +46,10 @@ public class Roles implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
-   public Role getDomRole(){
-	   Role role = new Role();
-	   role.setRoleid(this.roleID);
-	   role.setRole(this.role);
-	   return role;
-   }
+
+	public Role getDomRole(Role role) {
+		role.setRoleid(this.roleID);
+		role.setRole(this.role);
+		return role;
+	}
 }
