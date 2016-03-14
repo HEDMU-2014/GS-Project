@@ -11,6 +11,8 @@ import gs.ejb.domain.User;
 public interface UserRemote {
 	Optional<User> getUser(int userid);
 
+	Optional<User> getUser(String email);
+
 	void createUser(User user);
 
 	void updateUser(User user);

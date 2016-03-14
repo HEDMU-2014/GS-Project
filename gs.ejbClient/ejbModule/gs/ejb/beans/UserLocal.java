@@ -13,6 +13,8 @@ public interface UserLocal {
 
 	Optional<User> getUser(int userid);
 
+	Optional<User> getUser(String email);
+
 	void createUser(User user);
 
 	void updateUser(User user);

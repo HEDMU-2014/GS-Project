@@ -27,6 +27,18 @@ public class UserBean implements UserRemote, UserLocal {
 		}
 		return opt;
 	}
+
+	@Override
+	public Optional<User> getUser(String email) {
+		Optional<User> opt = Optional.empty();
+		List<Users> userse = em.createNamedQuery("getUserFromEmail", Users.class)
+				.setParameter("email", email.toUpperCase())
+				.getResultList();
+		if (userse.size() == 1) {
+			opt = Optional.of(userse.get(0).map(new User()));
+		}
+		return opt;
+	}
 	
 	@Override
 	public void createUser(User user) {

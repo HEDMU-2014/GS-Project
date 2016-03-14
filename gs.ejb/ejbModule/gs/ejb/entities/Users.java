@@ -29,13 +29,16 @@ import gs.ejb.domain.User;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "searchUsers", 
+	@NamedQuery(name = "getUserFromEmail", 
 		query = "SELECT u FROM Users u "
-			+ "WHERE UPPER(u.firstname) LIKE :search "
-			+ "OR UPPER(u.lastname) LIKE :search "
-			+ "OR UPPER(u.email) LIKE :search "
-			+ "OR UPPER(u.organization.name) LIKE :search "
-			+ "ORDER BY u.lastname"),
+			+ "WHERE UPPER(u.email) = :email "),
+	@NamedQuery(name = "searchUsers", 
+	query = "SELECT u FROM Users u "
+		+ "WHERE UPPER(u.firstname) LIKE :search "
+		+ "OR UPPER(u.lastname) LIKE :search "
+		+ "OR UPPER(u.email) LIKE :search "
+		+ "OR UPPER(u.organization.name) LIKE :search "
+		+ "ORDER BY u.lastname"),
 	@NamedQuery(name = "listMembers", 
 		query = "SELECT u FROM Users u, IN (u.roles) r "
 			+ "WHERE r.role = 'Member' " 
