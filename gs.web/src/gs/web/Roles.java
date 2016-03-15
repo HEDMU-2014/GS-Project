@@ -29,8 +29,6 @@ public class Roles extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("<h1>Http-method GET received");
-		String greeting = ejb.greeting(request.getParameter("name"));
-		response.getWriter().append("<h1>").append(greeting);
 	}
 
 	/**

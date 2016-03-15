@@ -4,17 +4,17 @@ import java.util.Optional;
 
 import javax.ejb.Local;
 
+import ejb.domain.Role;
+
 @Local
 public interface RoleLocal {
-	
-	String greeting(String key);
-	
-	void create(String key, String value);
 
-	Optional<String> read(String key);
+	Optional<Role> getRole(int roleid);
 
-	void update(String key, String value);
+	void createRole(Role role);
 
-	void delete(String key);
+	void updateRole(Role role);
+
+	void deleteRole(Role role);
 
 }

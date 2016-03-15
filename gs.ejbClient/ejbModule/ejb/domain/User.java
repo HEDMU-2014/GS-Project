@@ -1,14 +1,14 @@
 package ejb.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private int userid;
+	private long userid;
 	
 	private String firstName;
 	
@@ -18,17 +18,17 @@ public class User implements Serializable {
 	
 	private String password;
 	
-	private LocalDateTime createdDate;
+	private Timestamp createdDate;
 	
-	private LocalDateTime lastLogin;
+	private Timestamp lastLogin;
 
 	private Collection<Role> roles;
 
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
@@ -64,19 +64,19 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public LocalDateTime getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public LocalDateTime getLastLogin() {
+	public Timestamp getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(LocalDateTime lastLogin) {
+	public void setLastLogin(Timestamp lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 

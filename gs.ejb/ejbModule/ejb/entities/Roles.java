@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import ejb.domain.Role;
+
 /**
  * Entity implementation class for Entity: Roles
  *
@@ -13,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Roles implements Serializable {
 	
 	@Id
-	private String roleId;
+	private int roleId;
 	@NotNull
 	private String role;
 
@@ -24,11 +26,28 @@ public class Roles implements Serializable {
 		super();
 	}
 
-	public String getRoleId() {
+
+	public Roles(Role role) {
+		update(role);
+	}
+	
+	public Roles update(Role role) {
+		this.roleId = role.getRoleid();
+		this.role = role.getRole();
+		return this;
+	}
+	
+	public Role map(Role role) {
+		role.setRoleid(this.roleId);
+		role.setRole(this.role);
+		return role;
+	}
+
+	public int getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(String roleId) {
+	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
 
