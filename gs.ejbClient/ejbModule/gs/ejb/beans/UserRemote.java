@@ -9,7 +9,7 @@ import gs.ejb.domain.User;
 
 @Remote
 public interface UserRemote {
-	Optional<User> getUser(int userid);
+	Optional<User> getUser(long userid);
 
 	Optional<User> getUser(String email);
 

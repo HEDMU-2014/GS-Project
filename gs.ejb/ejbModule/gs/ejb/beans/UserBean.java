@@ -19,7 +19,7 @@ public class UserBean implements UserRemote, UserLocal {
 	@PersistenceContext private EntityManager em;
 
 	@Override
-	public Optional<User> getUser(int userid) {
+	public Optional<User> getUser(long userid) {
 		Optional<User> opt = Optional.empty();
 		Users user = em.find(Users.class, userid); 
 		if (user != null) {

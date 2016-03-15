@@ -11,7 +11,7 @@ import gs.ejb.domain.User;
 @Local
 public interface UserLocal {
 
-	Optional<User> getUser(int userid);
+	Optional<User> getUser(long userid);
 
 	Optional<User> getUser(String email);
 
