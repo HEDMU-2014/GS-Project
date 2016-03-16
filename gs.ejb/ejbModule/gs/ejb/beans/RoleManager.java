@@ -11,7 +11,7 @@ import java.util.List;
 @Stateless
 public class RoleManager implements RoleManagerLocal, RoleManagerRemote {
    @PersistenceContext
-   private EntityManager em;
+   EntityManager em;
 
    @Override
    public Role findRole(int id) {
