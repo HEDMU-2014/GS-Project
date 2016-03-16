@@ -2,7 +2,6 @@ package gs.ejb.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,8 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.Pattern;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
+import gs.ejb.domain.Organization;
 import gs.ejb.domain.Role;
 import gs.ejb.domain.User;
 
@@ -25,27 +27,35 @@ import gs.ejb.domain.User;
  *
  */
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "getUserFromEmail", query = "SELECT u FROM Users u " + "WHERE UPPER(u.email) = :email "),
+		@NamedQuery(name = "searchUsers", query = "SELECT u FROM Users u WHERE UPPER(u.firstName) LIKE :search OR UPPER(u.lastName) LIKE :search OR UPPER(u.email) LIKE :search OR UPPER(u.organization.name) LIKE :search ORDER BY u.lastName"),
+		@NamedQuery(name = "listMembers", query = "SELECT u FROM Users u, IN (u.roles) r WHERE UPPER(r.role) = UPPER('Member') AND u.organization.name LIKE :organization") })
 
 public class Users implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userID;
+	private long userID;
 	private int roleID;
 	@Column(length = 50, nullable = false)
 	private String firstName;
 	@Column(length = 50, nullable = false)
 	private String lastName;
 	@Column(length = 50, nullable = false, unique = true)
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9]"
-			+ "(?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
+	// @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." +
+	// "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+	// + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9]"
+	// + "(?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
 	private String email;
 	@Column(length = 50, nullable = false)
 	private String password;
 	private Timestamp createdDate;
 	private Timestamp lastLogin;
-	private String organisation;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "organization")
+	private Organizations organization;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
@@ -66,7 +76,7 @@ public class Users implements Serializable {
 		this.setFirstName(user.getFirstname());
 		this.setLastLogin(Timestamp.valueOf(user.getLastlogin()));
 		this.setLastName(user.getLastname());
-		this.setOrganisation(user.getOrganization());
+		this.organization = new Organizations(user.getOrganization());
 		this.setPassword(user.getPassword());
 		this.setUserID(user.getUserid());
 		this.setRoles(new ArrayList<Roles>());
@@ -75,11 +85,11 @@ public class Users implements Serializable {
 		return this;
 	}
 
-	public int getUserID() {
+	public long getUserID() {
 		return this.userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
@@ -139,14 +149,12 @@ public class Users implements Serializable {
 		this.lastLogin = lastLogin;
 	}
 
-	public String getOrganisation() {
-		return this.organisation;
+	public Organizations getOrganization() {
+		return organization;
 	}
-
-	public void setOrganisation(String organisation) {
-		this.organisation = organisation;
+	public void setOrganization(Organizations organization) {
+		this.organization = organization;
 	}
-
 	public Collection<Roles> getRoles() {
 		return roles;
 	}
@@ -162,7 +170,7 @@ public class Users implements Serializable {
 		domUser.setPassword(this.password);
 		domUser.setCreateddate(this.createdDate.toLocalDateTime());
 		domUser.setEmail(this.email);
-		domUser.setOrganization(this.organisation);
+		domUser.setOrganization(organization.map(new Organization()));
 		domUser.setLastlogin(this.lastLogin.toLocalDateTime());
 		domUser.setRoles(new ArrayList<Role>());
 		for (Roles r : this.getRoles())
