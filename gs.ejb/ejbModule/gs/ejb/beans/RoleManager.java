@@ -26,9 +26,9 @@ public class RoleManager implements RoleManagerLocal, RoleManagerRemote {
 
    @Override
    public void createRole(Role role) {
-      RoleEntity entity = findEntity(role.getId());
-      if (entity != null)
-         em.persist(entity);
+      RoleEntity entity = new RoleEntity();
+      map(role, entity);
+      em.persist(entity);
    }
 
    @Override
