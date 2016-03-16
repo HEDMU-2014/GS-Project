@@ -69,7 +69,7 @@ public class Users implements Serializable {
 	
 	private Timestamp lastlogin;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="organization")
 	private Organizations organization;
 	
