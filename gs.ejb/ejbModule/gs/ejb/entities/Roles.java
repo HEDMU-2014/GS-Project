@@ -1,10 +1,14 @@
 package gs.ejb.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import gs.ejb.domain.Role;
 
@@ -23,6 +27,9 @@ public class Roles implements Serializable {
 	
 	@Column(length=10, nullable=false)
 	private String role;
+	
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+	private Collection<Users> users;
 
 	public Roles() {
 		super();
@@ -41,6 +48,10 @@ public class Roles implements Serializable {
 	public Role map(Role role) {
 		role.setRoleid(this.roleid);
 		role.setRole(this.role);
+		role.setUsers(new ArrayList<>());
+		for(Users users : this.users) {
+			role.getUsers().add(users.getEmail());
+		}
 		return role;
 	}
 	
@@ -58,9 +69,17 @@ public class Roles implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public Collection<Users> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Collection<Users> users) {
+		this.users = users;
+	}
+
 	@Override
 	public String toString() {
-		return "Roles [roleid=" + roleid + ", role=" + role + "]";
+		return "Roles [roleid=" + roleid + ", role=" + role + ", users=" + users + "]";
 	}
    
 }

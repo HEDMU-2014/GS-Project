@@ -17,9 +17,9 @@ public class InterestContentBean implements InterestContentRemote, InterestConte
 	@PersistenceContext private EntityManager em;
 
 	@Override
-	public Optional<InterestContent> getInterestContent(int intConID) {
+	public Optional<InterestContent> getInterestContent(InterestContent key) {
 		Optional<InterestContent> opt = Optional.empty();
-		InterestContents intCon = em.find(InterestContents.class, intConID); 
+		InterestContents intCon = em.find(InterestContents.class, key); 
 		if (intCon != null) {
 			opt = Optional.of(intCon.map(new InterestContent()));
 		}
@@ -27,28 +27,28 @@ public class InterestContentBean implements InterestContentRemote, InterestConte
 	}
 	
 	@Override
-	public void createInterestContent(InterestContent intConID) {
-		InterestContents entity = new InterestContents(intConID);
+	public void createInterestContent(InterestContent key) {
+		InterestContents entity = new InterestContents(key);
 		em.persist(entity);
 	}
 	
 	@Override
-	public void updateInterestContent(InterestContent intConID) {
-		InterestContents entity = em.find(InterestContents.class, intConID.getContentID()); 
+	public void updateInterestContent(InterestContent key) {
+		InterestContents entity = em.find(InterestContents.class, key); 
 		if (entity != null) {
-			entity.update(intConID);
+			entity.update(key);
 		} else {
-			throw new RuntimeException("InterestContent with id " + intConID.getContentID() + " not found");
+			throw new RuntimeException("InterestContent with id " + key + " not found");
 		}
 	}
 	
 	@Override
-	public void deleteInterestContent(InterestContent intConID) {
-		InterestContent entity = em.find(InterestContent.class, intConID.getContentID()); 
+	public void deleteInterestContent(InterestContent key) {
+		InterestContent entity = em.find(InterestContent.class, key); 
 		if (entity != null) {
 			em.remove(entity);
 		} else {
-			throw new RuntimeException("InterestContent with id " + intConID.getContentID() + " not found");
+			throw new RuntimeException("InterestContent with id " + key + " not found");
 		}
 	}
 

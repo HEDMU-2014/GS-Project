@@ -5,21 +5,9 @@ import java.io.Serializable;
 public class InterestContent implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int contentID;
 	private long userID;
 	private int placeID;
 	private int interestID;
-	   
-	
-	
-	public int getContentID() {
-		return contentID;
-	}
-
-
-	public void setContentID(int contentID) {
-		this.contentID = contentID;
-	}
 
 
 	public long getUserID() {
@@ -54,9 +42,10 @@ public class InterestContent implements Serializable {
 
 	@Override
 	public String toString() {
-		return "InterestContent [contentID=" + contentID + ", userID=" + userID + ", placeID=" + placeID
-				+ ", interestID=" + interestID + "]";
+		return "InterestContent [userID=" + userID + ", placeID=" + placeID + ", interestID=" + interestID + "]";
 	}
+
+
 
 	
    

@@ -9,12 +9,12 @@ import gs.ejb.domain.InterestContent;
 @Local
 public interface InterestContentLocal {
 
-	Optional<InterestContent> getInterestContent(int intConID);
+	Optional<InterestContent> getInterestContent(InterestContent intCon);
 
-	void createInterestContent(InterestContent intConID);
+	void createInterestContent(InterestContent intCon);
 
-	void updateInterestContent(InterestContent intConID);
+	void updateInterestContent(InterestContent intCon);
 
-	void deleteInterestContent(InterestContent intConID);
+	void deleteInterestContent(InterestContent intCon);
 
 }
