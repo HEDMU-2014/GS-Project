@@ -1,8 +1,16 @@
 package gs.ejb.entities;
 
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import gs.ejb.domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserProfiles
@@ -16,6 +24,8 @@ public class UserProfiles implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="userID")
 	private long userid;
 	private char gender;
 	private String job;
@@ -33,6 +43,36 @@ public class UserProfiles implements Serializable {
 	public UserProfiles() {
 		super();
 	}   
+	public UserProfiles(UserProfile userProfile){
+		setId(userProfile.getId());
+		setUserid(userProfile.getUserid());
+		setGender(userProfile.getGender());
+		setJob(userProfile.getJob());
+		setDescription(userProfile.getDescription());
+		setWebsite(userProfile.getWebsite());
+		setPhone(userProfile.getPhone());
+		setEducation(userProfile.getEducation());
+		setIsocountryid(userProfile.getIsocountryid());
+		setCity(userProfile.getCity());
+		setState(userProfile.getState());
+		setProfilepictureid(userProfile.getProfilepictureid());
+	}
+	public UserProfile getDomUserProfile(UserProfile prof){
+		prof.setId(getId());
+		prof.setUserid(getUserid());
+		prof.setGender(getGender());
+		prof.setJob(getJob());
+		prof.setDescription(getDescription());
+		prof.setWebsite(getWebsite());
+		prof.setPhone(getPhone());
+		prof.setEducation(getEducation());
+		prof.setIsocountryid(getIsocountryid());
+		prof.setCity(getCity());
+		prof.setState(getState());
+		prof.setProfilepictureid(getProfilepictureid());
+		
+		return prof;
+	}
 	public int getId() {
 		return this.id;
 	}
