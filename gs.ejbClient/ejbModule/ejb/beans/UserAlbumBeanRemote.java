@@ -1,5 +1,6 @@
 package ejb.beans;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Remote;
@@ -17,4 +18,5 @@ public interface UserAlbumBeanRemote {
 
 	void deleteUserAlbum(UserAlbum album);
 
+	List<UserAlbum> searchUserAlbums(String search);
 }

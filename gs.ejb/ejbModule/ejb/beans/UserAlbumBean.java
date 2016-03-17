@@ -1,13 +1,17 @@
 package ejb.beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import ejb.domain.User;
 import ejb.domain.UserAlbum;
 import ejb.entities.UserAlbumEntity;
+import ejb.entities.UserEntity;
 
 /**
  * Session Bean implementation class UserAlbumBean
@@ -47,6 +51,18 @@ public class UserAlbumBean implements UserAlbumBeanRemote, UserAlbumBeanLocal {
 			em.remove(albumEntity);
 		else
 			throw new RuntimeException("Album with id " + album.getAlbumId() + " not found");
+	}
+	
+	@Override
+	public List<UserAlbum> searchUserAlbums(String search) {
+		List<UserAlbum> userAlbums = new ArrayList<>();
+		List<UserAlbumEntity> userAlbumsEntity = em.createNamedQuery("searchUserAlbums", UserAlbumEntity.class)
+				.setParameter("search", "%" + search.toUpperCase() + "%")
+				.getResultList();
+		for (UserAlbumEntity uae : userAlbumsEntity) {
+			userAlbums.add(uae.map(new UserAlbum()));
+		}
+		return userAlbums;
 	}
 
 }

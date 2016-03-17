@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import ejb.domain.Picture;
@@ -24,6 +26,12 @@ import ejb.domain.UserAlbum;
  *
  */
 @Entity
+@NamedQuery(name = "searchUserAlbums",
+	query = "SELECT ua FROM UserAlbumEntity ua "
+			+ "WHERE UPPER(ua.name) LIKE :search "
+			+ "OR UPPER(ua.user.firstName) LIKE :search "
+			+ "OR UPPER(ua.user.lastName) LIKE :search "
+			+ "ORDER BY ua.user, ua.name") //Order by user, then by album name.
 
 public class UserAlbumEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -34,6 +42,9 @@ public class UserAlbumEntity implements Serializable {
 	
 	@NotNull
 	private UserEntity user;
+	
+	@Column(nullable=false, length=50)
+	private String name;
 	
 	private PictureEntity coverPicture;
 	
@@ -60,6 +71,7 @@ public class UserAlbumEntity implements Serializable {
 	public UserAlbumEntity update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
 		this.user = new UserEntity().update(ua.getUser());
+		this.name = ua.getName();
 		this.coverPicture = new PictureEntity().update(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
 		for(Picture picture : ua.getPictures()) {
@@ -73,6 +85,7 @@ public class UserAlbumEntity implements Serializable {
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
 		ua.setUser(user.map(new User()));
+		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
 		for (PictureEntity picture : pictures) {
@@ -97,6 +110,14 @@ public class UserAlbumEntity implements Serializable {
 
 	public void setUser(UserEntity user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public PictureEntity getCoverPicture() {

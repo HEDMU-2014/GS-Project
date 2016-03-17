@@ -10,6 +10,8 @@ public class UserAlbum {
 	
 	private User user;
 	
+	private String name;
+	
 	private Picture coverPicture;
 	
 	private Collection<Picture> pictures;
@@ -32,6 +34,14 @@ public class UserAlbum {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Picture getCoverPicture() {
