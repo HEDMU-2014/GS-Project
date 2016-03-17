@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gs.ejb.beans.OrganizationLocal;
-import gs.ejb.beans.RoleLocal;
-import gs.ejb.beans.UserLocal;
-import gs.ejb.domain.User;
+import beans.OrganizationBeanLocal;
+import beans.RolesBeanLocal;
+import beans.UsersBeanLocal;
+import domain.User;
 
 /**
  * Servlet implementation class UserServlet
@@ -21,9 +21,9 @@ import gs.ejb.domain.User;
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB private UserLocal userejb;
-	@EJB private RoleLocal roleejb;
-	@EJB private OrganizationLocal orgejb;
+	@EJB private UsersBeanLocal userejb;
+	@EJB private RolesBeanLocal roleejb;
+	@EJB private OrganizationBeanLocal orgejb;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

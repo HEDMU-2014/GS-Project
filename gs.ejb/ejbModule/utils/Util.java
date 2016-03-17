@@ -1,18 +1,20 @@
-package gs.ejb.beans;
+package utils;
 
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import gs.ejb.domain.Role;
-import gs.ejb.entities.Roles;
+import domain.Role;
+import entities.Roles;
 
 public class Util {
 	
 	public static void main(String[] args) throws Throwable {
 		Util util = new Util();
-		Role role = new Role(2, "test");
+		Role role = new Role();
+		role.setRoleId(2);
+		role.setRole("test");
 		Roles roles = new Roles();
 		System.out.println(util.map(role, roles));
 		System.out.println("Hash xxx = " + util.hash("xxx"));

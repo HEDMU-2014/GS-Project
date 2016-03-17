@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
@@ -6,14 +6,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.Organization;
-import gs.ejb.entities.Organizations;
+import domain.Organization;
+import entities.Organizations;
 
 /**
  * Session Bean implementation class OrganizationBean
  */
 @Stateless
-public class OrganizationBean implements OrganizationRemote, OrganizationLocal {
+public class OrganizationBean implements OrganizationBeanRemote, OrganizationBeanLocal {
 	@PersistenceContext private EntityManager em;
 
 	@Override
