@@ -13,7 +13,7 @@ public class User {
 	private String password;
 	private LocalDateTime createddate;
 	private LocalDateTime lastlogin;
-	private String organization;
+	private Organization organization;
 	private Collection<Role> roles;
 
 	public long getUserid() {
@@ -72,11 +72,11 @@ public class User {
 		this.lastlogin = lastlogin;
 	}
 
-	public String getOrganization() {
+	public Organization getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(String organization) {
+	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
 

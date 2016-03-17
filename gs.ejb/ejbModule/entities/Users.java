@@ -12,14 +12,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import domain.Organization;
 import domain.Role;
 import domain.User;
 
 @Entity
-@NamedQuery(name = "searchUsers",
-			query = "SELECT u FROM Users u WHERE UPPER(u.firstname) LIKE :search")
+@NamedQueries({
+	@NamedQuery(name = "getUserFromEmail", 
+		query = "SELECT u FROM Users u "
+			+ "WHERE UPPER(u.email) = :email "),
+	@NamedQuery(name = "searchUsers", 
+	query = "SELECT u FROM Users u "
+		+ "WHERE UPPER(u.firstname) LIKE :search "
+		+ "OR UPPER(u.lastname) LIKE :search "
+		+ "OR UPPER(u.email) LIKE :search "
+		+ "OR UPPER(u.organization.name) LIKE :search "
+		+ "ORDER BY u.lastname"),
+	@NamedQuery(name = "listMembers", 
+		query = "SELECT u FROM Users u, IN (u.roles) r "
+			+ "WHERE r.role = 'Member' " 
+			+ "AND u.organization.name LIKE :organization")})
+
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +48,7 @@ public class Users implements Serializable {
 	private String password;
 	private Timestamp createddate;
 	private Timestamp lastlogin;
-	private String organization;
+	private Organizations organization;
 
 	@ManyToMany
 	@JoinTable(name = "AssignedRoles",
@@ -53,7 +69,7 @@ public class Users implements Serializable {
 		this.lastname = user.getLastname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = user.getOrganization();
+		this.organization = new Organizations().update(user.getOrganization());
 		this.createddate = Timestamp.valueOf(user.getCreateddate());
 		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
 		this.roles = new ArrayList<>();
@@ -69,7 +85,7 @@ public class Users implements Serializable {
 		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setOrganization(organization);
+		user.setOrganization(organization.map(new Organization()));
 		user.setCreateddate(createddate.toLocalDateTime());
 		user.setLastlogin(lastlogin.toLocalDateTime());
 		user.setRoles(new ArrayList<>());
@@ -115,11 +131,11 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public String getOrganization() {
+	public Organizations getOrganization() {
 		return organization;
 	}
-
-	public void setOrganization(String organization) {
+	
+	public void setOrganization(Organizations organization) {
 		this.organization = organization;
 	}
 

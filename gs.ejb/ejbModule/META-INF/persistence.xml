@@ -3,8 +3,7 @@
 	<persistence-unit name="gs.ejb">
 		<jta-data-source>java:jboss/datasources/HsqldbDS</jta-data-source>
 		<properties>
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.show_sql" value="false"/>
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.User;
-import entities.Roles;
 import entities.Users;
 
 @Stateless
@@ -31,6 +30,19 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 		else
 			return Optional.empty();
 	}
+
+	@Override
+	public Optional<User> read(String email) {
+		Optional<User> opt = Optional.empty();
+		List<Users> userse = em.createNamedQuery("getUserFromEmail", Users.class)
+				.setParameter("email", email.toUpperCase())
+				.getResultList();
+		if (userse.size() == 1) {
+			opt = Optional.of(userse.get(0).map(new User()));
+		}
+		return opt;
+	}
+	
 
 	@Override
 	public void update(User user) {
@@ -60,4 +72,16 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 		return users;
 	}
 	
+	@Override
+	public List<User> listMembers(String organization) {
+		List<User> users = new ArrayList<>();
+		List<Users> userse = em.createNamedQuery("listMembers", Users.class)
+				.setParameter("organization", "%" + organization.toUpperCase() + "%")
+				.getResultList();
+		for (Users u : userse) {
+			users.add(u.map(new User()));
+		}
+		return users;
+	}
+
 }
