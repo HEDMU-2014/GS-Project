@@ -12,17 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 
 import domain.Role;
 import domain.User;
 
 @Entity
+@NamedQuery(name = "searchUsers",
+			query = "SELECT u FROM Users u WHERE UPPER(u.firstname) LIKE :search")
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userid;
+	private long userid;
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -51,8 +54,8 @@ public class Users implements Serializable {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.organization = user.getOrganization();
-		this.createddate = user.getCreateddate();
-		this.lastlogin = user.getLastlogin();
+		this.createddate = Timestamp.valueOf(user.getCreateddate());
+		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
 			this.roles.add(new Roles(role));
@@ -67,8 +70,8 @@ public class Users implements Serializable {
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setOrganization(organization);
-		user.setCreateddate(createddate);
-		user.setLastlogin(lastlogin);
+		user.setCreateddate(createddate.toLocalDateTime());
+		user.setLastlogin(lastlogin.toLocalDateTime());
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));
@@ -76,7 +79,7 @@ public class Users implements Serializable {
 		return user;
 	}
 
-	public int getUserid() {
+	public long getUserid() {
 		return this.userid;
 	}
 
@@ -139,5 +142,5 @@ public class Users implements Serializable {
 	public Collection<Roles> getRoles() {
 		return roles;
 	}
-
+	
 }

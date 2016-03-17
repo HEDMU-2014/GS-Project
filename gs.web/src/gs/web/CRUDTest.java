@@ -1,10 +1,9 @@
 package gs.web;
 
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,40 +13,62 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.RolesBeanLocal;
+import beans.UserPictureCommentsBeanLocal;
 import beans.UsersBeanLocal;
 import domain.Role;
 import domain.User;
+import domain.UserPictureComment;
 
 @WebServlet("/CRUDTest")
 public class CRUDTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB RolesBeanLocal rbl;
-	@EJB UsersBeanLocal ubl;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@EJB
+	RolesBeanLocal rbl;
+	@EJB
+	UsersBeanLocal ubl;
+	@EJB
+	UserPictureCommentsBeanLocal upcl;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Role role = new Role();
 		role.setRole("Moderator");
 		role.setRoleId(1);
 		rbl.create(role);
-		response.getWriter().append("Rolle: ").append(rbl.read(1).toString() + "\n");
-		
+		response.getWriter().append("Role: ").append(rbl.read(1).toString() + "\n");
+
 		User user = new User();
 		user.setFirstname("Tom");
 		user.setLastname("Engelsen");
 		user.setEmail("uninet@live.no");
 		user.setOrganization("n/a");
 		user.setPassword("abcdefg");
-		Date date = new Date();
-		user.setCreateddate(new Timestamp(date.getTime()));
-		user.setLastlogin(new Timestamp(date.getTime()));
+		user.setCreateddate(LocalDateTime.now());
+		user.setLastlogin(LocalDateTime.now());
 		user.setRoles(new ArrayList<>());
 		user.getRoles().add(role);
-		
+
 		ubl.create(user);
-		response.getWriter().append("User: ").append(ubl.read(1).toString());
+		List<User> users = ubl.searchUsers("Tom");
+
+		for (User u : users)
+			response.getWriter().append("User: " + u.toString() + "\n");
+		// response.getWriter().append("User added:
+		// ").append(ubl.read(1).toString());
+
+		UserPictureComment upc = new UserPictureComment();
+		upc.setUserId(user.getUserid());
+		upc.setMessage("woopdedoo");
+		upc.setPictureId(14245);
+		upc.setCreatedDate(LocalDateTime.now());
+		upcl.create(upc);
+		
+		
+		response.getWriter().append("UserPictureComment: " + upcl.searchCommentsByUserId(0));
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

@@ -1,26 +1,26 @@
 package domain;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 
 public class User {
 
-	private int userid;
+	private long userid;
 	private String firstname;
 	private String lastname;
 	private String email;
 	private String password;
-	private Timestamp createddate;
-	private Timestamp lastlogin;
+	private LocalDateTime createddate;
+	private LocalDateTime lastlogin;
 	private String organization;
 	private Collection<Role> roles;
 
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
@@ -56,19 +56,19 @@ public class User {
 		this.password = password;
 	}
 
-	public Timestamp getCreateddate() {
+	public LocalDateTime getCreateddate() {
 		return createddate;
 	}
 
-	public void setCreateddate(Timestamp createddate) {
+	public void setCreateddate(LocalDateTime createddate) {
 		this.createddate = createddate;
 	}
 
-	public Timestamp getLastlogin() {
+	public LocalDateTime getLastlogin() {
 		return lastlogin;
 	}
 
-	public void setLastlogin(Timestamp lastlogin) {
+	public void setLastlogin(LocalDateTime lastlogin) {
 		this.lastlogin = lastlogin;
 	}
 
@@ -88,5 +88,11 @@ public class User {
 		this.roles = roles;
 	}
 
-
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
+				+ ", password=" + password + ", createddate=" + createddate + ", lastlogin=" + lastlogin
+				+ ", organization=" + organization + ", roles=" + roles + "]";
+	}
+	
 }
