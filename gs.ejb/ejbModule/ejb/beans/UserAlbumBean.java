@@ -8,10 +8,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ejb.domain.User;
 import ejb.domain.UserAlbum;
 import ejb.entities.UserAlbumEntity;
-import ejb.entities.UserEntity;
 
 /**
  * Session Bean implementation class UserAlbumBean
