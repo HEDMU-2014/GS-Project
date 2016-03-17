@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import ejb.domain.Role;
-import ejb.entities.Roles;
+import ejb.entities.RoleEntity;
 
 /**
  * Session Bean implementation class RoleBean
@@ -19,7 +19,7 @@ public class RoleBean implements RoleRemote, RoleLocal {
 	@Override
 	public Optional<Role> getRole(int roleid) {
 		Optional<Role> opt = Optional.empty();
-		Roles role = em.find(Roles.class, roleid); 
+		RoleEntity role = em.find(RoleEntity.class, roleid); 
 		if (role != null) {
 			opt = Optional.of(role.map(new Role()));
 		}
@@ -28,13 +28,13 @@ public class RoleBean implements RoleRemote, RoleLocal {
 	
 	@Override
 	public void createRole(Role role) {
-		Roles entity = new Roles(role);
+		RoleEntity entity = new RoleEntity(role);
 		em.persist(entity);
 	}
 	
 	@Override
 	public void updateRole(Role role) {
-		Roles roles = em.find(Roles.class, role.getRoleid()); 
+		RoleEntity roles = em.find(RoleEntity.class, role.getRoleid()); 
 		if (roles != null) {
 			roles.update(role);
 		} else {
@@ -44,7 +44,7 @@ public class RoleBean implements RoleRemote, RoleLocal {
 	
 	@Override
 	public void deleteRole(Role role) {
-		Roles roles = em.find(Roles.class, role.getRoleid()); 
+		RoleEntity roles = em.find(RoleEntity.class, role.getRoleid()); 
 		if (roles != null) {
 			em.remove(roles);
 		} else {

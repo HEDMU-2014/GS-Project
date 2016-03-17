@@ -1,0 +1,20 @@
+package ejb.beans;
+
+import java.util.Optional;
+
+import javax.ejb.Remote;
+
+import ejb.domain.UserAlbum;
+
+@Remote
+public interface UserAlbumBeanRemote {
+
+	Optional<UserAlbum> getUserAlbum(long albumId);
+
+	void createUserAlbum(UserAlbum ua);
+
+	void updateUserAlbum(UserAlbum album);
+
+	void deleteUserAlbum(UserAlbum album);
+
+}

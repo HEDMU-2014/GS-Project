@@ -16,7 +16,7 @@ import ejb.domain.Organization;
  */
 @Entity
 
-public class Organizations implements Serializable {
+public class OrganizationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	   
@@ -35,15 +35,15 @@ public class Organizations implements Serializable {
 	@Column(length=50, nullable=false)
 	private String city;
 
-	public Organizations() {
+	public OrganizationEntity() {
 		super();
 	} 
 	
-	public Organizations(Organization org) {
+	public OrganizationEntity(Organization org) {
 		update(org);
 	} 
 	
-	public Organizations update(Organization org) {
+	public OrganizationEntity update(Organization org) {
 		this.orgId = org.getOrgId();
 		this.name = org.getName();
 		this.address = org.getAddress();

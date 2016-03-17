@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import ejb.domain.Organization;
-import ejb.entities.Organizations;
+import ejb.entities.OrganizationEntity;
 
 /**
  * Session Bean implementation class OrganizationBean
@@ -19,7 +19,7 @@ public class OrganizationBean implements OrganizationRemote, OrganizationLocal {
 	@Override
 	public Optional<Organization> getOrganization(int orgid) {
 		Optional<Organization> opt = Optional.empty();
-		Organizations org = em.find(Organizations.class, orgid); 
+		OrganizationEntity org = em.find(OrganizationEntity.class, orgid); 
 		if (org != null) {
 			opt = Optional.of(org.map(new Organization()));
 		}
@@ -28,13 +28,13 @@ public class OrganizationBean implements OrganizationRemote, OrganizationLocal {
 	
 	@Override
 	public void createOrganization(Organization org) {
-		Organizations entity = new Organizations(org);
+		OrganizationEntity entity = new OrganizationEntity(org);
 		em.persist(entity);
 	}
 	
 	@Override
 	public void updateOrganization(Organization org) {
-		Organizations entity = em.find(Organizations.class, org.getOrgId()); 
+		OrganizationEntity entity = em.find(OrganizationEntity.class, org.getOrgId()); 
 		if (entity != null) {
 			entity.update(org);
 		} else {

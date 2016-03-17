@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import ejb.domain.User;
-import ejb.entities.Users;
+import ejb.entities.UserEntity;
 
 /**
  * Session Bean implementation class UserBean
@@ -21,7 +21,7 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public Optional<User> getUser(long userid) {
 		Optional<User> opt = Optional.empty();
-		Users user = em.find(Users.class, userid); 
+		UserEntity user = em.find(UserEntity.class, userid); 
 		if (user != null) {
 			opt = Optional.of(user.map(new User()));
 		}
@@ -31,7 +31,7 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public Optional<User> getUser(String email) {
 		Optional<User> opt = Optional.empty();
-		List<Users> userse = em.createNamedQuery("getUserFromEmail", Users.class)
+		List<UserEntity> userse = em.createNamedQuery("getUserFromEmail", UserEntity.class)
 				.setParameter("email", email.toUpperCase())
 				.getResultList();
 		if (userse.size() == 1) {
@@ -42,13 +42,13 @@ public class UserBean implements UserRemote, UserLocal {
 	
 	@Override
 	public void createUser(User user) {
-		Users entity = new Users(user);
+		UserEntity entity = new UserEntity(user);
 		em.persist(entity);
 	}
 	
 	@Override
 	public void updateUser(User user) {
-		Users users = em.find(Users.class, user.getUserid()); 
+		UserEntity users = em.find(UserEntity.class, user.getUserid()); 
 		if (users != null) {
 			users.update(user);
 		} else {
@@ -58,7 +58,7 @@ public class UserBean implements UserRemote, UserLocal {
 	
 	@Override
 	public void deleteUser(User user) {
-		Users users = em.find(Users.class, user.getUserid()); 
+		UserEntity users = em.find(UserEntity.class, user.getUserid()); 
 		if (users != null) {
 			em.remove(users);
 		} else {
@@ -69,10 +69,10 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public List<User> listMembers(String organization) {
 		List<User> users = new ArrayList<>();
-		List<Users> userse = em.createNamedQuery("listMembers", Users.class)
+		List<UserEntity> userse = em.createNamedQuery("listMembers", UserEntity.class)
 				.setParameter("organization", "%" + organization.toUpperCase() + "%")
 				.getResultList();
-		for (Users u : userse) {
+		for (UserEntity u : userse) {
 			users.add(u.map(new User()));
 		}
 		return users;
@@ -81,10 +81,10 @@ public class UserBean implements UserRemote, UserLocal {
 	@Override
 	public List<User> searchUsers(String search) {
 		List<User> users = new ArrayList<>();
-		List<Users> userse = em.createNamedQuery("searchUsers", Users.class)
+		List<UserEntity> userse = em.createNamedQuery("searchUsers", UserEntity.class)
 				.setParameter("search", "%" + search.toUpperCase() + "%")
 				.getResultList();
-		for (Users u : userse) {
+		for (UserEntity u : userse) {
 			users.add(u.map(new User()));
 		}
 		return users;

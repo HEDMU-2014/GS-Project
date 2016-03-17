@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
+import ejb.domain.Organization;
 import ejb.domain.Role;
 import ejb.domain.User;
 
@@ -29,22 +30,22 @@ import ejb.domain.User;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "getUserFromEmail", 
-			query = "SELECT u FROM Users u "
+			query = "SELECT u FROM UserEntity u "
 					+ "WHERE UPPER(u.email) = :email "),
 	@NamedQuery(name = "searchUsers",
-			query = "SELECT u FROM Users u "
+			query = "SELECT u FROM UserEntity u "
 					+ "WHERE UPPER(u.firstName) LIKE :search "
 					+ "OR UPPER(u.lastName) LIKE :search "
 					+ "OR UPPER(u.email) LIKE :search "
 					+ "OR UPPER(u.organization.name) LIKE :search "
 					+ "ORDER BY u.lastName"),
 	@NamedQuery(name = "listMembers", 
-			query = "SELECT u FROM Users u, IN (u.roles) r "
+			query = "SELECT u FROM UserEntity u, IN (u.roles) r "
 					+ "WHERE r.role = 'Member' " 
 					+ "AND u.organization.name LIKE :organization")
 })
 
-public class Users implements Serializable {
+public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -72,30 +73,31 @@ public class Users implements Serializable {
 	@JoinTable(name="AssignedRoles",
 			joinColumns=@JoinColumn(name="userid", referencedColumnName="userid"),
 			inverseJoinColumns=@JoinColumn(name="roleid", referencedColumnName="roleid"))
-	private Collection<Roles> roles;
+	private Collection<RoleEntity> roles;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="organization")
-	private Organizations organization;
+	private OrganizationEntity organization;
 
-	public Users() {
+	public UserEntity() {
 		super();
 	}
 	
-	public Users(User user) {
+	public UserEntity(User user) {
 		update(user);
 	}
 	
-	public Users update(User user) {
+	public UserEntity update(User user) {
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.createdDate = user.getCreatedDate();
 		this.lastLogin = user.getLastLogin();
+		this.organization = new OrganizationEntity().update(user.getOrganization());
 		this.roles = new ArrayList<>();
 		for(Role role : user.getRoles())
-			this.roles.add(new Roles(role));
+			this.roles.add(new RoleEntity(role));
 		return this;
 		
 	}
@@ -108,8 +110,9 @@ public class Users implements Serializable {
 		user.setPassword(password);
 		user.setCreatedDate(createdDate);
 		user.setLastLogin(lastLogin);
+		user.setOrganization(organization.map(new Organization()));
 		user.setRoles(new ArrayList<>());
-		for (Roles role : roles)
+		for (RoleEntity role : roles)
 			user.getRoles().add(role.map(new Role()));
 		return user;
 		
@@ -171,19 +174,19 @@ public class Users implements Serializable {
 		this.lastLogin = lastLogin;
 	}
 
-	public Collection<Roles> getRoles() {
+	public Collection<RoleEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Roles> roles) {
+	public void setRoles(Collection<RoleEntity> roles) {
 		this.roles = roles;
 	}
 
-	public Organizations getOrganization() {
+	public OrganizationEntity getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(Organizations organization) {
+	public void setOrganization(OrganizationEntity organization) {
 		this.organization = organization;
 	}
    

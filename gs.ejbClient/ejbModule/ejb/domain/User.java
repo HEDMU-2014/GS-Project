@@ -21,6 +21,8 @@ public class User implements Serializable {
 	private Timestamp createdDate;
 	
 	private Timestamp lastLogin;
+	
+	private Organization organization;
 
 	private Collection<Role> roles;
 
@@ -78,6 +80,14 @@ public class User implements Serializable {
 
 	public void setLastLogin(Timestamp lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public Collection<Role> getRoles() {

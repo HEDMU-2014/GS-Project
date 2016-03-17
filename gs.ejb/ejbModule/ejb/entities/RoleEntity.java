@@ -12,7 +12,7 @@ import ejb.domain.Role;
  */
 @Entity
 
-public class Roles implements Serializable {
+public class RoleEntity implements Serializable {
 	
 	@Id
 	private int roleId;
@@ -22,16 +22,16 @@ public class Roles implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Roles() {
+	public RoleEntity() {
 		super();
 	}
 
 
-	public Roles(Role role) {
+	public RoleEntity(Role role) {
 		update(role);
 	}
 	
-	public Roles update(Role role) {
+	public RoleEntity update(Role role) {
 		this.roleId = role.getRoleid();
 		this.role = role.getRole();
 		return this;
