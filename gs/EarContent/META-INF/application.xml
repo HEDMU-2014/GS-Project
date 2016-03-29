@@ -10,4 +10,10 @@
       <context-root>gs</context-root>
     </web>
   </module>
+  <module>
+    <web>
+      <web-uri>gs.ws.war</web-uri>
+      <context-root>gs.ws</context-root>
+    </web>
+  </module>
 </application>
