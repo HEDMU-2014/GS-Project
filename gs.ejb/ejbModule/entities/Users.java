@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -48,8 +49,11 @@ public class Users implements Serializable {
 	private String password;
 	private Timestamp createddate;
 	private Timestamp lastlogin;
+	
+	@ManyToOne
+	@JoinColumn(name="organization")
 	private Organizations organization;
-
+	
 	@ManyToMany
 	@JoinTable(name = "AssignedRoles",
 	joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") ,
