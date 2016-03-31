@@ -15,7 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
 
 import ejb.domain.Picture;
 import ejb.domain.User;
@@ -26,12 +29,13 @@ import ejb.domain.UserAlbum;
  *
  */
 @Entity
-@NamedQuery(name = "searchUserAlbums",
-	query = "SELECT ua FROM UserAlbumEntity ua "
-			+ "WHERE UPPER(ua.name) LIKE :search "
-			+ "OR UPPER(ua.user.firstName) LIKE :search "
-			+ "OR UPPER(ua.user.lastName) LIKE :search "
-			+ "ORDER BY ua.user, ua.name") //Order by user, then by album name.
+//NamedQuery uncommented untill PictureEntity and related classes is added, else the project wont run.
+//@NamedQuery(name = "searchUserAlbums",
+//	query = "SELECT ua FROM UserAlbumEntity ua "
+//			+ "WHERE UPPER(ua.name) LIKE :search "
+//			+ "OR UPPER(ua.user.firstName) LIKE :search "
+//			+ "OR UPPER(ua.user.lastName) LIKE :search "
+//			+ "ORDER BY ua.user.lastName, ua.name") //Order by user last name, then by album name.
 
 public class UserAlbumEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
