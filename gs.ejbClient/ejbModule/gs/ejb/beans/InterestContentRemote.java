@@ -9,12 +9,12 @@ import gs.ejb.domain.InterestContent;
 @Remote
 public interface InterestContentRemote {
 
-	Optional<InterestContent> getInterestContent(InterestContent intCon);
+	Optional<InterestContent> getInterestContent(InterestContent key);
 
-	void createInterestContent(InterestContent intCon);
+	void createInterestContent(InterestContent key);
 
-	void updateInterestContent(InterestContent intCon);
+	void updateInterestContent(InterestContent key);
 
-	void deleteInterestContent(InterestContent intCon);
+	void deleteInterestContent(InterestContent key);
 
 }
