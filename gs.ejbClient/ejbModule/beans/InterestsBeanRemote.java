@@ -1,8 +1,10 @@
 package beans;
 
-import domain.Interest;
-
 import java.util.Optional;
+
+import javax.ejb.Remote;
+
+import domain.Interest;
 
 @Remote
 public interface InterestsBeanRemote {

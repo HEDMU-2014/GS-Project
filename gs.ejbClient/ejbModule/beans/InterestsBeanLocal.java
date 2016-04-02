@@ -1,8 +1,10 @@
 package beans;
 
-import domain.Interest;
-
 import java.util.Optional;
+
+import javax.ejb.Local;
+
+import domain.Interest;
 
 @Local
 public interface InterestsBeanLocal {
