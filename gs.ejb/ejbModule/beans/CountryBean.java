@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import entities.Countries;
 import gs.ejb.domain.Country;
-import gs.ejb.entities.Countries;
 
 /**
  * Session Bean implementation class CountryBean

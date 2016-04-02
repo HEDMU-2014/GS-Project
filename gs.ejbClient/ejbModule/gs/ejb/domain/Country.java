@@ -1,4 +1,4 @@
-package domain;
+package gs.ejb.domain;
 
 import java.io.Serializable;
 

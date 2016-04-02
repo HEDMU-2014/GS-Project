@@ -1,13 +1,13 @@
-package beans;
+package gs.ejb.beans;
 
 import java.util.Optional;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 import gs.ejb.domain.Country;
 
-@Local
-public interface CountryLocal {
+@Remote
+public interface CountryRemote {
 
 	Optional<Country> getCountry(String countrycode);
 

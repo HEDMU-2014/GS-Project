@@ -1,4 +1,4 @@
-package beans;
+package gs.ejb.beans;
 
 import java.util.Optional;
 
