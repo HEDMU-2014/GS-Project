@@ -23,8 +23,8 @@ public class UserProfiles implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userID")
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "userID")
 	private long userid;
 	private char gender;
 	private String job;
