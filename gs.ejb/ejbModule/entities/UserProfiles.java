@@ -1,4 +1,4 @@
-package gs.ejb.entities;
+package entities;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import gs.ejb.domain.UserProfile;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserProfiles

@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.UserProfile;
-import gs.ejb.entities.UserProfiles;
+import domain.UserProfile;
+import entities.UserProfiles;
 
 /**
  * Session Bean implementation class UserProfilesBean
