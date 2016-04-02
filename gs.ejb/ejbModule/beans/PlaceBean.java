@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 
 import java.util.Optional;
@@ -7,8 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.Place;
-import gs.ejb.entities.Places;
+import domain.Place;
+import entities.Places;
 
 @Stateless
 public class PlaceBean implements PlaceRemote, PlaceLocal {

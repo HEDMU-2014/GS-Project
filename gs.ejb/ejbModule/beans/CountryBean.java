@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import domain.Country;
 import entities.Countries;
-import gs.ejb.domain.Country;
 
 /**
  * Session Bean implementation class CountryBean

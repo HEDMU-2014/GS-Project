@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.ejb.Remote;
 
-import gs.ejb.domain.Country;
+import domain.Country;
 
 @Remote
 public interface CountryRemote {

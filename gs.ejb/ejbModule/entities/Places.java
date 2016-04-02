@@ -1,11 +1,17 @@
-package gs.ejb.domain;
-
+package entities;
 
 import java.io.Serializable;
+import javax.annotation.Generated;
+import javax.persistence.*;
 
-public class Place implements Serializable {
+import domain.Place;
+
+@Entity
+public class Places implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Column(nullable=false, unique=true)
     private int placeId;
     private String placeCity;
     private String placeDescription;
@@ -13,15 +19,34 @@ public class Place implements Serializable {
     private int createdBy;
     private int createdDate;
 
-    public Place() {}
+    public Places() {
+        super();
+    }
 
-    public Place(int placeId, String placeCity, String placeDescription, String placeIsoCountry, int createdBy, int createdDate) {
-        this.placeId = placeId;
-        this.placeCity = placeCity;
-        this.placeDescription = placeDescription;
-        this.placeIsoCountry = placeIsoCountry;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
+    public Places(Place place) {
+
+    }
+
+    public Places update(Place place) {
+        placeId = place.getPlaceId();
+        placeCity = place.getPlaceCity();
+        placeDescription = place.getPlaceDescription();
+        placeIsoCountry = place.getPlaceIsoCountry();
+        createdBy = place.getCreatedBy();
+        createdDate = place.getCreatedDate();
+
+        return this;
+    }
+
+    public Place map(Place place) {
+        place.setPlaceId(placeId);
+        place.setPlaceCity(placeCity);
+        place.setPlaceDescription(placeDescription);
+        place.setPlaceIsoCountry(placeIsoCountry);
+        place.setCreatedBy(createdBy);
+        place.setCreatedDate(createdDate);
+
+        return place;
     }
 
     public int getPlaceId() {
@@ -74,7 +99,7 @@ public class Place implements Serializable {
 
     @Override
     public String toString() {
-        return "Place{" +
+        return "Places{" +
                 "placeId=" + placeId +
                 ", placeCity='" + placeCity + '\'' +
                 ", placeDescription='" + placeDescription + '\'' +

@@ -1,9 +1,12 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import gs.ejb.domain.Country;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import domain.Country;
 
 /**
  * Entity implementation class for Entity: Country

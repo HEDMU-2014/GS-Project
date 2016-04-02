@@ -1,15 +1,15 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
 import javax.ejb.Local;
 
-import gs.ejb.domain.Place;
+import domain.Place;
 
 @Local
 public interface PlaceLocal {
 
-    Optional<Place> getPlace(String placeid);
+    Optional<Place> getPlace(int placeid);
 
     void createPlace(Place place);
 

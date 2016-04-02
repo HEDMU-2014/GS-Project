@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.ejb.Local;
 
-import gs.ejb.domain.Country;
+import domain.Country;
 
 @Local
 public interface CountryLocal {
