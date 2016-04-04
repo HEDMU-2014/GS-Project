@@ -6,6 +6,7 @@
 		<project>gs.ejb</project>
 		<project>gs.ejbClient</project>
 		<project>gs.web</project>
+		<project>gs.ws</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
