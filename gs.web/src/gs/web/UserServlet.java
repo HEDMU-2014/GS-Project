@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gs.ejb.beans.OrganizationBeanLocal;
-import gs.ejb.beans.RoleBeanLocal;
-import gs.ejb.beans.UserBeanLocal;
-import gs.ejb.domain.Organization;
-import gs.ejb.domain.Role;
-import gs.ejb.domain.User;
+import beans.OrganizationBeanLocal;
+import beans.RoleBeanLocal;
+import beans.UserBeanLocal;
+import domain.Organization;
+import domain.Role;
+import domain.User;
 
 /**
  * Servlet implementation class UserServlet

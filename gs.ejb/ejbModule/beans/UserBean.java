@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.User;
-import gs.ejb.entities.Users;
+import beans.UserBeanLocal;
+import beans.UserBeanRemote;
+import domain.User;
+import entities.Users;
 
 /**
  * Session Bean implementation class UserBean

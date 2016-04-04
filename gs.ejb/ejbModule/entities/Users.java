@@ -1,4 +1,4 @@
-package gs.ejb.entities;
+package entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -18,9 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import gs.ejb.domain.Organization;
-import gs.ejb.domain.Role;
-import gs.ejb.domain.User;
+import domain.Organization;
+import domain.Role;
+import domain.User;
 
 /**
  * Entity implementation class for Entity: Users

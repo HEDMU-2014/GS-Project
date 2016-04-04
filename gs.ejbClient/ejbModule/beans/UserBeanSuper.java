@@ -1,9 +1,9 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.List;
 import java.util.Optional;
 
-import gs.ejb.domain.User;
+import domain.User;
 
 public interface UserBeanSuper {
 

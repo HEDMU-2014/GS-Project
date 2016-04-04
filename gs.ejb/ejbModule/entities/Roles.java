@@ -1,4 +1,4 @@
-package gs.ejb.entities;
+package entities;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import gs.ejb.domain.Role;
+import domain.Role;
 
 @Entity
 

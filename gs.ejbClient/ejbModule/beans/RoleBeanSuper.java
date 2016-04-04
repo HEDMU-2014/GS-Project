@@ -1,6 +1,6 @@
-package gs.ejb.beans;
+package beans;
 
-import gs.ejb.domain.Role;
+import domain.Role;
 
 public interface RoleBeanSuper {
 void createRole(int roleID, String role);

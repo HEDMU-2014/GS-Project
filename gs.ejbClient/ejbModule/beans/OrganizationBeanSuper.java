@@ -1,8 +1,8 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
-import gs.ejb.domain.Organization;
+import domain.Organization;
 
 public interface OrganizationBeanSuper {
 public void createOrg(Organization org);

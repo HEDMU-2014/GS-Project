@@ -1,11 +1,13 @@
-package gs.ejb.beans;
+package beans;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.Role;
-import gs.ejb.entities.Roles;
+import beans.RoleBeanLocal;
+import beans.RoleBeanRemote;
+import domain.Role;
+import entities.Roles;
 
 /**
  * Session Bean implementation class RoleBean

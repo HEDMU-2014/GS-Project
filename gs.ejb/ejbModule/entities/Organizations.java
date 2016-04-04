@@ -1,4 +1,4 @@
-package gs.ejb.entities;
+package entities;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import gs.ejb.domain.Organization;
+import domain.Organization;
 
 /**
  * Entity implementation class for Entity: Organizations

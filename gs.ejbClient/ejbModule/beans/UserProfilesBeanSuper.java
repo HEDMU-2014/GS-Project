@@ -1,8 +1,8 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
-import gs.ejb.domain.UserProfile;
+import domain.UserProfile;
 
 public interface UserProfilesBeanSuper {
 public void createUserProfile(UserProfile profile);

@@ -1,4 +1,4 @@
-package gs.ejb.domain;
+package domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

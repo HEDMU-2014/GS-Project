@@ -1,4 +1,4 @@
-package gs.ejb.beans;
+package beans;
 
 import java.util.Optional;
 
@@ -6,8 +6,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import gs.ejb.domain.Organization;
-import gs.ejb.entities.Organizations;
+import beans.OrganizationBeanLocal;
+import beans.OrganizationBeanRemote;
+import domain.Organization;
+import entities.Organizations;
 
 /**
  * Session Bean implementation class OrganizationBean
