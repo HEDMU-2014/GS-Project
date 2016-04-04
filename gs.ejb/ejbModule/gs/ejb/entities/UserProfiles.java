@@ -12,12 +12,7 @@ import javax.persistence.ManyToOne;
 
 import gs.ejb.domain.UserProfile;
 
-/**
- * Entity implementation class for Entity: UserProfiles
- *
- */
 @Entity
-
 public class UserProfiles implements Serializable {
 
 	@Id
@@ -25,7 +20,7 @@ public class UserProfiles implements Serializable {
 	private int id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userID")
-	private long userid;
+	private Users user;
 	private char gender;
 	private String job;
 	private String description;
@@ -46,9 +41,10 @@ public class UserProfiles implements Serializable {
 	public UserProfiles(UserProfile userProfile) {
 		getEntityUserProfile(userProfile);
 	}
-	public UserProfiles getEntityUserProfile(UserProfile userProfile){
+
+	public UserProfiles getEntityUserProfile(UserProfile userProfile) {
 		setId(userProfile.getId());
-		setUserid(userProfile.getUserid());
+//		setUser(new Users(userProfile.getUser()));
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
 		setDescription(userProfile.getDescription());
@@ -61,9 +57,10 @@ public class UserProfiles implements Serializable {
 		setProfilepictureid(userProfile.getProfilepictureid());
 		return this;
 	}
+
 	public UserProfile getDomUserProfile(UserProfile prof) {
 		prof.setId(getId());
-		prof.setUserid(getUserid());
+//		prof.setUserid(getUserid());
 		prof.setGender(getGender());
 		prof.setJob(getJob());
 		prof.setDescription(getDescription());
@@ -86,12 +83,12 @@ public class UserProfiles implements Serializable {
 		this.id = id;
 	}
 
-	public long getUserid() {
-		return this.userid;
+	public Users getUser() {
+		return this.user;
 	}
 
-	public void setUserid(long userid) {
-		this.userid = userid;
+	public void setUser(Users userid) {
+		this.user = userid;
 	}
 
 	public char getGender() {
