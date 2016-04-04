@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:tns="http://ws.user.gs.eamv.dk/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="UserService" 
+	targetNamespace="http://ws.user.gs.eamv.dk/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://ws.user.gs.eamv.dk/" 
+			xmlns:cns="http://gs.eamv.dk/" 
+			elementFormDefault="unqualified"
+			targetNamespace="http://ws.user.gs.eamv.dk/" version="1.0">
+
+			<xsd:import schemaLocation="gs.xsd" namespace="http://gs.eamv.dk/" />
+
+			<xs:element name="getUser" type="tns:getUser"></xs:element>
+
+			<xs:element name="getUserResponse" type="tns:getUserResponse"></xs:element>
+
+			<xs:element name="createUser" type="tns:createUser"></xs:element>
+
+			<xs:element name="createUserResponse" type="tns:createUserResponse"></xs:element>
+
+			<xs:complexType name="getUser">
+				<xs:sequence>
+					<xs:element name="email" type="xs:string"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="getUserResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="cns:user"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="createUser">
+				<xs:sequence>
+					<xs:element name="user" type="cns:user"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="createUserResponse">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="return" type="xs:boolean"></xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+		</xs:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="getUser">
+		<wsdl:part element="tns:getUser" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getUserResponse">
+		<wsdl:part element="tns:getUserResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createUser">
+		<wsdl:part element="tns:createUser" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createUserResponse">
+		<wsdl:part element="tns:createUserResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	
+	<wsdl:portType name="User">
+		<wsdl:operation name="getUser">
+			<wsdl:input message="tns:getUser" name="getUser">
+			</wsdl:input>
+			<wsdl:output message="tns:getUserResponse" name="getUserResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createUser">
+			<wsdl:input message="tns:createUser" name="createUser">
+			</wsdl:input>
+			<wsdl:output message="tns:createUserResponse" name="createUserResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="UserServiceSoapBinding" type="tns:User">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+		<wsdl:operation name="getUser">
+			<soap:operation soapAction="" style="document"></soap:operation>
+			<wsdl:input name="getUser">
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output name="getUserResponse">
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createUser">
+			<soap:operation soapAction="" style="document"></soap:operation>
+			<wsdl:input name="createUser">
+				<soap:body use="literal"></soap:body>
+			</wsdl:input>
+			<wsdl:output name="createUserResponse">
+				<soap:body use="literal"></soap:body>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="UserService">
+		<wsdl:port binding="tns:UserServiceSoapBinding" name="UserPort">
+			<soap:address location="http://bjorn-dell:8080/gs.ws/user"></soap:address>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
