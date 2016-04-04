@@ -33,7 +33,7 @@ import domain.UserAlbum;
 //			+ "OR UPPER(ua.user.lastName) LIKE :search "
 //			+ "ORDER BY ua.user.lastName, ua.name") //Order by user last name, then by album name.
 
-public class UserAlbumEntity implements Serializable {
+public class UserAlbums implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -60,15 +60,15 @@ public class UserAlbumEntity implements Serializable {
 	@NotNull
 	private Boolean publicOA;
 	
-	public UserAlbumEntity() {
+	public UserAlbums() {
 		super();
 	}
 	
-	public UserAlbumEntity(UserAlbum ua) {
+	public UserAlbums(UserAlbum ua) {
 		update(ua);
 	}
 
-	public UserAlbumEntity update(UserAlbum ua) {
+	public UserAlbums update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
 		this.user = new Users().update(ua.getUser());
 		this.name = ua.getName();
