@@ -2,54 +2,53 @@ package entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import domain.Role;
 
-@Entity
 
+@Entity
 public class Roles implements Serializable {
 
 	@Id
-	private int roleID;
-	@Column(length = 50, nullable = false)
+	private int roleId;
 	private String role;
 	private static final long serialVersionUID = 1L;
-
+	
 	public Roles() {
+		super();
 	}
-
+	
 	public Roles(Role role) {
-		getEntityRoles(role);
+		update(role);
 	}
-
-	public Roles getEntityRoles(Role role) {
-		this.setRoleID(role.getRoleid());
-		this.setRole(role.getRole());
+	
+	public Roles update(Role role) {
+		this.roleId = role.getRoleId();
+		this.role = role.getRole();
 		return this;
 	}
-
-	public int getRoleID() {
-		return this.roleID;
+	
+	public Role map(Role role) {
+		role.setRoleId(this.roleId);
+		role.setRole(this.role);
+		return role;
+	}
+	
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRoleID(int roleID) {
-		this.roleID = roleID;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRole() {
-		return this.role;
+		return role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	public Role getDomRole(Role role) {
-		role.setRoleid(this.roleID);
-		role.setRole(this.role);
-		return role;
 	}
 }

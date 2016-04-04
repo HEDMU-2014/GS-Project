@@ -107,7 +107,7 @@
 
 	<wsdl:service name="UserService">
 		<wsdl:port binding="tns:UserServiceSoapBinding" name="UserPort">
-			<soap:address location="http://bjorn-dell:8080/gs.ws/user"></soap:address>
+			<soap:address location="http://eamv.dk/user"></soap:address>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

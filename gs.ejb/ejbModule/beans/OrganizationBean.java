@@ -6,8 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import beans.OrganizationBeanLocal;
-import beans.OrganizationBeanRemote;
 import domain.Organization;
 import entities.Organizations;
 
@@ -16,38 +14,44 @@ import entities.Organizations;
  */
 @Stateless
 public class OrganizationBean implements OrganizationBeanRemote, OrganizationBeanLocal {
-
-	@PersistenceContext
-	private EntityManager em;
-
-	public OrganizationBean() {
-	}
+	@PersistenceContext private EntityManager em;
 
 	@Override
-	public void createOrg(Organization org) {
-		Organizations organ = new Organizations(org);
-		em.persist(organ);
+	public Optional<Organization> getOrganization(int orgid) {
+		Optional<Organization> opt = Optional.empty();
+		Organizations org = em.find(Organizations.class, orgid); 
+		if (org != null) {
+			opt = Optional.of(org.map(new Organization()));
+		}
+		return opt;
+	}
+	
+	@Override
+	public void createOrganization(Organization org) {
+		Organizations entity = new Organizations(org);
+		em.persist(entity);
+	}
+	
+	@Override
+	public void updateOrganization(Organization org) {
+		Organizations entity = em.find(Organizations.class, org.getOrgId()); 
+		if (entity != null) {
+			entity.update(org);
+		} else {
+			throw new RuntimeException("Organization with id " + org.getOrgId() + " not found");
+		}
+	}
+	
+	@Override
+	public void deleteOrganization(Organization org) {
+		Organization entity = em.find(Organization.class, org.getOrgId()); 
+		if (entity != null) {
+			em.remove(entity);
+		} else {
+			throw new RuntimeException("Organization with id " + org.getOrgId() + " not found");
+		}
 	}
 
-	@Override
-	public Optional<Organization> readOrg(int orgID) {
-		Optional<Organization> org = Optional.empty();
-		Organizations organ = em.find(Organizations.class, orgID);
-		if (organ != null)
-			org = Optional.of(organ.map(new Organization()));
-		return org;
-	}
 
-	@Override
-	public void updateOrg(Organization org) {
-		Organizations organ = em.find(Organizations.class, org.getOrgId());
-		organ.map(org);
-	}
-
-	@Override
-	public void deleteOrg(int orgID) {
-		Organizations organ = em.find(Organizations.class, orgID);
-		em.remove(organ);
-	}
 
 }

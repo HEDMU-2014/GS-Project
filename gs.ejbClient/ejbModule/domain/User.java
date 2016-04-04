@@ -1,12 +1,10 @@
 package domain;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+public class User {
 
 	private long userid;
 	private String firstname;
@@ -96,5 +94,5 @@ public class User implements Serializable {
 				+ ", password=" + password + ", createddate=" + createddate + ", lastlogin=" + lastlogin
 				+ ", organization=" + organization + ", roles=" + roles + "]";
 	}
-
+	
 }

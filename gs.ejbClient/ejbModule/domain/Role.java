@@ -1,28 +1,16 @@
 package domain;
 
-import java.io.Serializable;
+public class Role {
 
-public class Role implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private int roleid;
+	private int roleId;
 	private String role;
 
-	public Role() {
-
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public Role(int roleid, String role) {
-		this.roleid = roleid;
-		this.role = role;
-	}
-
-	public int getRoleid() {
-		return roleid;
-	}
-
-	public void setRoleid(int roleid) {
-		this.roleid = roleid;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRole() {
@@ -35,7 +23,7 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role [roleid=" + roleid + ", role=" + role + "]";
+		return "Role [roleId=" + roleId + ", role=" + role + "]";
 	}
 
 }

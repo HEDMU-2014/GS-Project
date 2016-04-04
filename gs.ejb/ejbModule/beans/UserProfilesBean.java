@@ -6,8 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import beans.UserProfilesBeanLocal;
-import beans.UserProfilesBeanRemote;
 import domain.UserProfile;
 import entities.UserProfiles;
 

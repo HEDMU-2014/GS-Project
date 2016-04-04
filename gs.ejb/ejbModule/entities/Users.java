@@ -5,9 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,103 +20,107 @@ import domain.Organization;
 import domain.Role;
 import domain.User;
 
-/**
- * Entity implementation class for Entity: Users
- *
- */
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "getUserFromEmail", query = "SELECT u FROM Users u " + "WHERE UPPER(u.email) = :email "),
-		@NamedQuery(name = "searchUsers", query = "SELECT u FROM Users u WHERE UPPER(u.firstName) LIKE :search OR UPPER(u.lastName) LIKE :search OR UPPER(u.email) LIKE :search OR UPPER(u.organization.name) LIKE :search ORDER BY u.lastName"),
-		@NamedQuery(name = "listMembers", query = "SELECT u FROM Users u, IN (u.roles) r WHERE UPPER(r.role) = UPPER('Member') AND u.organization.name LIKE :organization") })
+	@NamedQuery(name = "getUserFromEmail", 
+		query = "SELECT u FROM Users u "
+			+ "WHERE UPPER(u.email) = :email "),
+	@NamedQuery(name = "searchUsers", 
+	query = "SELECT u FROM Users u "
+		+ "WHERE UPPER(u.firstname) LIKE :search "
+		+ "OR UPPER(u.lastname) LIKE :search "
+		+ "OR UPPER(u.email) LIKE :search "
+		+ "OR UPPER(u.organization.name) LIKE :search "
+		+ "ORDER BY u.lastname"),
+	@NamedQuery(name = "listMembers", 
+		query = "SELECT u FROM Users u, IN (u.roles) r "
+			+ "WHERE r.role = 'Member' " 
+			+ "AND u.organization.name LIKE :organization")})
 
 public class Users implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long userID;
-	private int roleID;
-	@Column(length = 50, nullable = false)
-	private String firstName;
-	@Column(length = 50, nullable = false)
-	private String lastName;
-	@Column(length = 50, nullable = false, unique = true)
-	// @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." +
-	// "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-	// + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9]"
-	// + "(?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
+	private long userid;
+	private String firstname;
+	private String lastname;
 	private String email;
-	@Column(length = 50, nullable = false)
 	private String password;
-	private Timestamp createdDate;
-	private Timestamp lastLogin;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "organization")
+	private Timestamp createddate;
+	private Timestamp lastlogin;
+	
+	@ManyToOne
+	@JoinColumn(name="organization")
 	private Organizations organization;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
+	
+	@ManyToMany
+	@JoinTable(name = "AssignedRoles",
+	joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") ,
+	inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
 	private Collection<Roles> roles;
 
-	private static final long serialVersionUID = 1L;
-
 	public Users() {
+		super();
 	}
-
+	
 	public Users(User user) {
-		getEntityUsers(user);
+		update(user);
 	}
-
-	public Users getEntityUsers(User user) {
-		this.setCreatedDate(Timestamp.valueOf(user.getCreateddate()));
-		this.setEmail(user.getEmail());
-		this.setFirstName(user.getFirstname());
-		this.setLastLogin(Timestamp.valueOf(user.getLastlogin()));
-		this.setLastName(user.getLastname());
-		this.organization = new Organizations(user.getOrganization());
-		this.setPassword(user.getPassword());
-		this.setUserID(user.getUserid());
-		this.setRoles(new ArrayList<Roles>());
-		for (Role r : user.getRoles())
-			this.getRoles().add(new Roles(r));
+	
+	public Users update(User user) {
+		this.firstname = user.getFirstname();
+		this.lastname = user.getLastname();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.organization = new Organizations().update(user.getOrganization());
+		this.createddate = Timestamp.valueOf(user.getCreateddate());
+		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
+		this.roles = new ArrayList<>();
+		for (Role role : user.getRoles()) {
+			this.roles.add(new Roles(role));
+		}
 		return this;
 	}
-
-	public long getUserID() {
-		return this.userID;
+	
+	public User map(User user) {
+		user.setUserid(userid);
+		user.setFirstname(firstname);
+		user.setLastname(lastname);
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setOrganization(organization.map(new Organization()));
+		user.setCreateddate(createddate.toLocalDateTime());
+		user.setLastlogin(lastlogin.toLocalDateTime());
+		user.setRoles(new ArrayList<>());
+		for (Roles role : roles) {
+			user.getRoles().add(role.map(new Role()));
+		}
+		return user;
 	}
 
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public long getUserid() {
+		return this.userid;
 	}
 
-	public int getRoleID() {
-		return this.roleID;
+	public String getFirstname() {
+		return this.firstname;
 	}
 
-	public void setRoleID(int roleID) {
-		this.roleID = roleID;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getFirstName() {
-		return this.firstName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -126,56 +128,39 @@ public class Users implements Serializable {
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public Timestamp getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Timestamp getLastLogin() {
-		return this.lastLogin;
-	}
-
-	public void setLastLogin(Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
 	public Organizations getOrganization() {
 		return organization;
 	}
+	
 	public void setOrganization(Organizations organization) {
 		this.organization = organization;
 	}
+
+	public Timestamp getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Timestamp createddate) {
+		this.createddate = createddate;
+	}
+
+	public Timestamp getLastlogin() {
+		return lastlogin;
+	}
+
+	public void setLastlogin(Timestamp lastlogin) {
+		this.lastlogin = lastlogin;
+	}
+
 	public Collection<Roles> getRoles() {
 		return roles;
 	}
-
-	public void setRoles(Collection<Roles> roles) {
-		this.roles = roles;
-	}
-
-	public User getDomUser(User domUser) {
-		domUser.setUserid(this.userID);
-		domUser.setFirstname(this.firstName);
-		domUser.setLastname(this.lastName);
-		domUser.setPassword(this.password);
-		domUser.setCreateddate(this.createdDate.toLocalDateTime());
-		domUser.setEmail(this.email);
-		domUser.setOrganization(organization.map(new Organization()));
-		domUser.setLastlogin(this.lastLogin.toLocalDateTime());
-		domUser.setRoles(new ArrayList<Role>());
-		for (Roles r : this.getRoles())
-			domUser.getRoles().add(r.getDomRole(new Role()));
-		return domUser;
-	}
-
+	
 }
