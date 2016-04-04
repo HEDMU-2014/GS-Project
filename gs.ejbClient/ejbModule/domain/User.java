@@ -1,6 +1,7 @@
 package domain;
 
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 
 
@@ -11,8 +12,8 @@ public class User {
 	private String lastname;
 	private String email;
 	private String password;
-	private LocalDateTime createddate;
-	private LocalDateTime lastlogin;
+	private Calendar createddate;
+	private Calendar lastlogin;
 	private Organization organization;
 	private Collection<Role> roles;
 
@@ -56,19 +57,19 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDateTime getCreateddate() {
+	public Calendar getCreateddate() {
 		return createddate;
 	}
 
-	public void setCreateddate(LocalDateTime createddate) {
+	public void setCreateddate(Calendar createddate) {
 		this.createddate = createddate;
 	}
 
-	public LocalDateTime getLastlogin() {
+	public Calendar getLastlogin() {
 		return lastlogin;
 	}
 
-	public void setLastlogin(LocalDateTime lastlogin) {
+	public void setLastlogin(Calendar lastlogin) {
 		this.lastlogin = lastlogin;
 	}
 
@@ -90,8 +91,10 @@ public class User {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 		return "User [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", createddate=" + createddate + ", lastlogin=" + lastlogin
+				+ ", password=" + password + ", createddate=" + formatter.format(createddate.getTime()) 
+				+ ", lastlogin=" + formatter.format(lastlogin.getTime()) 
 				+ ", organization=" + organization + ", roles=" + roles + "]";
 	}
 	
