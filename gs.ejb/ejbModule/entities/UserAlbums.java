@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
@@ -27,12 +28,12 @@ import domain.UserAlbum;
  */
 @Entity
 //NamedQuery uncommented untill PictureEntity and related classes is added, else the project wont run.
-//@NamedQuery(name = "searchUserAlbums",
-//	query = "SELECT ua FROM UserAlbums ua "
-//			+ "WHERE UPPER(ua.name) LIKE :search "
-//			+ "OR UPPER(ua.user.firstname) LIKE :search "
-//			+ "OR UPPER(ua.user.lastname) LIKE :search "
-//			+ "ORDER BY ua.user.lastname, ua.name") //Order by user last name, then by album name.
+@NamedQuery(name = "searchUserAlbums",
+	query = "SELECT ua FROM UserAlbums ua "
+			+ "WHERE UPPER(ua.name) LIKE :search "
+			+ "OR UPPER(ua.user.firstname) LIKE :search "
+			+ "OR UPPER(ua.user.lastname) LIKE :search "
+			+ "ORDER BY ua.user.lastname, ua.name") //Order by user last name, then by album name.
 
 public class UserAlbums implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -42,6 +43,8 @@ public class UserAlbums implements Serializable {
 	private long albumId;
 	
 	@NotNull
+	@ManyToOne
+	@JoinColumn(name="userid")
 	private Users user;
 	
 	@Column(nullable=false, length=50)
