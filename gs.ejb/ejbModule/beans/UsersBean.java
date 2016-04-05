@@ -23,7 +23,7 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 	}
 
 	@Override
-	public Optional<User> read(int userId) {
+	public Optional<User> read(long userId) {
 		Users user = em.find(Users.class, userId); 
 		if (user != null)
 			return Optional.of(user.map(new User()));
