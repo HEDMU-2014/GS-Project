@@ -23,18 +23,6 @@ public class RestUser {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/read/{key}")
-	public User getUser(@PathParam("key") String key) {
-		User user = null;
-		Optional<User> opt = ejb.read(key);
-		if (opt.isPresent()) {
-			user = opt.get();
-		}
-		return user;
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/readid/{key}")
 	public User getUserById(@PathParam("key") long key) {
 		User user = null;
