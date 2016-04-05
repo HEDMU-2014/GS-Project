@@ -8,7 +8,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-@Entity
+@Entity(name = "Picture")
 public class PictureEntity {
    @Id @GeneratedValue
    private long id;
