@@ -17,8 +17,8 @@ public class Util {
 		role.setRole("test");
 		Roles roles = new Roles();
 		System.out.println(util.map(role, roles));
-		System.out.println("Hash xxx = " + util.hash("xxx"));
-		System.out.println("Hash 1234567890 = " + util.hash("1234567890"));
+//		System.out.println("Hash xxx = " + util.hash("xxx"));
+//		System.out.println("Hash 1234567890 = " + util.hash("1234567890"));
 
 	}
 
@@ -33,7 +33,7 @@ public class Util {
 				String mtoname = "set" + mf.getName().substring(3);
 				for (Method mt : mto) {
 					if (mt.getName().equalsIgnoreCase(mtoname)) {
-						mt.invoke(to, mf.invoke(from, null));
+						mt.invoke(to, mf.invoke(from));
 					}
 				}
 			}

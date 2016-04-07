@@ -3,7 +3,9 @@ package entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -74,8 +76,8 @@ public class Users implements Serializable {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.organization = new Organizations().update(user.getOrganization());
-		this.createddate = Timestamp.valueOf(user.getCreateddate());
-		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
+		this.createddate = new Timestamp(user.getCreateddate().getTimeInMillis());
+		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
 			this.roles.add(new Roles(role));
@@ -90,8 +92,10 @@ public class Users implements Serializable {
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setOrganization(organization.map(new Organization()));
-		user.setCreateddate(createddate.toLocalDateTime());
-		user.setLastlogin(lastlogin.toLocalDateTime());
+		user.setCreateddate(Calendar.getInstance());
+		user.getCreateddate().setTimeInMillis(createddate.getTime());
+		user.setLastlogin(Calendar.getInstance());
+		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));

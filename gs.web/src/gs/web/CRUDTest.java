@@ -3,6 +3,7 @@ package gs.web;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -55,8 +56,8 @@ public class CRUDTest extends HttpServlet {
 		user.setEmail("uninet@live.no");
 		user.setOrganization(org);
 		user.setPassword("abcdefg");
-		user.setCreateddate(LocalDateTime.now());
-		user.setLastlogin(LocalDateTime.now());
+		user.setCreateddate(Calendar.getInstance());
+		user.setLastlogin(Calendar.getInstance());
 		user.setRoles(new ArrayList<>());
 		user.getRoles().add(role);
 

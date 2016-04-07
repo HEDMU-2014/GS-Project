@@ -1,6 +1,7 @@
 package dk.eamv.gs.user.ws.impl;
 
 
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import javax.ejb.EJB;
@@ -30,9 +31,12 @@ public class UserImpl implements User {
 			user.setEmail(domain.getEmail());
 			user.setPassword(domain.getPassword());
 			try {
-				user.setCreateddate(DatatypeFactory.newInstance().newXMLGregorianCalendar(domain.getCreateddate().toString()));
+				GregorianCalendar cal = new GregorianCalendar();
+				cal.setTimeInMillis(domain.getCreateddate().getTimeInMillis());
+				user.setCreateddate(DatatypeFactory.newInstance().newXMLGregorianCalendar(cal));
 				if (domain.getLastlogin() != null) {
-					user.setLastlogin(DatatypeFactory.newInstance().newXMLGregorianCalendar(domain.getLastlogin().toString()));
+					cal.setTimeInMillis(domain.getLastlogin().getTimeInMillis());
+					user.setLastlogin(DatatypeFactory.newInstance().newXMLGregorianCalendar(cal));
 				}
 			} catch (DatatypeConfigurationException e) {
 				// TODO Auto-generated catch block
