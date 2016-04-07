@@ -3,6 +3,7 @@ package gs.web;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,9 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
 import beans.UserPictureCommentsBeanLocal;
 import beans.UsersBeanLocal;
+import domain.Organization;
 import domain.Role;
 import domain.User;
 import domain.UserPictureComment;
@@ -24,6 +27,8 @@ public class CRUDTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	RolesBeanLocal rbl;
+	@EJB
+	OrganizationBeanLocal obl;
 	@EJB
 	UsersBeanLocal ubl;
 	@EJB
@@ -37,14 +42,22 @@ public class CRUDTest extends HttpServlet {
 		rbl.create(role);
 		response.getWriter().append("Role: ").append(rbl.read(1).toString() + "\n");
 
+		Organization org = new Organization();
+		org.setName("EAMV");
+		org.setAddress("Gl. Landevej 2");
+		org.setZip(7400);
+		org.setCity("Herning");
+		obl.createOrganization(org);
+		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
+
 		User user = new User();
 		user.setFirstname("Tom");
 		user.setLastname("Engelsen");
 		user.setEmail("uninet@live.no");
-		user.setOrganization("n/a");
+		user.setOrganization(org);
 		user.setPassword("abcdefg");
-		user.setCreateddate(LocalDateTime.now());
-		user.setLastlogin(LocalDateTime.now());
+		user.setCreateddate(Calendar.getInstance());
+		user.setLastlogin(Calendar.getInstance());
 		user.setRoles(new ArrayList<>());
 		user.getRoles().add(role);
 

@@ -3,7 +3,9 @@ package entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,14 +14,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import domain.Organization;
 import domain.Role;
 import domain.User;
 
 @Entity
-@NamedQuery(name = "searchUsers",
-			query = "SELECT u FROM Users u WHERE UPPER(u.firstname) LIKE :search")
+@NamedQueries({
+	@NamedQuery(name = "getUserFromEmail", 
+		query = "SELECT u FROM Users u "
+			+ "WHERE UPPER(u.email) = :email "),
+	@NamedQuery(name = "searchUsers", 
+	query = "SELECT u FROM Users u "
+		+ "WHERE UPPER(u.firstname) LIKE :search "
+		+ "OR UPPER(u.lastname) LIKE :search "
+		+ "OR UPPER(u.email) LIKE :search "
+		+ "OR UPPER(u.organization.name) LIKE :search "
+		+ "ORDER BY u.lastname"),
+	@NamedQuery(name = "listMembers", 
+		query = "SELECT u FROM Users u, IN (u.roles) r "
+			+ "WHERE r.role = 'Member' " 
+			+ "AND u.organization.name LIKE :organization")})
+
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,8 +51,11 @@ public class Users implements Serializable {
 	private String password;
 	private Timestamp createddate;
 	private Timestamp lastlogin;
-	private String organization;
-
+	
+	@ManyToOne
+	@JoinColumn(name="organization")
+	private Organizations organization;
+	
 	@ManyToMany
 	@JoinTable(name = "AssignedRoles",
 	joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") ,
@@ -53,9 +75,9 @@ public class Users implements Serializable {
 		this.lastname = user.getLastname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = user.getOrganization();
-		this.createddate = Timestamp.valueOf(user.getCreateddate());
-		this.lastlogin = Timestamp.valueOf(user.getLastlogin());
+		this.organization = new Organizations().update(user.getOrganization());
+		this.createddate = new Timestamp(user.getCreateddate().getTimeInMillis());
+		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
 			this.roles.add(new Roles(role));
@@ -69,9 +91,11 @@ public class Users implements Serializable {
 		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setOrganization(organization);
-		user.setCreateddate(createddate.toLocalDateTime());
-		user.setLastlogin(lastlogin.toLocalDateTime());
+		user.setOrganization(organization.map(new Organization()));
+		user.setCreateddate(Calendar.getInstance());
+		user.getCreateddate().setTimeInMillis(createddate.getTime());
+		user.setLastlogin(Calendar.getInstance());
+		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));
@@ -115,11 +139,11 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public String getOrganization() {
+	public Organizations getOrganization() {
 		return organization;
 	}
-
-	public void setOrganization(String organization) {
+	
+	public void setOrganization(Organizations organization) {
 		this.organization = organization;
 	}
 

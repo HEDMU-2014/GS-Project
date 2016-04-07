@@ -1,7 +1,9 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import domain.Role;
 
@@ -48,5 +50,10 @@ public class Roles implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "Roles [roleId=" + roleId + ", role=" + role + "]";
 	}
 }

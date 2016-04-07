@@ -11,8 +11,10 @@ import domain.User;
 public interface UsersBeanLocal {
 
 	public void create(User user);
-	public Optional<User> read(int userId);
+	public Optional<User> read(long userId);
+	public Optional<User> read(String email);
 	public void update(User user);
 	public void delete(User user);
 	public List<User> searchUsers(String search);
+	public List<User> listMembers(String organization);
 }
