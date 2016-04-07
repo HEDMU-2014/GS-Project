@@ -1,8 +1,10 @@
 package entities;
 
 import java.io.Serializable;
-import javax.annotation.Generated;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import domain.Place;
 
