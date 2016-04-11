@@ -2,8 +2,6 @@ package beans;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,7 +35,7 @@ public class UserPictureCommentsBean implements UserPictureCommentsBeanRemote, U
 		if (jpaUpc != null)
 			jpaUpc.update(comment);
 		else
-			throw new RuntimeException("Comment with id " + jpaUpc.getId() + " not found");
+			throw new RuntimeException("Comment with id " + comment.getId() + " not found");
 		
 	}
 

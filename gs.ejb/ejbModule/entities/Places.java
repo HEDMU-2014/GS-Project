@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import javax.annotation.Generated;
 import javax.persistence.*;
 
 import domain.Place;
