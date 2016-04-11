@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
+import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
 import domain.Role;
 import domain.User;
+import domain.UserProfile;
 
 /**
  * Servlet implementation class UserServlet
@@ -26,7 +28,7 @@ public class UserServlet extends HttpServlet {
 	@EJB private UsersBeanLocal userejb;
 	@EJB private RolesBeanLocal roleejb;
 	@EJB private OrganizationBeanLocal orgejb;
-
+	@EJB private UserProfilesBeanLocal profejb;
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -35,14 +37,18 @@ public class UserServlet extends HttpServlet {
 		response.getWriter().append("Users : " + users);
 		User user = new User();
 		user.setEmail("fkj@eamv.dk");
-		user.setFirstname("Flemming Koch");
-		user.setLastname("Jensen");
 		user.setRoles(new ArrayList<>());
 		Role r = new Role();
 		r.setRole("?");
 		r.setRoleId(2);
 		user.getRoles().add(r);
 		userejb.create(user);
+		
+		UserProfile up = new UserProfile();
+		up.setUser(user);
+		up.setFirstname("Flemming Koch");
+		up.setLastname("Jensen");
+		profejb.create(up);
 //		Organization org = orgejb.getOrganization(1).get();
 //		response.getWriter().append("Org: " + org);
 //		Role role = roleejb.getRole(1).get();

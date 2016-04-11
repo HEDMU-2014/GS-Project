@@ -22,13 +22,13 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
     }
 
 	@Override
-	public void createUserProfile(UserProfile profile) {
+	public void create(UserProfile profile) {
 		UserProfiles profiles = new UserProfiles(profile);
 		em.persist(profiles);
 	}
 
 	@Override
-	public Optional<UserProfile> readUserProfile(int profileID) {
+	public Optional<UserProfile> read(int profileID) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profileID);
 		if (userProfile != null)
 			return Optional.of(userProfile.getDomUserProfile(new UserProfile()));
@@ -36,13 +36,13 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	}
 
 	@Override
-	public void updateUserProfile(UserProfile profile) {
+	public void update(UserProfile profile) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
 		userProfile.getEntityUserProfile(profile);
 	}
 
 	@Override
-	public void deleteUserProfile(UserProfile profile) {
+	public void delete(UserProfile profile) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
 		em.remove(userProfile);
 	}
