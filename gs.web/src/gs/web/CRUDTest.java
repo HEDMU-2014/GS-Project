@@ -50,6 +50,8 @@ public class CRUDTest extends HttpServlet {
 		obl.createOrganization(org);
 		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
 
+		org = obl.getOrganization(1).get();
+		
 		User user = new User();
 		user.setFirstname("Tom");
 		user.setLastname("Engelsen");

@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -67,15 +66,17 @@ public class Users implements Serializable {
 	}
 	
 	public Users(User user) {
+		super();
 		update(user);
 	}
 	
 	public Users update(User user) {
+		this.userid = user.getUserid();
 		this.firstname = user.getFirstname();
 		this.lastname = user.getLastname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = new Organizations().update(user.getOrganization());
+		this.organization = new Organizations(user.getOrganization());
 		this.createddate = new Timestamp(user.getCreateddate().getTimeInMillis());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
