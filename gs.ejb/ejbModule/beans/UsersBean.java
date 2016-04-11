@@ -57,20 +57,7 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 	public void delete(User user) {
 		Users jpaUsers = em.find(Users.class, user.getUserid());
 		em.remove(jpaUsers);
-	}
-	
-	@Override
-	public List<User> searchUsers(String search) {
-		List<User> users = new ArrayList<>();
-		List<Users> temp = em.createNamedQuery("searchUsers", Users.class)
-				.setParameter("search", "%" + search.toUpperCase() + "%")
-				.getResultList();
-		
-		for (Users u : temp)
-			users.add(u.map(new User()));
-		
-		return users;
-	}
+	}	
 	
 	@Override
 	public List<User> listMembers(String organization) {

@@ -1,13 +1,18 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class UserProfile implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
 	private long userid;
+	private User user;
+	private String firstname;
+	private String lastname;
+	private Calendar createddate;
+	private Organization organization;
 	private char gender;
 	private String job;
 	private String description;
@@ -15,29 +20,61 @@ public class UserProfile implements Serializable {
 	private int phone;
 	private String education;
 	private String location;
-	private String isocountryid;
+	private Country country;
 	private String city;
 	private String state;
-	private int profilepictureid;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	private Picture profilepicture;
 
 	public long getUserid() {
 		return userid;
 	}
 
-	public void setUserid(long userid) {
-		this.userid = userid;
+	public void setUserid(long id) {
+		this.userid = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public char getGender() {
 		return gender;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public Calendar getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Calendar createddate) {
+		this.createddate = createddate;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public void setGender(char gender) {
@@ -92,12 +129,12 @@ public class UserProfile implements Serializable {
 		this.location = location;
 	}
 
-	public String getIsocountryid() {
-		return isocountryid;
+	public Country getCountry() {
+		return country;
 	}
 
-	public void setIsocountryid(String isocountryid) {
-		this.isocountryid = isocountryid;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	public String getCity() {
@@ -116,20 +153,22 @@ public class UserProfile implements Serializable {
 		this.state = state;
 	}
 
-	public int getProfilepictureid() {
-		return profilepictureid;
+	public Picture getProfilepicture() {
+		return profilepicture;
 	}
 
-	public void setProfilepictureid(int profilepictureid) {
-		this.profilepictureid = profilepictureid;
+	public void setProfilepicture(Picture profilepicture) {
+		this.profilepicture = profilepicture;
 	}
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", userid=" + userid + ", gender=" + gender + ", job=" + job + ", description="
-				+ description + ", website=" + website + ", phone=" + phone + ", education=" + education + ", location="
-				+ location + ", isocountryid=" + isocountryid + ", city=" + city + ", state=" + state
-				+ ", profilepictureid=" + profilepictureid + "]";
+		return "UserProfile [userid=" + userid + ", user=" + user + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", createddate=" + createddate + ", organization=" + organization + ", gender=" + gender + ", job="
+				+ job + ", description=" + description + ", website=" + website + ", phone=" + phone + ", education="
+				+ education + ", location=" + location + ", country=" + country + ", city=" + city
+				+ ", state=" + state + ", profilepicture=" + profilepicture	+ "]";
 	}
+
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,30 +14,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
-import domain.Organization;
 import domain.Role;
 import domain.User;
+import domain.UserProfile;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "getUserFromEmail", 
-		query = "SELECT u FROM Users u "
-			+ "WHERE UPPER(u.email) = :email "),
-	@NamedQuery(name = "searchUsers", 
-	query = "SELECT u FROM Users u "
-		+ "WHERE UPPER(u.firstname) LIKE :search "
-		+ "OR UPPER(u.lastname) LIKE :search "
-		+ "OR UPPER(u.email) LIKE :search "
-		+ "OR UPPER(u.organization.name) LIKE :search "
-		+ "ORDER BY u.lastname"),
-	@NamedQuery(name = "listMembers", 
-		query = "SELECT u FROM Users u, IN (u.roles) r "
-			+ "WHERE r.role = 'Member' " 
-			+ "AND u.organization.name LIKE :organization")})
+		@NamedQuery(name = "getUserFromEmail", 
+				query = "SELECT u FROM Users u " + "WHERE UPPER(u.email) = :email "),
+		@NamedQuery(name = "listMembers", 
+				query = "SELECT u FROM Users u, IN (u.roles) r " 
+						+ "WHERE r.role = 'Member' "
+						+ "AND u.userprofile.organization.name LIKE :organization") 
+		})
 
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -44,40 +38,31 @@ public class Users implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userid;
-	private String firstname;
-	private String lastname;
+	@Column(unique = true)
 	private String email;
 	private String password;
-	private Timestamp createddate;
 	private Timestamp lastlogin;
-	
-	@ManyToOne
-	@JoinColumn(name="organization")
-	private Organizations organization;
-	
+	@OneToOne
+	@JoinColumn(name = "userid", referencedColumnName = "userid")
+	private UserProfiles userprofile;
 	@ManyToMany
-	@JoinTable(name = "AssignedRoles",
-	joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") ,
-	inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
+	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
 	private Collection<Roles> roles;
 
 	public Users() {
 		super();
 	}
-	
+
 	public Users(User user) {
 		super();
 		update(user);
 	}
-	
+
 	public Users update(User user) {
 		this.userid = user.getUserid();
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = new Organizations(user.getOrganization());
-		this.createddate = new Timestamp(user.getCreateddate().getTimeInMillis());
+		this.userprofile = new UserProfiles(user.getUserprofile());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
@@ -85,16 +70,12 @@ public class Users implements Serializable {
 		}
 		return this;
 	}
-	
+
 	public User map(User user) {
 		user.setUserid(userid);
-		user.setFirstname(firstname);
-		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setOrganization(organization.map(new Organization()));
-		user.setCreateddate(Calendar.getInstance());
-		user.getCreateddate().setTimeInMillis(createddate.getTime());
+		user.setUserprofile(userprofile.getDomUserProfile(new UserProfile()));
 		user.setLastlogin(Calendar.getInstance());
 		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
 		user.setRoles(new ArrayList<>());
@@ -106,22 +87,6 @@ public class Users implements Serializable {
 
 	public long getUserid() {
 		return this.userid;
-	}
-
-	public String getFirstname() {
-		return this.firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 
 	public String getEmail() {
@@ -140,22 +105,6 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public Organizations getOrganization() {
-		return organization;
-	}
-	
-	public void setOrganization(Organizations organization) {
-		this.organization = organization;
-	}
-
-	public Timestamp getCreateddate() {
-		return createddate;
-	}
-
-	public void setCreateddate(Timestamp createddate) {
-		this.createddate = createddate;
-	}
-
 	public Timestamp getLastlogin() {
 		return lastlogin;
 	}
@@ -164,8 +113,12 @@ public class Users implements Serializable {
 		this.lastlogin = lastlogin;
 	}
 
-	public Collection<Roles> getRoles() {
-		return roles;
+	public UserProfiles getUserprofile() {
+		return userprofile;
 	}
-	
+
+	public void setUserprofile(UserProfiles userprofile) {
+		this.userprofile = userprofile;
+	}
+
 }

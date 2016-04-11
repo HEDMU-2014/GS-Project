@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -37,14 +39,27 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 
 	@Override
 	public void updateUserProfile(UserProfile profile) {
-		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
+		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
 		userProfile.getEntityUserProfile(profile);
 	}
 
 	@Override
 	public void deleteUserProfile(UserProfile profile) {
-		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
+		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
 		em.remove(userProfile);
+	}
+
+	@Override
+	public List<UserProfile> searchUsers(String search) {
+		List<UserProfile> users = new ArrayList<>();
+		List<UserProfiles> temp = em.createNamedQuery("searchUsers", UserProfiles.class)
+				.setParameter("search", "%" + search.toUpperCase() + "%")
+				.getResultList();
+		
+		for (UserProfiles u : temp)
+			users.add(u.getDomUserProfile(new UserProfile()));
+		
+		return users;
 	}
 
 }

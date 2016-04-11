@@ -15,6 +15,5 @@ public interface UsersBeanLocal {
 	public Optional<User> read(String email);
 	public void update(User user);
 	public void delete(User user);
-	public List<User> searchUsers(String search);
 	public List<User> listMembers(String organization);
 }

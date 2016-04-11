@@ -8,13 +8,10 @@ import java.util.Collection;
 public class User {
 
 	private long userid;
-	private String firstname;
-	private String lastname;
 	private String email;
 	private String password;
-	private Calendar createddate;
 	private Calendar lastlogin;
-	private Organization organization;
+	private UserProfile userprofile;
 	private Collection<Role> roles;
 
 	public long getUserid() {
@@ -23,22 +20,6 @@ public class User {
 
 	public void setUserid(long userid) {
 		this.userid = userid;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 
 	public String getEmail() {
@@ -57,14 +38,6 @@ public class User {
 		this.password = password;
 	}
 
-	public Calendar getCreateddate() {
-		return createddate;
-	}
-
-	public void setCreateddate(Calendar createddate) {
-		this.createddate = createddate;
-	}
-
 	public Calendar getLastlogin() {
 		return lastlogin;
 	}
@@ -73,14 +46,14 @@ public class User {
 		this.lastlogin = lastlogin;
 	}
 
-	public Organization getOrganization() {
-		return organization;
+	public UserProfile getUserprofile() {
+		return userprofile;
 	}
 
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setUserprofile(UserProfile userprofile) {
+		this.userprofile = userprofile;
 	}
-
+	
 	public Collection<Role> getRoles() {
 		return roles;
 	}
@@ -88,14 +61,14 @@ public class User {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-
+	
 	@Override
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
-		return "User [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", createddate=" + formatter.format(createddate.getTime()) 
+		return "User [userid=" + userid + ", email=" + email + ", password=" + password 
 				+ ", lastlogin=" + formatter.format(lastlogin.getTime()) 
-				+ ", organization=" + organization + ", roles=" + roles + "]";
+				+ ", userprofile=" + userprofile + ", roles=" + roles + "]";
 	}
-	
+
+
 }
