@@ -1,9 +1,12 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.*;
 
+import domain.Organization;
 import domain.UserProfile;
 
 /**
@@ -16,10 +19,13 @@ public class UserProfiles implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userID")
 	private Users user;
+	private String firstname;
+	private String lastname;
+	private Timestamp createddate;
 	private char gender;
 	private String job;
 	private String description;
@@ -33,6 +39,11 @@ public class UserProfiles implements Serializable {
 	private int profilepictureid;
 	private static final long serialVersionUID = 1L;
 
+	@ManyToOne
+	@JoinColumn(name="organization")
+	private Organizations organization;
+
+	
 	public UserProfiles() {
 		super();
 	}
@@ -42,7 +53,15 @@ public class UserProfiles implements Serializable {
 	}
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
 		setId(userProfile.getId());
+		
+		//TODO: set user from userprofile
 //		setUser(new Users().map(userProfile.getUserid()));
+		
+		this.firstname = userProfile.getFirstname();
+		this.lastname = userProfile.getLastname();
+		this.organization = new Organizations().update(userProfile.getOrganization());
+		this.createddate = new Timestamp(userProfile.getCreateddate().getTimeInMillis());
+		
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
 		setDescription(userProfile.getDescription());
@@ -55,9 +74,19 @@ public class UserProfiles implements Serializable {
 		setProfilepictureid(userProfile.getProfilepictureid());
 		return this;
 	}
+	
 	public UserProfile getDomUserProfile(UserProfile prof) {
 		prof.setId(getId());
 		prof.setUserid(user.getUserid());
+		
+		prof.setFirstname(firstname);
+		prof.setLastname(lastname);
+
+		prof.setCreateddate(Calendar.getInstance());
+		prof.getCreateddate().setTimeInMillis(createddate.getTime());
+
+		prof.setOrganization(organization.map(new Organization()));
+		
 		prof.setGender(getGender());
 		prof.setJob(getJob());
 		prof.setDescription(getDescription());
@@ -72,12 +101,12 @@ public class UserProfiles implements Serializable {
 		return prof;
 	}
 
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(long l) {
+		this.id = l;
 	}
 
 	public Users getUser() {
@@ -94,6 +123,38 @@ public class UserProfiles implements Serializable {
 
 	public void setGender(char gender) {
 		this.gender = gender;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public Timestamp getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Timestamp createddate) {
+		this.createddate = createddate;
+	}
+
+	public Organizations getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organizations organization) {
+		this.organization = organization;
 	}
 
 	public String getJob() {
@@ -174,6 +235,15 @@ public class UserProfiles implements Serializable {
 
 	public void setProfilepictureid(int profilepictureid) {
 		this.profilepictureid = profilepictureid;
+	}
+
+	@Override
+	public String toString() {
+		return "UserProfiles [id=" + id + ", user=" + user + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", createddate=" + createddate + ", gender=" + gender + ", job=" + job + ", description="
+				+ description + ", website=" + website + ", phone=" + phone + ", education=" + education + ", location="
+				+ location + ", isocountryid=" + isocountryid + ", city=" + city + ", state=" + state
+				+ ", profilepictureid=" + profilepictureid + ", organization=" + organization + "]";
 	}
 
 }

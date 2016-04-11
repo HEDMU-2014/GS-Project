@@ -1,13 +1,18 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class UserProfile implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private long id;
 	private long userid;
+	private String firstname;
+	private String lastname;
+	private Calendar createddate;
+	private Organization organization;
 	private char gender;
 	private String job;
 	private String description;
@@ -20,11 +25,11 @@ public class UserProfile implements Serializable {
 	private String state;
 	private int profilepictureid;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -38,6 +43,38 @@ public class UserProfile implements Serializable {
 
 	public char getGender() {
 		return gender;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public Calendar getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Calendar createddate) {
+		this.createddate = createddate;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public void setGender(char gender) {
@@ -126,10 +163,11 @@ public class UserProfile implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", userid=" + userid + ", gender=" + gender + ", job=" + job + ", description="
-				+ description + ", website=" + website + ", phone=" + phone + ", education=" + education + ", location="
-				+ location + ", isocountryid=" + isocountryid + ", city=" + city + ", state=" + state
-				+ ", profilepictureid=" + profilepictureid + "]";
+		return "UserProfile [id=" + id + ", userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", createddate=" + createddate + ", organization=" + organization + ", gender=" + gender + ", job="
+				+ job + ", description=" + description + ", website=" + website + ", phone=" + phone + ", education="
+				+ education + ", location=" + location + ", isocountryid=" + isocountryid + ", city=" + city
+				+ ", state=" + state + ", profilepictureid=" + profilepictureid + "]";
 	}
 
 }
