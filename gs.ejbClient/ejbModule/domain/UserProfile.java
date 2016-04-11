@@ -8,7 +8,7 @@ public class UserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long userid;
-	private User user;
+//	private User user;
 	private String firstname;
 	private String lastname;
 	private Calendar createddate;
@@ -33,13 +33,13 @@ public class UserProfile implements Serializable {
 		this.userid = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public char getGender() {
 		return gender;
@@ -163,7 +163,9 @@ public class UserProfile implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserProfile [userid=" + userid + ", user=" + user + ", firstname=" + firstname + ", lastname=" + lastname
+		return "UserProfile [userid=" + userid 
+//				+ ", user=" + user 
+				+ ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", createddate=" + createddate + ", organization=" + organization + ", gender=" + gender + ", job="
 				+ job + ", description=" + description + ", website=" + website + ", phone=" + phone + ", education="
 				+ education + ", location=" + location + ", country=" + country + ", city=" + city

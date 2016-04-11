@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import domain.Country;
 import domain.Organization;
 import domain.Picture;
-import domain.User;
 import domain.UserProfile;
 
 /**
@@ -74,7 +73,7 @@ public class UserProfiles implements Serializable {
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
 		
 		this.userid=userProfile.getUserid();
-		setUser(new Users().update(userProfile.getUser()));
+//		setUser(new Users().update(userProfile.getUser()));
 		setFirstname(userProfile.getFirstname());
 		setLastname(userProfile.getLastname());
 		setOrganization(new Organizations().update(userProfile.getOrganization()));
@@ -94,7 +93,7 @@ public class UserProfiles implements Serializable {
 	
 	public UserProfile getDomUserProfile(UserProfile prof) {
 		prof.setUserid(getUserid());
-		prof.setUser(getUser().map(new User()));
+//		prof.setUser(getUser().map(new User()));
 		prof.setFirstname(getFirstname());
 		prof.setLastname(getLastname());
 
@@ -112,7 +111,9 @@ public class UserProfiles implements Serializable {
 		prof.setCountry(getCountry().map(new Country()));
 		prof.setCity(getCity());
 		prof.setState(getState());
-		prof.setProfilepicture(getProfilepicture().map(new Picture()));
+		if (getProfilepicture() != null) {
+			prof.setProfilepicture(getProfilepicture().map(new Picture()));
+		}
 		return prof;
 	}
 
