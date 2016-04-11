@@ -2,10 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import domain.UserProfile;
 
@@ -20,9 +17,9 @@ public class UserProfiles implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "userID")
-	private long userid;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userID")
+	private Users user;
 	private char gender;
 	private String job;
 	private String description;
@@ -45,7 +42,7 @@ public class UserProfiles implements Serializable {
 	}
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
 		setId(userProfile.getId());
-		setUserid(userProfile.getUserid());
+//		setUser(new Users().map(userProfile.getUserid()));
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
 		setDescription(userProfile.getDescription());
@@ -60,7 +57,7 @@ public class UserProfiles implements Serializable {
 	}
 	public UserProfile getDomUserProfile(UserProfile prof) {
 		prof.setId(getId());
-		prof.setUserid(getUserid());
+		prof.setUserid(user.getUserid());
 		prof.setGender(getGender());
 		prof.setJob(getJob());
 		prof.setDescription(getDescription());
@@ -83,12 +80,12 @@ public class UserProfiles implements Serializable {
 		this.id = id;
 	}
 
-	public long getUserid() {
-		return this.userid;
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUserid(long userid) {
-		this.userid = userid;
+	public void setUser(Users user) {
+		this.user = user;
 	}
 
 	public char getGender() {
