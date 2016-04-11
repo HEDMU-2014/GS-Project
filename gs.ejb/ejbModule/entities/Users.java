@@ -64,6 +64,7 @@ public class Users implements Serializable {
 	}
 	
 	public Users update(User user) {
+		this.userid = user.getUserid();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());

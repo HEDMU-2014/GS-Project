@@ -6,8 +6,7 @@ import java.util.Calendar;
 
 import javax.persistence.*;
 
-import domain.Organization;
-import domain.UserProfile;
+import domain.*;
 
 /**
  * Entity implementation class for Entity: UserProfiles
@@ -20,7 +19,7 @@ public class UserProfiles implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userID")
 	private Users user;
 	private String firstname;
@@ -52,15 +51,13 @@ public class UserProfiles implements Serializable {
 		getEntityUserProfile(userProfile);
 	}
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
+		
 		setId(userProfile.getId());
-		
-		//TODO: set user from userprofile
-//		setUser(new Users().map(userProfile.getUserid()));
-		
-		this.firstname = userProfile.getFirstname();
-		this.lastname = userProfile.getLastname();
-		this.organization = new Organizations().update(userProfile.getOrganization());
-		this.createddate = new Timestamp(userProfile.getCreateddate().getTimeInMillis());
+		setUser(new Users().update(userProfile.getUser()));
+		setFirstname(userProfile.getFirstname());
+		setLastname(userProfile.getLastname());
+		setOrganization(new Organizations().update(userProfile.getOrganization()));
+		setCreateddate(new Timestamp(userProfile.getCreateddate().getTimeInMillis()));
 		
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
@@ -77,15 +74,14 @@ public class UserProfiles implements Serializable {
 	
 	public UserProfile getDomUserProfile(UserProfile prof) {
 		prof.setId(getId());
-		prof.setUserid(user.getUserid());
-		
-		prof.setFirstname(firstname);
-		prof.setLastname(lastname);
+		prof.setUser(getUser().map(new User()));
+		prof.setFirstname(getFirstname());
+		prof.setLastname(getLastname());
 
 		prof.setCreateddate(Calendar.getInstance());
-		prof.getCreateddate().setTimeInMillis(createddate.getTime());
+		prof.getCreateddate().setTimeInMillis(getCreateddate().getTime());
 
-		prof.setOrganization(organization.map(new Organization()));
+		prof.setOrganization(getOrganization().map(new Organization()));
 		
 		prof.setGender(getGender());
 		prof.setJob(getJob());
