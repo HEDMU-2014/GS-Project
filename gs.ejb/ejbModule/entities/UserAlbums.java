@@ -27,7 +27,6 @@ import domain.UserAlbum;
  *
  */
 @Entity
-//NamedQuery uncommented untill PictureEntity and related classes is added, else the project wont run.
 @NamedQuery(name = "searchUserAlbums",
 	query = "SELECT ua FROM UserAlbums ua "
 			+ "WHERE UPPER(ua.name) LIKE :search "
@@ -50,13 +49,15 @@ public class UserAlbums implements Serializable {
 	@Column(nullable=false, length=50)
 	private String name;
 	
-	private PictureEntity coverPicture;
+	@ManyToOne
+	@JoinColumn(name="pictureId")
+	private Pictures coverPicture;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="AlbumPictures",
 			joinColumns=@JoinColumn(name="albumId", referencedColumnName="albumId"),
 			inverseJoinColumns=@JoinColumn(name="pictureId", referencedColumnName="id"))
-	private Collection<PictureEntity> pictures;
+	private Collection<Pictures> pictures;
 
 	@NotNull
 	private Timestamp createdDate;
@@ -76,10 +77,10 @@ public class UserAlbums implements Serializable {
 		this.albumId = ua.getAlbumId();
 		this.user = new Users().update(ua.getUser());
 		this.name = ua.getName();
-		this.coverPicture = new PictureEntity().update(ua.getCoverPicture());
+		this.coverPicture = new Pictures().update(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
 		for(Picture picture : ua.getPictures()) {
-			this.pictures.add(new PictureEntity(picture));
+			this.pictures.add(new Pictures(picture));
 		}
 		this.createdDate = ua.getCreatedDate();
 		this.publicOA = ua.getPublicOA();
@@ -92,7 +93,7 @@ public class UserAlbums implements Serializable {
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
-		for (PictureEntity picture : pictures) {
+		for (Pictures picture : pictures) {
 			ua.getPictures().add(picture.map(new Picture()));
 		}
 		ua.setCreatedDate(this.getCreatedDate());
@@ -124,19 +125,19 @@ public class UserAlbums implements Serializable {
 		this.name = name;
 	}
 
-	public PictureEntity getCoverPicture() {
+	public Pictures getCoverPicture() {
 		return coverPicture;
 	}
 
-	public void setCoverPicture(PictureEntity coverPicture) {
+	public void setCoverPicture(Pictures coverPicture) {
 		this.coverPicture = coverPicture;
 	}
 
-	public Collection<PictureEntity> getPictures() {
+	public Collection<Pictures> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(Collection<PictureEntity> pictures) {
+	public void setPictures(Collection<Pictures> pictures) {
 		this.pictures = pictures;
 	}
 

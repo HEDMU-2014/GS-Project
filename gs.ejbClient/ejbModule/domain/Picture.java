@@ -1,16 +1,46 @@
 package domain;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 
-public class Picture implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private long id;
+public class Picture {
+	
+	private long pictureId;
+	
+	private String imgUrl;
+	
+	private User user;
+	
+	private Timestamp createdDate;
 
-	public long getId() {
-		return id;
+	public long getPictureId() {
+		return pictureId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setPictureId(long id) {
+		this.pictureId = id;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
 	}
 }
