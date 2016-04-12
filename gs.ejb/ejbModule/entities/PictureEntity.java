@@ -28,17 +28,17 @@ public class PictureEntity implements Serializable {
 	}
 	
 	public PictureEntity(Picture picture) {
-		// TODO Auto-generated constructor stub
+		this.id = (int) picture.getId();
 	}
 
 	public PictureEntity update(Picture coverPicture) {
-		// TODO Auto-generated method stub
-		return null;
+		this.id = (int) coverPicture.getId();
+		return this;
 	}
 
 	public Picture map(Picture picture) {
-		// TODO Auto-generated method stub
-		return null;
+		picture.setId(id);
+		return picture;
 	}
 
 }

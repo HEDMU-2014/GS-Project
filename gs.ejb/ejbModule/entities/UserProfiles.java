@@ -111,9 +111,9 @@ public class UserProfiles implements Serializable {
 		prof.setCountry(getCountry().map(new Country()));
 		prof.setCity(getCity());
 		prof.setState(getState());
-		if (getProfilepicture() != null) {
+//		if (getProfilepicture() != null) {
 			prof.setProfilepicture(getProfilepicture().map(new Picture()));
-		}
+//		}
 		return prof;
 	}
 
