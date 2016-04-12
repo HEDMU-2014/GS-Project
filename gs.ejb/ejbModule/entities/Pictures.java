@@ -14,17 +14,16 @@ import javax.validation.constraints.NotNull;
 
 import domain.Picture;
 import domain.User;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserAlbums
  *
  */
 @Entity
-@NamedQuery(name = "searchPictures",
-	query = "SELECT p FROM Pictures p "
-			+ "WHERE UPPER(p.user.firstname) LIKE :search "
-			+ "OR UPPER(p.user.lastname) LIKE :search "
-			+ "ORDER BY p.user.lastname, p.user.firstname")
+@NamedQuery(name = "getPictures",
+query = "SELECT p FROM Pictures p "
+		+ "WHERE p.userProfile.id LIKE :search ")
 
 public class Pictures implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,8 +37,8 @@ public class Pictures implements Serializable {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="userid")
-	private Users user;
+	@JoinColumn(name="id")
+	private UserProfiles userProfile;
 	
 	@NotNull
 	private Timestamp createdDate;
@@ -55,7 +54,7 @@ public class Pictures implements Serializable {
 	public Pictures update(Picture picture) {
 		this.pictureId = picture.getPictureId();
 		this.imgUrl = picture.getImgUrl();
-		this.user = new Users().update(picture.getUser());
+		this.userProfile = new UserProfiles(picture.getUserProfile());
 		this.createdDate = picture.getCreatedDate();
 		return this;
 	}
@@ -63,7 +62,7 @@ public class Pictures implements Serializable {
 	public Picture map(Picture picture) {
 		picture.setPictureId(this.getPictureId());
 		picture.setImgUrl(this.getImgUrl());
-		picture.setUser(this.user.map(new User()));
+		picture.setUserProfile(this.userProfile.map(new UserProfile()));
 		picture.setCreatedDate(this.getCreatedDate());
 		return picture;
 	}
@@ -84,12 +83,12 @@ public class Pictures implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public Users getUser() {
-		return user;
+	public UserProfiles getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setUserProfile(UserProfiles user) {
+		this.userProfile = user;
 	}
 
 	public Timestamp getCreatedDate() {

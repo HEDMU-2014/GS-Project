@@ -21,18 +21,16 @@ import javax.validation.constraints.NotNull;
 import domain.Picture;
 import domain.User;
 import domain.UserAlbum;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserAlbums
  *
  */
 @Entity
-@NamedQuery(name = "searchUserAlbums",
+@NamedQuery(name = "getUserAlbums",
 	query = "SELECT ua FROM UserAlbums ua "
-			+ "WHERE UPPER(ua.name) LIKE :search "
-			+ "OR UPPER(ua.user.firstname) LIKE :search "
-			+ "OR UPPER(ua.user.lastname) LIKE :search "
-			+ "ORDER BY ua.user.lastname, ua.name") //Order by user last name, then by album name.
+			+ "WHERE ua.userProfile.id LIKE :search ")
 
 public class UserAlbums implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,8 +41,8 @@ public class UserAlbums implements Serializable {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="userid")
-	private Users user;
+	@JoinColumn(name="id")
+	private UserProfiles userProfile;
 	
 	@Column(nullable=false, length=50)
 	private String name;
@@ -75,7 +73,7 @@ public class UserAlbums implements Serializable {
 
 	public UserAlbums update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
-		this.user = new Users().update(ua.getUser());
+		this.userProfile = new UserProfiles(ua.getUserProfile());
 		this.name = ua.getName();
 		this.coverPicture = new Pictures().update(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
@@ -89,7 +87,7 @@ public class UserAlbums implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUser(user.map(new User()));
+		ua.setUserProfile(userProfile.map(new UserProfile()));
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
@@ -109,12 +107,12 @@ public class UserAlbums implements Serializable {
 		this.albumId = albumId;
 	}
 
-	public Users getUser() {
-		return user;
+	public UserProfiles getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setUserProfile(UserProfiles userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public String getName() {

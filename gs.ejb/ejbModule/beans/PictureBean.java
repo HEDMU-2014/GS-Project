@@ -9,7 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Picture;
+import domain.UserAlbum;
+import domain.UserProfile;
 import entities.Pictures;
+import entities.UserAlbums;
 
 /**
  * Session Bean implementation class PictureBean
@@ -26,6 +29,18 @@ public class PictureBean implements PictureBeanRemote, PictureBeanLocal {
     		optional = Optional.of(pictureEntity.map(new Picture()));
     	return optional;
     }
+	
+	@Override
+	public List<Picture> getPictures(long userProfileId) {
+		List<Picture> pictures = new ArrayList<>();
+		List<Pictures> pictureEntity = em.createNamedQuery("getPictures", Pictures.class)
+				.setParameter("search", "%" + userProfileId + "%")
+				.getResultList();
+		for (Pictures pic : pictureEntity) {
+			pictures.add(pic.map(new Picture()));
+		}
+		return pictures;
+	}
 	
 	@Override
 	public void createPicture(Picture picture) {
@@ -50,18 +65,6 @@ public class PictureBean implements PictureBeanRemote, PictureBeanLocal {
 			em.remove(picture);
 		else
 			throw new RuntimeException("Picture with id " + picture.getPictureId() + " not found");
-	}
-	
-	@Override
-	public List<Picture> searchPictures(String search) {
-		List<Picture> picture = new ArrayList<>();
-		List<Pictures> pictureEntity = em.createNamedQuery("searchPictures", Pictures.class)
-				.setParameter("search", "%" + search.toUpperCase() + "%")
-				.getResultList();
-		for (Pictures pic : pictureEntity) {
-			picture.add(pic.map(new Picture()));
-		}
-		return picture;
 	}
 
 }

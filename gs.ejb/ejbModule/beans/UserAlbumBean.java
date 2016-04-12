@@ -28,6 +28,18 @@ public class UserAlbumBean implements UserAlbumBeanRemote, UserAlbumBeanLocal {
     }
 	
 	@Override
+	public List<UserAlbum> getUserAlbums(long userProfileId) {
+		List<UserAlbum> userAlbums = new ArrayList<>();
+		List<UserAlbums> userAlbumsEntity = em.createNamedQuery("getUserAlbums", UserAlbums.class)
+				.setParameter("search", "%" + userProfileId + "%")
+				.getResultList();
+		for (UserAlbums uae : userAlbumsEntity) {
+			userAlbums.add(uae.map(new UserAlbum()));
+		}
+		return userAlbums;
+	}
+	
+	@Override
 	public void createUserAlbum(UserAlbum album) {
 		UserAlbums albumEntity = new UserAlbums(album);
 		em.persist(albumEntity);
@@ -49,18 +61,6 @@ public class UserAlbumBean implements UserAlbumBeanRemote, UserAlbumBeanLocal {
 			em.remove(albumEntity);
 		else
 			throw new RuntimeException("Album with id " + album.getAlbumId() + " not found");
-	}
-	
-	@Override
-	public List<UserAlbum> searchUserAlbums(String search) {
-		List<UserAlbum> userAlbums = new ArrayList<>();
-		List<UserAlbums> userAlbumsEntity = em.createNamedQuery("searchUserAlbums", UserAlbums.class)
-				.setParameter("search", "%" + search.toUpperCase() + "%")
-				.getResultList();
-		for (UserAlbums uae : userAlbumsEntity) {
-			userAlbums.add(uae.map(new UserAlbum()));
-		}
-		return userAlbums;
 	}
 
 }

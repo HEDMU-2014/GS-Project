@@ -8,7 +8,7 @@ public class Picture {
 	
 	private String imgUrl;
 	
-	private User user;
+	private UserProfile userProfile;
 	
 	private Timestamp createdDate;
 
@@ -28,12 +28,12 @@ public class Picture {
 		this.imgUrl = imgUrl;
 	}
 
-	public User getUser() {
-		return user;
+	public UserProfile getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public Timestamp getCreatedDate() {

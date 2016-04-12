@@ -18,6 +18,6 @@ public interface PictureBeanLocal {
 
 	void deletePicture(Picture picture);
 
-	List<Picture> searchPictures(String search);
+	List<Picture> getPictures(long userProfileId);
 
 }
