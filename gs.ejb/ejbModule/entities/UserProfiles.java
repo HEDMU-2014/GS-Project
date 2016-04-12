@@ -23,8 +23,8 @@ import domain.UserProfile;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "searchUsers", 
-	query = "SELECT u FROM Users u, UserProfiles p "
+	@NamedQuery(name = "searchUserProfiles", 
+	query = "SELECT p FROM UserProfiles p, Users u  "
 		+ "WHERE UPPER(p.firstname) LIKE :search "
 		+ "OR UPPER(p.lastname) LIKE :search "
 		+ "OR UPPER(u.email) LIKE :search "

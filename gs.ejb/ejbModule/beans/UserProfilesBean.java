@@ -50,9 +50,9 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	}
 
 	@Override
-	public List<UserProfile> searchUsers(String search) {
+	public List<UserProfile> searchUserProfiles(String search) {
 		List<UserProfile> users = new ArrayList<>();
-		List<UserProfiles> temp = em.createNamedQuery("searchUsers", UserProfiles.class)
+		List<UserProfiles> temp = em.createNamedQuery("searchUserProfiles", UserProfiles.class)
 				.setParameter("search", "%" + search.toUpperCase() + "%")
 				.getResultList();
 		
