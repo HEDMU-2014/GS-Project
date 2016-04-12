@@ -46,13 +46,13 @@ public class CRUDTest extends HttpServlet {
 //		rbl.create(role);
 //		response.getWriter().append("Role: ").append(rbl.read(1).toString() + "\n");
 
-		Organization org = new Organization();
-		org.setName("EAMV");
-		org.setAddress("Gl. Landevej 2");
-		org.setZip(7400);
-		org.setCity("Herning");
-		obl.createOrganization(org);
-		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
+//		Organization org = new Organization();
+//		org.setName("EAMV");
+//		org.setAddress("Gl. Landevej 2");
+//		org.setZip(7400);
+//		org.setCity("Herning");
+//		obl.createOrganization(org);
+//		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
 
 //		User user = new User();
 //		user.setEmail("uninet@live.no");
