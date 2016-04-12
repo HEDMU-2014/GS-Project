@@ -12,6 +12,7 @@ public class User {
 	private String password;
 	private Calendar lastlogin;
 	private UserProfile userprofile;
+	private LoginType logintype;
 	private Collection<Role> roles;
 
 	public long getUserid() {
@@ -62,12 +63,20 @@ public class User {
 		this.roles = roles;
 	}
 	
+	public LoginType getLogintype() {
+		return logintype;
+	}
+
+	public void setLogintype(LoginType logintype) {
+		this.logintype = logintype;
+	}
+
 	@Override
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 		return "User [userid=" + userid + ", email=" + email + ", password=" + password 
 				+ ", lastlogin=" + formatter.format(lastlogin.getTime()) 
-				+ ", userprofile=" + userprofile + ", roles=" + roles + "]";
+				+ ", userprofile=" + userprofile + ", logintype=" + logintype + ", roles=" + roles + "]";
 	}
 
 

@@ -14,10 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
+import domain.LoginType;
 import domain.Role;
 import domain.User;
 import domain.UserProfile;
@@ -45,6 +47,9 @@ public class Users implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "userid", referencedColumnName = "userid")
 	private UserProfiles userprofile;
+	@ManyToOne
+	@JoinColumn(name = "logintype", referencedColumnName = "id")
+	private LoginTypes logintype;
 	@ManyToMany
 	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
 	private Collection<Roles> roles;
@@ -63,6 +68,7 @@ public class Users implements Serializable {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.userprofile = new UserProfiles(user.getUserprofile());
+		this.logintype = new LoginTypes(user.getLogintype());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
@@ -78,6 +84,7 @@ public class Users implements Serializable {
 		user.setUserprofile(userprofile.getDomUserProfile(new UserProfile()));
 		user.setLastlogin(Calendar.getInstance());
 		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
+		user.setLogintype(logintype.map(new LoginType()));
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));
