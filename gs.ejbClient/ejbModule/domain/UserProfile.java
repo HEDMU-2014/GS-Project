@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class UserProfile implements Serializable {
@@ -163,12 +164,16 @@ public class UserProfile implements Serializable {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
 		return "UserProfile [userid=" + userid 
 //				+ ", user=" + user 
 				+ ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", createddate=" + createddate + ", organization=" + organization + ", gender=" + gender + ", job="
-				+ job + ", description=" + description + ", website=" + website + ", phone=" + phone + ", education="
-				+ education + ", location=" + location + ", country=" + country + ", city=" + city
+				+ ", createddate=" + formatter.format(createddate.getTime()) 
+				+ ", organization=" + organization + ", gender=" + gender + ", job="
+				+ job + ", description=" + description + ", website=" + website 
+				+ ", phone=" + phone + ", education="
+				+ education + ", location=" + location + ", country=" + country 
+				+ ", city=" + city
 				+ ", state=" + state + ", profilepicture=" + profilepicture	+ "]";
 	}
 
