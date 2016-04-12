@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,13 +14,16 @@ import entities.Users;
 
 @Stateless
 public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
-
+	@EJB UserProfilesBeanLocal upb;
 	@PersistenceContext EntityManager em;
 
 	@Override
 	public void create(User user) {
 		Users jpaUsers = new Users(user);
 		em.persist(jpaUsers);
+		user.setUserid(jpaUsers.getUserid());
+		user.getUserprofile().setUserid(jpaUsers.getUserid());
+		upb.createUserProfile(user.getUserprofile());
 	}
 
 	@Override
