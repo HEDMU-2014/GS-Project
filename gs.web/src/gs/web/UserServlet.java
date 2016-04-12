@@ -1,7 +1,6 @@
 package gs.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,10 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
+import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
-import domain.Organization;
-import domain.Role;
-import domain.User;
+import domain.UserProfile;
 
 /**
  * Servlet implementation class UserServlet
@@ -25,6 +23,7 @@ import domain.User;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal userejb;
+	@EJB private UserProfilesBeanLocal profejb;
 	@EJB private RolesBeanLocal roleejb;
 	@EJB private OrganizationBeanLocal orgejb;
 
@@ -32,20 +31,20 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<User> users = userejb.listMembers("eamv");
+		List<UserProfile> users = profejb.searchUserProfiles("eamv");
 		response.getWriter().append("Users : " + users);
-		User user = userejb.read(1).get();
-		user.setUserid(0);
-		user.setEmail("fkj@eamv.dk");
-		user.getUserprofile().setFirstname("Flemming Koch");
-		user.getUserprofile().setLastname("Jensen");
-		user.setRoles(new ArrayList<>());
-		user.getRoles().add(new Role(2, "?"));
-		userejb.create(user);
-		Organization org = orgejb.getOrganization(1).get();
-		response.getWriter().append("Org: " + org);
-		Role role = roleejb.read(1).get();
-		response.getWriter().append("Role: " + role);
+//		User user = userejb.read(1).get();
+//		user.setUserid(0);
+//		user.setEmail("fkj@eamv.dk");
+//		user.getUserprofile().setFirstname("Flemming Koch");
+//		user.getUserprofile().setLastname("Jensen");
+//		user.setRoles(new ArrayList<>());
+//		user.getRoles().add(new Role(2, "?"));
+//		userejb.create(user);
+//		Organization org = orgejb.getOrganization(1).get();
+//		response.getWriter().append("Org: " + org);
+//		Role role = roleejb.read(1).get();
+//		response.getWriter().append("Role: " + role);
 	}
 
 	/**
