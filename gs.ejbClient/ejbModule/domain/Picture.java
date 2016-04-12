@@ -8,6 +8,8 @@ public class Picture {
 	
 	private String imgUrl;
 	
+	private String description;
+	
 	private UserProfile userProfile;
 	
 	private Timestamp createdDate;
@@ -26,6 +28,14 @@ public class Picture {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public UserProfile getUserProfile() {

@@ -9,10 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Picture;
-import domain.UserAlbum;
-import domain.UserProfile;
 import entities.Pictures;
-import entities.UserAlbums;
 
 /**
  * Session Bean implementation class PictureBean

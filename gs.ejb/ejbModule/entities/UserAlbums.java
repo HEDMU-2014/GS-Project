@@ -19,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import domain.Picture;
-import domain.User;
 import domain.UserAlbum;
 import domain.UserProfile;
 
@@ -41,20 +40,20 @@ public class UserAlbums implements Serializable {
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="userProfileId")
 	private UserProfiles userProfile;
 	
 	@Column(nullable=false, length=50)
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name="pictureId")
+	@JoinColumn(name="coverPictureId")
 	private Pictures coverPicture;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="AlbumPictures",
 			joinColumns=@JoinColumn(name="albumId", referencedColumnName="albumId"),
-			inverseJoinColumns=@JoinColumn(name="pictureId", referencedColumnName="id"))
+			inverseJoinColumns=@JoinColumn(name="pictureId", referencedColumnName="pictureId"))
 	private Collection<Pictures> pictures;
 
 	@NotNull
@@ -87,7 +86,7 @@ public class UserAlbums implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUserProfile(userProfile.map(new UserProfile()));
+		ua.setUserProfile(userProfile.getDomUserProfile(new UserProfile()));
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());

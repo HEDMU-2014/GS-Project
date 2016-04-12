@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import domain.Picture;
-import domain.User;
 import domain.UserProfile;
 
 /**
@@ -35,9 +35,12 @@ public class Pictures implements Serializable {
 	@NotNull
 	private String imgUrl;
 	
+	@Column(length=200)
+	private String description;
+	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="userProfileId")
 	private UserProfiles userProfile;
 	
 	@NotNull
@@ -54,6 +57,7 @@ public class Pictures implements Serializable {
 	public Pictures update(Picture picture) {
 		this.pictureId = picture.getPictureId();
 		this.imgUrl = picture.getImgUrl();
+		this.description = picture.getDescription();
 		this.userProfile = new UserProfiles(picture.getUserProfile());
 		this.createdDate = picture.getCreatedDate();
 		return this;
@@ -62,7 +66,8 @@ public class Pictures implements Serializable {
 	public Picture map(Picture picture) {
 		picture.setPictureId(this.getPictureId());
 		picture.setImgUrl(this.getImgUrl());
-		picture.setUserProfile(this.userProfile.map(new UserProfile()));
+		picture.setDescription(this.getDescription());
+		picture.setUserProfile(this.userProfile.getDomUserProfile(new UserProfile()));
 		picture.setCreatedDate(this.getCreatedDate());
 		return picture;
 	}
@@ -81,6 +86,14 @@ public class Pictures implements Serializable {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public UserProfiles getUserProfile() {
