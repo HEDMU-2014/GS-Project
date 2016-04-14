@@ -24,14 +24,6 @@ public class RestUserAlbum {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/search/{key}")
-	public List<UserAlbum> searchUserAlbums(@PathParam("key") String key) {
-		
-		return ejb.searchUserAlbums(key);
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/readid/{key}")
 	public UserAlbum getUserAlbumById(@PathParam("key") long key) {
 		UserAlbum userAlbum = null;

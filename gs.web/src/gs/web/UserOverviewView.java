@@ -13,21 +13,35 @@ import javax.inject.Named;
 
 import org.jboss.logging.Logger;
 
-import beans.UserBeanLocal;
+import beans.UsersBeanLocal;
 import domain.User;
 
 @Named
 @SessionScoped
 public class UserOverviewView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@EJB private UserBeanLocal ejb;
+	@EJB private UsersBeanLocal ejb;
 	@Inject UserDetailView detail;
 	private Logger logger = Logger.getLogger(UserOverviewView.class);
+	private String searchstring;
 	private List<UserWrapper> users;
 	private UserWrapper selectedUser;
 	
 	public void init() {
-		List<User> users = ejb.searchUsers("");
+//		List<User> users = ejb.searchUsers("");
+//		this.users = new ArrayList<UserWrapper>();
+//		int i=0;
+//		for (User user : users) {
+//			UserWrapper uw = new UserWrapper();
+//			uw.setId(i++);
+//			uw.setUser(user);
+//			this.users.add(uw);
+//		}
+	}
+
+	public void search() {
+		logger.info("Search : " + searchstring);
+		List<User> users = ejb.searchUsers(searchstring);
 		this.users = new ArrayList<UserWrapper>();
 		int i=0;
 		for (User user : users) {
@@ -41,60 +55,67 @@ public class UserOverviewView implements Serializable {
 	public String view() {
 		logger.info("Selected user : " + selectedUser);
 		if (this.selectedUser != null && detail != null) {
-			detail.setEmail(this.selectedContact.getContact().getEmail());
-			detail.setCt(this.selectedContact.getContact().getCttype().getCtname());
-			detail.setTp(this.selectedContact.getContact().getTp().getTpname());
-			detail.setEdit(true);
-			detail.init();
-			this.selectedContact = null;
-			return "/contactdetail.xhtml";
-		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
-		return null;
-	}
-
-	public String create() {
-		if (detail != null) {
-			detail.setSpace(this.space);
-			detail.setEmail(null);
-			detail.setCt(null);
-			detail.setTp(null);
-			this.selectedContact = null;
+			detail.setUser(this.selectedUser.getUser());
 			detail.setEdit(false);
 			detail.init();
-			this.selectedContact = null;
-			return "/contactdetail.xhtml";
+			this.selectedUser = null;
+			return "/userdetail.xhtml";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
+			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something very wrong"));
-		return null;
 	}
 
-	public List<UserWrapper> getContacts() {
-		return contacts;
-	}
-
-	public void setContacts(List<UserWrapper> contacts) {
-		this.contacts = contacts;
-	}
-
-	public UserWrapper getSelectedContact() {
-		return selectedContact;
-	}
-
-	public void setSelectedContact(UserWrapper selectedContact) {
-		this.selectedContact = selectedContact;
-	}
-
-	public Space getSpace() {
-		return space;
-	}
-
-	public void setSpace(Space space) {
-		this.space = space;
+	public String update() {
+		logger.info("Selected user : " + selectedUser);
+		if (this.selectedUser != null && detail != null) {
+			detail.setUser(this.selectedUser.getUser());
+			detail.setEdit(true);
+			detail.init();
+			this.selectedUser = null;
+			return "/userdetail.xhtml";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
+			return null;
+		}
 	}
 	
+	public String create() {
+		if (detail != null) {
+			detail.setUser(new User());
+			detail.setEdit(true);
+			detail.init();
+			this.selectedUser = null;
+			return "/userdetail.xhtml";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something very wrong"));
+			return null;
+		}
+	}
 
+	public List<UserWrapper> getUsers() {
+		return users;
+	}
 
+	public void setUsers(List<UserWrapper> users) {
+		this.users = users;
+	}
+
+	public UserWrapper getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(UserWrapper selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	public String getSearchstring() {
+		return searchstring;
+	}
+
+	public void setSearchstring(String searchstring) {
+		this.searchstring = searchstring;
+	}
 
 	
 }

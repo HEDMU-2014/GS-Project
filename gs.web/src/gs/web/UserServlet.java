@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
+import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
 import domain.Organization;
 import domain.Role;

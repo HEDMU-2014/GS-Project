@@ -32,7 +32,14 @@ import domain.User;
 		@NamedQuery(name = "listMembers", 
 				query = "SELECT u FROM Users u, IN (u.roles) r " 
 						+ "WHERE r.role = 'Member' "
-						+ "AND u.userprofile.organization.name LIKE :organization") 
+						+ "AND u.userprofile.organization.name LIKE :organization"), 
+		@NamedQuery(name = "searchUsers", 
+				query = "SELECT u FROM Users u  "
+						+ "WHERE UPPER(u.userprofile.firstname) LIKE :search "
+						+ "OR UPPER(u.userprofile.lastname) LIKE :search "
+						+ "OR UPPER(u.email) LIKE :search "
+						+ "OR UPPER(u.userprofile.organization.name) LIKE :search "
+						+ "ORDER BY u.userprofile.lastname")
 		})
 
 public class Users implements Serializable {
