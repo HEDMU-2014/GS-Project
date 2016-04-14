@@ -19,11 +19,12 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 	@PersistenceContext EntityManager em;
 
 	@Override
-	public void create(User user) {
+	public long create(User user) {
 		Users jpaUsers = new Users(user);
 		jpaUsers.setUserprofile(new UserProfiles());
 		jpaUsers.getUserprofile().setUser(jpaUsers);
 		em.persist(jpaUsers);
+		return jpaUsers.getUserid();
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import domain.User;
 @Local
 public interface UsersBeanLocal {
 
-	public void create(User user);
+	public long create(User user);
 	public Optional<User> read(long userId);
 	public Optional<User> read(String email);
 	public void update(User user);
