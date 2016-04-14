@@ -12,7 +12,7 @@ import domain.UserPictureComment;
 public interface UserPictureCommentsBeanLocal {
 
 	public void create(UserPictureComment comment);
-	public Optional<UserPictureComment> read(int commentId);
+	public UserPictureComment read(int commentId);
 	public void update(UserPictureComment comment);
 	public void delete(UserPictureComment comment);
 	public List<UserPictureComment> searchCommentsByUserId(long userId);
