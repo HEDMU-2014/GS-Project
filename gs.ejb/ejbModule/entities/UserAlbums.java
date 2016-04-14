@@ -29,7 +29,7 @@ import domain.UserProfile;
 @Entity
 @NamedQuery(name = "getUserAlbums",
 	query = "SELECT ua FROM UserAlbums ua "
-			+ "WHERE ua.userProfile.id LIKE :search ")
+			+ "WHERE ua.userProfile.lastname LIKE :search ")
 
 public class UserAlbums implements Serializable {
 	private static final long serialVersionUID = 1L;

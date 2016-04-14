@@ -16,4 +16,5 @@ public interface UsersBeanLocal {
 	public void update(User user);
 	public void delete(User user);
 	public List<User> listMembers(String organization);
+	public List<User> searchUsers(String search);
 }

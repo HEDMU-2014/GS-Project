@@ -55,8 +55,8 @@ public class UserProfiles implements Serializable {
 	private String city;
 	private String state;
 	@ManyToOne
-	@JoinColumn(name="profilepicture", referencedColumnName="id")
-	private PictureEntity profilepicture;
+	@JoinColumn(name="profilepicture", referencedColumnName="pictureId")
+	private Pictures profilepicture;
 	@ManyToOne
 	@JoinColumn(name="organization", referencedColumnName="orgId")
 	private Organizations organization;
@@ -94,8 +94,8 @@ public class UserProfiles implements Serializable {
 		setCity(userProfile.getCity());
 		setState(userProfile.getState());
 		if (userProfile.getProfilepictureId() >0) {
-			setProfilepicture(new PictureEntity());
-			getProfilepicture().setId(userProfile.getProfilepictureId());
+			setProfilepicture(new Pictures());
+			getProfilepicture().setPictureId(userProfile.getProfilepictureId());
 		}
 		return this;
 	}
@@ -120,7 +120,7 @@ public class UserProfiles implements Serializable {
 		prof.setCountrycode(getCountry().getCountrycode());
 		prof.setCity(getCity());
 		prof.setState(getState());
-		prof.setProfilepictureId(getProfilepicture().getId());
+		prof.setProfilepictureId(getProfilepicture().getPictureId());
 		return prof;
 	}
 
@@ -244,11 +244,11 @@ public class UserProfiles implements Serializable {
 		this.state = state;
 	}
 
-	public PictureEntity getProfilepicture() {
+	public Pictures getProfilepicture() {
 		return profilepicture;
 	}
 
-	public void setProfilepicture(PictureEntity profilepicture) {
+	public void setProfilepicture(Pictures profilepicture) {
 		this.profilepicture = profilepicture;
 	}
 

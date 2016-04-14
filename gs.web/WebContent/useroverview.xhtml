@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -9,32 +9,33 @@
 	<h:form>
 		<p:messages id="messages" showDetail="false" autoUpdate="true" />
 
-		<h:panelGrid id="grid" columns="3" cellpadding="5">
-			<p:outputLabel value="Space: #{contactOverviewView.space.spacename}" />
+		<h:panelGrid id="grid" columns="4" cellpadding="5">
+			<p:outputLabel for="search" value="Searchstring:" />
+			<p:inputText id="search"
+				value="#{userOverviewView.searchstring}" />
+			<p:message for="search" />
+			<p:commandButton id="searchbutton" value="Search"
+				actionListener="#{userOverviewView.search}" ajax="false" />
 		</h:panelGrid>
 
-		<p:dataTable id="table" var="contact"
-			selection="#{contactOverviewView.selectedContact}"
-			rowKey="#{contact.id}" value="#{contactOverviewView.contacts}">
+		<p:dataTable id="table" var="user"
+			selection="#{userOverviewView.selectedUser}"
+			rowKey="#{user.id}" value="#{userOverviewView.users}">
 			<p:column selectionMode="single" style="width:16px;text-align:center" />
 			<p:column headerText="Email">
-				<h:outputText value="#{contact.contact.email}" />
+				<h:outputText value="#{user.user.email}" />
 			</p:column>
 
-			<p:column headerText="Type">
-				<h:outputText value="#{contact.contact.cttype.ctname}" />
-			</p:column>
-			<p:column headerText="TouchPoint">
-				<h:outputText value="#{contact.contact.tp.tpname}" />
+			<p:column headerText="LoginType">
+				<h:outputText value="#{user.user.logintype.name}" />
 			</p:column>
 			<f:facet name="footer">
-				<p:commandButton id="back" value="Back" immediate="true"
-					action="/spaceoverview.xhtml" ajax="false" />
 				<p:commandButton process="table" icon="ui-icon-search"
-					value="View" action="#{contactOverviewView.view}" ajax="false" />
+					value="View" action="#{userOverviewView.view}" ajax="false" />
 				<p:commandButton process="table" icon="ui-icon-search"
-					value="Create new" action="#{contactOverviewView.create}"
-					ajax="false" />
+					value="Edit" action="#{userOverviewView.update}" ajax="false" />
+				<p:commandButton process="table" icon="ui-icon-search"
+					value="Create new" action="#{userOverviewView.create}" ajax="false" />
 			</f:facet>
 			<p:ajax event="rowSelect" />
 		</p:dataTable>
