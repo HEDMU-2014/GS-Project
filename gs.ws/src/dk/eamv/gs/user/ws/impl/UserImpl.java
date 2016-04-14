@@ -28,7 +28,7 @@ public class UserImpl implements User {
 			user.setUserid(domain.getUserid());
 //			user.setFirstname(domain.getUserprofile().getFirstname());
 //			user.setLastname(domain.getUserprofile().getLastname());
-			user.setEmail(domain.getEmail());
+	 		user.setEmail(domain.getEmail());
 			user.setPassword(domain.getPassword());
 			try {
 				GregorianCalendar cal = new GregorianCalendar();
