@@ -11,23 +11,23 @@ import domain.Place;
 import entities.Places;
 
 @Stateless
-public class PlaceBean implements PlaceRemote, PlaceLocal {
+public class PlaceBean implements PlaceBeanRemote, PlaceBeanLocal {
     @PersistenceContext private EntityManager em;
 
     @Override
-    public Optional<Place> getPlace(int placeId) {
+    public void createPlace(Place place) {
+        Places entity = new Places(place);
+        em.persist(entity);
+    }
+
+    @Override
+    public Optional<Place> readPlace(int placeId) {
         Places places = em.find(Places.class, placeId);
         if (places != null) {
             return Optional.of(places.map(new Place()));
         } else {
             return Optional.empty();
         }
-    }
-
-    @Override
-    public void createPlace(Place place) {
-        Places entity = new Places(place);
-        em.persist(entity);
     }
 
     @Override
@@ -41,12 +41,12 @@ public class PlaceBean implements PlaceRemote, PlaceLocal {
     }
 
     @Override
-    public void deletePlace(Place place) {
-        Places places = em.find(Places.class, place.getPlaceId());
+    public void deletePlace(int placeid) {
+        Places places = em.find(Places.class, placeid);
         if (places != null) {
             em.remove(places);
         } else {
-            throw new RuntimeException("Place with id " + place.getPlaceId() + " not found");
+            throw new RuntimeException("Place with id " + placeid + " not found");
         }
     }
 }

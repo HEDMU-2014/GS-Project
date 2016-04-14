@@ -7,14 +7,14 @@ import javax.ejb.Remote;
 import domain.Place;
 
 @Remote
-public interface PlaceRemote {
+public interface PlaceBeanRemote {
 
-    Optional<Place> getPlace(int placeid);
+    Optional<Place> readPlace(int placeid);
 
     void createPlace(Place place);
 
     void updatePlace(Place place);
 
-    void deletePlace(Place place);
+    void deletePlace(int placeid);
 
 }
