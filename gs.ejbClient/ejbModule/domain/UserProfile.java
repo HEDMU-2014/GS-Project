@@ -9,11 +9,11 @@ public class UserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long userid;
-//	private User user;
 	private String firstname;
 	private String lastname;
+	private String email;
 	private Calendar createddate;
-	private Organization organization;
+	private int orgId;
 	private char gender;
 	private String job;
 	private String description;
@@ -21,10 +21,10 @@ public class UserProfile implements Serializable {
 	private int phone;
 	private String education;
 	private String location;
-	private Country country;
+	private String countrycode;
 	private String city;
 	private String state;
-	private Picture profilepicture;
+	private long profilepictureId;
 
 	public long getUserid() {
 		return userid;
@@ -33,14 +33,6 @@ public class UserProfile implements Serializable {
 	public void setUserid(long id) {
 		this.userid = id;
 	}
-
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
 
 	public char getGender() {
 		return gender;
@@ -68,14 +60,6 @@ public class UserProfile implements Serializable {
 
 	public void setCreateddate(Calendar createddate) {
 		this.createddate = createddate;
-	}
-
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 
 	public void setGender(char gender) {
@@ -130,14 +114,6 @@ public class UserProfile implements Serializable {
 		this.location = location;
 	}
 
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
 	public String getCity() {
 		return city;
 	}
@@ -154,28 +130,50 @@ public class UserProfile implements Serializable {
 		this.state = state;
 	}
 
-	public Picture getProfilepicture() {
-		return profilepicture;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setProfilepicture(Picture profilepicture) {
-		this.profilepicture = profilepicture;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(int orgId) {
+		this.orgId = orgId;
+	}
+
+	public String getCountrycode() {
+		return countrycode;
+	}
+
+	public void setCountrycode(String countrycode) {
+		this.countrycode = countrycode;
+	}
+
+	public long getProfilepictureId() {
+		return profilepictureId;
+	}
+
+	public void setProfilepictureId(long profilepictureId) {
+		this.profilepictureId = profilepictureId;
 	}
 
 	@Override
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
 		return "UserProfile [userid=" + userid 
-//				+ ", user=" + user 
-				+ ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", createddate=" + formatter.format(createddate.getTime()) 
-				+ ", organization=" + organization + ", gender=" + gender + ", job="
+				+ ", organization=" + orgId + ", gender=" + gender + ", job="
 				+ job + ", description=" + description + ", website=" + website 
 				+ ", phone=" + phone + ", education="
-				+ education + ", location=" + location + ", country=" + country 
+				+ education + ", location=" + location + ", country=" + countrycode 
 				+ ", city=" + city
-				+ ", state=" + state + ", profilepicture=" + profilepicture	+ "]";
+				+ ", state=" + state + ", profilepicture=" + profilepictureId	+ "]";
 	}
-
 
 }

@@ -22,7 +22,6 @@ import javax.persistence.OneToOne;
 import domain.LoginType;
 import domain.Role;
 import domain.User;
-import domain.UserProfile;
 
 @Entity
 @NamedQueries({
@@ -67,7 +66,8 @@ public class Users implements Serializable {
 		this.userid = user.getUserid();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.userprofile = new UserProfiles(user.getUserprofile());
+		this.userprofile = new UserProfiles();
+		this.userprofile.setUser(this);
 		this.logintype = new LoginTypes(user.getLogintype());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
@@ -81,7 +81,6 @@ public class Users implements Serializable {
 		user.setUserid(userid);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setUserprofile(userprofile.getDomUserProfile(new UserProfile()));
 		user.setLastlogin(Calendar.getInstance());
 		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
 		user.setLogintype(logintype.map(new LoginType()));
@@ -94,6 +93,10 @@ public class Users implements Serializable {
 
 	public long getUserid() {
 		return this.userid;
+	}
+
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 
 	public String getEmail() {
@@ -126,6 +129,22 @@ public class Users implements Serializable {
 
 	public void setUserprofile(UserProfiles userprofile) {
 		this.userprofile = userprofile;
+	}
+
+	public LoginTypes getLogintype() {
+		return logintype;
+	}
+
+	public void setLogintype(LoginTypes logintype) {
+		this.logintype = logintype;
+	}
+
+	public Collection<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Roles> roles) {
+		this.roles = roles;
 	}
 
 }

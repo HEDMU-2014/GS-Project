@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.User;
+import entities.UserProfiles;
 import entities.Users;
 
 @Stateless
@@ -22,8 +23,9 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 		Users jpaUsers = new Users(user);
 		em.persist(jpaUsers);
 		user.setUserid(jpaUsers.getUserid());
-		user.getUserprofile().setUserid(jpaUsers.getUserid());
-		upb.createUserProfile(user.getUserprofile());
+		UserProfiles jpaUserProfiles = new UserProfiles();
+		jpaUserProfiles.setUser(jpaUsers);
+		em.persist(jpaUserProfiles);
 	}
 
 	@Override

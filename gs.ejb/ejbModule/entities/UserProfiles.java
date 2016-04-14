@@ -12,9 +12,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
-import domain.Country;
-import domain.Organization;
-import domain.Picture;
 import domain.UserProfile;
 
 /**
@@ -36,9 +33,8 @@ public class UserProfiles implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private long userid;
-	@OneToOne
-	@JoinColumn(name="userid", referencedColumnName="userid")
+//	private long userid;
+	@OneToOne(mappedBy="userprofile")
 	private Users user;
 	private String firstname;
 	private String lastname;
@@ -51,15 +47,15 @@ public class UserProfiles implements Serializable {
 	private String education;
 	private String location;
 	@ManyToOne
-	@JoinColumn(name="country", referencedColumnName="countrycode")
+	@JoinColumn(columnDefinition="string", name="country", referencedColumnName="countrycode")
 	private Countries country;
 	private String city;
 	private String state;
 	@ManyToOne
-	@JoinColumn(name="profilepicture", referencedColumnName="id")
+	@JoinColumn(columnDefinition="long", name="profilepicture", referencedColumnName="id")
 	private PictureEntity profilepicture;
 	@ManyToOne
-	@JoinColumn(name="organization")
+	@JoinColumn(columnDefinition="integer", name="organization", referencedColumnName="orgId")
 	private Organizations organization;
 	
 	public UserProfiles() {
@@ -72,11 +68,15 @@ public class UserProfiles implements Serializable {
 	
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
 		
-		this.userid=userProfile.getUserid();
-//		setUser(new Users().update(userProfile.getUser()));
+//		this.userid=userProfile.getUserid();
+		setUser(new Users());
+		getUser().setUserid(userProfile.getUserid());
 		setFirstname(userProfile.getFirstname());
 		setLastname(userProfile.getLastname());
-		setOrganization(new Organizations().update(userProfile.getOrganization()));
+		if (userProfile.getOrgId() > 0) {
+			setOrganization(new Organizations());
+			getOrganization().setOrgId(userProfile.getOrgId());
+		}
 		setCreateddate(new Timestamp(userProfile.getCreateddate().getTimeInMillis()));
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
@@ -84,23 +84,29 @@ public class UserProfiles implements Serializable {
 		setWebsite(userProfile.getWebsite());
 		setPhone(userProfile.getPhone());
 		setEducation(userProfile.getEducation());
-		setCountry(new Countries(userProfile.getCountry()));
+		if (userProfile.getCountrycode() != null) {
+			setCountry(new Countries());
+			getCountry().setCountrycode(userProfile.getCountrycode());
+		}
 		setCity(userProfile.getCity());
 		setState(userProfile.getState());
-		setProfilepicture(new PictureEntity(userProfile.getProfilepicture()));
+		if (userProfile.getProfilepictureId() >0) {
+			setProfilepicture(new PictureEntity());
+			getProfilepicture().setId(userProfile.getProfilepictureId());
+		}
 		return this;
 	}
 	
 	public UserProfile getDomUserProfile(UserProfile prof) {
-		prof.setUserid(getUserid());
-//		prof.setUser(getUser().map(new User()));
+		prof.setUserid(getUser().getUserid());
 		prof.setFirstname(getFirstname());
 		prof.setLastname(getLastname());
+		prof.setEmail(getUser().getEmail());
 
 		prof.setCreateddate(Calendar.getInstance());
 		prof.getCreateddate().setTimeInMillis(getCreateddate().getTime());
 
-		prof.setOrganization(getOrganization().map(new Organization()));
+		prof.setOrgId(getOrganization().getOrgId());
 		
 		prof.setGender(getGender());
 		prof.setJob(getJob());
@@ -108,17 +114,11 @@ public class UserProfiles implements Serializable {
 		prof.setWebsite(getWebsite());
 		prof.setPhone(getPhone());
 		prof.setEducation(getEducation());
-		prof.setCountry(getCountry().map(new Country()));
+		prof.setCountrycode(getCountry().getCountrycode());
 		prof.setCity(getCity());
 		prof.setState(getState());
-//		if (getProfilepicture() != null) {
-			prof.setProfilepicture(getProfilepicture().map(new Picture()));
-//		}
+		prof.setProfilepictureId(getProfilepicture().getId());
 		return prof;
-	}
-
-	public long getUserid() {
-		return userid;
 	}
 
 	public Users getUser() {
@@ -251,7 +251,7 @@ public class UserProfiles implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserProfiles [userid=" + userid + ", user=" + user + ", firstname=" + firstname + ", lastname="
+		return "UserProfiles [user=" + user + ", firstname=" + firstname + ", lastname="
 				+ lastname + ", createddate=" + createddate + ", gender=" + gender + ", job=" + job + ", description="
 				+ description + ", website=" + website + ", phone=" + phone + ", education=" + education + ", location="
 				+ location + ", country=" + country + ", city=" + city + ", state=" + state + ", profilepicture="

@@ -20,7 +20,7 @@ public class PictureEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	//Dummy entity class
 	
 	public PictureEntity() {
@@ -39,6 +39,14 @@ public class PictureEntity implements Serializable {
 	public Picture map(Picture picture) {
 		picture.setId(id);
 		return picture;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

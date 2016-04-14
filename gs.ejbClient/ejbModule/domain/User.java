@@ -11,7 +11,6 @@ public class User {
 	private String email;
 	private String password;
 	private Calendar lastlogin;
-	private UserProfile userprofile;
 	private LoginType logintype;
 	private Collection<Role> roles;
 
@@ -47,14 +46,6 @@ public class User {
 		this.lastlogin = lastlogin;
 	}
 
-	public UserProfile getUserprofile() {
-		return userprofile;
-	}
-
-	public void setUserprofile(UserProfile userprofile) {
-		this.userprofile = userprofile;
-	}
-	
 	public Collection<Role> getRoles() {
 		return roles;
 	}
@@ -76,7 +67,7 @@ public class User {
 		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 		return "User [userid=" + userid + ", email=" + email + ", password=" + password 
 				+ ", lastlogin=" + formatter.format(lastlogin.getTime()) 
-				+ ", userprofile=" + userprofile + ", logintype=" + logintype + ", roles=" + roles + "]";
+				+ ", logintype=" + logintype + ", roles=" + roles + "]";
 	}
 
 
