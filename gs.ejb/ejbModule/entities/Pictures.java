@@ -2,6 +2,8 @@ package entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import domain.Picture;
-import domain.UserProfile;
+import domain.UserAlbum;
 
 /**
  * Entity implementation class for Entity: UserAlbums
@@ -43,6 +46,9 @@ public class Pictures implements Serializable {
 	@JoinColumn(name="userProfileId")
 	private UserProfiles userProfile;
 	
+	@ManyToMany(mappedBy="pictures")
+	private List<UserAlbums> userAlbums;
+	
 	@NotNull
 	private Timestamp createdDate;
 	
@@ -58,7 +64,11 @@ public class Pictures implements Serializable {
 		this.pictureId = picture.getPictureId();
 		this.imgUrl = picture.getImgUrl();
 		this.description = picture.getDescription();
-		this.userProfile = new UserProfiles(picture.getUserProfile());
+		this.userProfile = new UserProfiles();
+		this.userProfile.setUserId(picture.getUserId());
+		this.userAlbums = new ArrayList<>();
+		for (UserAlbum ua : picture.getUserAlbums())
+			this.userAlbums.add(new UserAlbums(ua));
 		this.createdDate = picture.getCreatedDate();
 		return this;
 	}
@@ -67,7 +77,7 @@ public class Pictures implements Serializable {
 		picture.setPictureId(this.getPictureId());
 		picture.setImgUrl(this.getImgUrl());
 		picture.setDescription(this.getDescription());
-		picture.setUserProfile(this.userProfile.getDomUserProfile(new UserProfile()));
+		picture.setUserId(this.userProfile.getUserId());
 		picture.setCreatedDate(this.getCreatedDate());
 		return picture;
 	}
@@ -102,6 +112,14 @@ public class Pictures implements Serializable {
 
 	public void setUserProfile(UserProfiles user) {
 		this.userProfile = user;
+	}
+
+	public List<UserAlbums> getUserAlbums() {
+		return userAlbums;
+	}
+
+	public void setUserAlbums(List<UserAlbums> userAlbums) {
+		this.userAlbums = userAlbums;
 	}
 
 	public Timestamp getCreatedDate() {

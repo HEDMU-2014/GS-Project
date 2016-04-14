@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Picture {
 	
@@ -10,7 +11,9 @@ public class Picture {
 	
 	private String description;
 	
-	private UserProfile userProfile;
+	private long userId;
+	
+	private List<UserAlbum> userAlbums;
 	
 	private Timestamp createdDate;
 
@@ -38,12 +41,20 @@ public class Picture {
 		this.description = description;
 	}
 
-	public UserProfile getUserProfile() {
-		return userProfile;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public List<UserAlbum> getUserAlbums() {
+		return userAlbums;
+	}
+
+	public void setUserAlbums(List<UserAlbum> userAlbums) {
+		this.userAlbums = userAlbums;
 	}
 
 	public Timestamp getCreatedDate() {

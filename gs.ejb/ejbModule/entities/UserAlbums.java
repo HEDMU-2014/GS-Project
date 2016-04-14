@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 
 import domain.Picture;
 import domain.UserAlbum;
-import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserAlbums
@@ -72,9 +71,10 @@ public class UserAlbums implements Serializable {
 
 	public UserAlbums update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
-		this.userProfile = new UserProfiles(ua.getUserProfile());
+		this.userProfile = new UserProfiles();
+		this.userProfile.setUserId(ua.getUserId());
 		this.name = ua.getName();
-		this.coverPicture = new Pictures().update(ua.getCoverPicture());
+		this.coverPicture = new Pictures(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
 		for(Picture picture : ua.getPictures()) {
 			this.pictures.add(new Pictures(picture));
@@ -86,7 +86,7 @@ public class UserAlbums implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUserProfile(userProfile.getDomUserProfile(new UserProfile()));
+		ua.setUserId(this.userProfile.getUserId());
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
