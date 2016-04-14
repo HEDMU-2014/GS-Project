@@ -18,6 +18,6 @@ public interface UserAlbumBeanLocal {
 
 	void deleteUserAlbum(UserAlbum album);
 
-	List<UserAlbum> searchUserAlbums(String search);
+	List<UserAlbum> getUserAlbums(long userProfileId);
 
 }

@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.UserAlbum;
-import entities.UserAlbumEntity;
+import entities.UserAlbums;
 
 /**
  * Session Bean implementation class UserAlbumBean
@@ -21,21 +21,33 @@ public class UserAlbumBean implements UserAlbumBeanRemote, UserAlbumBeanLocal {
 	@Override
     public Optional<UserAlbum> getUserAlbum(long albumId) {
     	Optional<UserAlbum> optional = Optional.empty();
-    	UserAlbumEntity albumEntity = em.find(UserAlbumEntity.class, albumId);
+    	UserAlbums albumEntity = em.find(UserAlbums.class, albumId);
     	if (albumEntity != null)
     		optional = Optional.of(albumEntity.map(new UserAlbum()));
     	return optional;
     }
 	
 	@Override
+	public List<UserAlbum> getUserAlbums(long userProfileId) {
+		List<UserAlbum> userAlbums = new ArrayList<>();
+		List<UserAlbums> userAlbumsEntity = em.createNamedQuery("getUserAlbums", UserAlbums.class)
+				.setParameter("search", "%" + userProfileId + "%")
+				.getResultList();
+		for (UserAlbums uae : userAlbumsEntity) {
+			userAlbums.add(uae.map(new UserAlbum()));
+		}
+		return userAlbums;
+	}
+	
+	@Override
 	public void createUserAlbum(UserAlbum album) {
-		UserAlbumEntity albumEntity = new UserAlbumEntity(album);
+		UserAlbums albumEntity = new UserAlbums(album);
 		em.persist(albumEntity);
 	}
 	
 	@Override
 	public void updateUserAlbum(UserAlbum album) {
-		UserAlbumEntity albumEntity = em.find(UserAlbumEntity.class, album.getAlbumId());
+		UserAlbums albumEntity = em.find(UserAlbums.class, album.getAlbumId());
 		if (albumEntity != null)
 			albumEntity.update(album);
 		else
@@ -44,23 +56,11 @@ public class UserAlbumBean implements UserAlbumBeanRemote, UserAlbumBeanLocal {
 	
 	@Override
 	public void deleteUserAlbum(UserAlbum album) {
-		UserAlbumEntity albumEntity = em.find(UserAlbumEntity.class, album.getAlbumId());
+		UserAlbums albumEntity = em.find(UserAlbums.class, album.getAlbumId());
 		if (albumEntity != null)
 			em.remove(albumEntity);
 		else
 			throw new RuntimeException("Album with id " + album.getAlbumId() + " not found");
-	}
-	
-	@Override
-	public List<UserAlbum> searchUserAlbums(String search) {
-		List<UserAlbum> userAlbums = new ArrayList<>();
-		List<UserAlbumEntity> userAlbumsEntity = em.createNamedQuery("searchUserAlbums", UserAlbumEntity.class)
-				.setParameter("search", "%" + search.toUpperCase() + "%")
-				.getResultList();
-		for (UserAlbumEntity uae : userAlbumsEntity) {
-			userAlbums.add(uae.map(new UserAlbum()));
-		}
-		return userAlbums;
 	}
 
 }
