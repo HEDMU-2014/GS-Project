@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import domain.LoginType;
 import domain.Role;
@@ -43,8 +45,8 @@ public class Users implements Serializable {
 	private String email;
 	private String password;
 	private Timestamp lastlogin;
-	@OneToOne
-	@JoinColumn(name = "userid", referencedColumnName = "userid")
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE} )
+	@PrimaryKeyJoinColumn(name = "userid", referencedColumnName = "userid")
 	private UserProfiles userprofile;
 	@ManyToOne
 	@JoinColumn(name = "logintype", referencedColumnName = "id")
@@ -67,6 +69,7 @@ public class Users implements Serializable {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.userprofile = new UserProfiles();
+		this.userprofile.setUserid(user.getUserid());
 		this.userprofile.setUser(this);
 		this.logintype = new LoginTypes(user.getLogintype());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());

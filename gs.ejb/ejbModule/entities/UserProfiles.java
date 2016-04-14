@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -33,8 +34,10 @@ public class UserProfiles implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	private long userid;
+	private long userid;
+	@MapsId
 	@OneToOne(mappedBy="userprofile")
+	@JoinColumn(name="userid")
 	private Users user;
 	private String firstname;
 	private String lastname;
@@ -47,15 +50,15 @@ public class UserProfiles implements Serializable {
 	private String education;
 	private String location;
 	@ManyToOne
-	@JoinColumn(columnDefinition="string", name="country", referencedColumnName="countrycode")
+	@JoinColumn(name="country", referencedColumnName="countrycode")
 	private Countries country;
 	private String city;
 	private String state;
 	@ManyToOne
-	@JoinColumn(columnDefinition="long", name="profilepicture", referencedColumnName="id")
+	@JoinColumn(name="profilepicture", referencedColumnName="id")
 	private PictureEntity profilepicture;
 	@ManyToOne
-	@JoinColumn(columnDefinition="integer", name="organization", referencedColumnName="orgId")
+	@JoinColumn(name="organization", referencedColumnName="orgId")
 	private Organizations organization;
 	
 	public UserProfiles() {
@@ -68,7 +71,7 @@ public class UserProfiles implements Serializable {
 	
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
 		
-//		this.userid=userProfile.getUserid();
+		this.userid=userProfile.getUserid();
 		setUser(new Users());
 		getUser().setUserid(userProfile.getUserid());
 		setFirstname(userProfile.getFirstname());
@@ -119,6 +122,14 @@ public class UserProfiles implements Serializable {
 		prof.setState(getState());
 		prof.setProfilepictureId(getProfilepicture().getId());
 		return prof;
+	}
+
+	public long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 
 	public Users getUser() {
@@ -247,15 +258,6 @@ public class UserProfiles implements Serializable {
 
 	public void setOrganization(Organizations organization) {
 		this.organization = organization;
-	}
-
-	@Override
-	public String toString() {
-		return "UserProfiles [user=" + user + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", createddate=" + createddate + ", gender=" + gender + ", job=" + job + ", description="
-				+ description + ", website=" + website + ", phone=" + phone + ", education=" + education + ", location="
-				+ location + ", country=" + country + ", city=" + city + ", state=" + state + ", profilepicture="
-				+ profilepicture + ", organization=" + organization + "]";
 	}
 
 }

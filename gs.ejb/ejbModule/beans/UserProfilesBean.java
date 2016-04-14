@@ -20,15 +20,6 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	@PersistenceContext
 	private EntityManager em;
 	
-    public UserProfilesBean() {
-    }
-
-	@Override
-	public void createUserProfile(UserProfile profile) {
-		UserProfiles profiles = new UserProfiles(profile);
-		em.persist(profiles);
-	}
-
 	@Override
 	public Optional<UserProfile> readUserProfile(int profileID) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profileID);
@@ -41,12 +32,6 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	public void updateUserProfile(UserProfile profile) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
 		userProfile.getEntityUserProfile(profile);
-	}
-
-	@Override
-	public void deleteUserProfile(UserProfile profile) {
-		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
-		em.remove(userProfile);
 	}
 
 	@Override

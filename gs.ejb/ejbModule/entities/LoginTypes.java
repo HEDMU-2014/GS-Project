@@ -1,11 +1,11 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import domain.LoginType;
-import domain.Role;
 
 /**
  * Entity implementation class for Entity: LoginType

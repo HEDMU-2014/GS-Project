@@ -21,11 +21,9 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 	@Override
 	public void create(User user) {
 		Users jpaUsers = new Users(user);
+		jpaUsers.setUserprofile(new UserProfiles());
+		jpaUsers.getUserprofile().setUser(jpaUsers);
 		em.persist(jpaUsers);
-		user.setUserid(jpaUsers.getUserid());
-		UserProfiles jpaUserProfiles = new UserProfiles();
-		jpaUserProfiles.setUser(jpaUsers);
-		em.persist(jpaUserProfiles);
 	}
 
 	@Override
