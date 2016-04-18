@@ -5,8 +5,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,27 +18,29 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-import domain.Organization;
+import domain.LoginType;
 import domain.Role;
 import domain.User;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "getUserFromEmail", 
-		query = "SELECT u FROM Users u "
-			+ "WHERE UPPER(u.email) = :email "),
-	@NamedQuery(name = "searchUsers", 
-	query = "SELECT u FROM Users u "
-		+ "WHERE UPPER(u.firstname) LIKE :search "
-		+ "OR UPPER(u.lastname) LIKE :search "
-		+ "OR UPPER(u.email) LIKE :search "
-		+ "OR UPPER(u.organization.name) LIKE :search "
-		+ "ORDER BY u.lastname"),
-	@NamedQuery(name = "listMembers", 
-		query = "SELECT u FROM Users u, IN (u.roles) r "
-			+ "WHERE r.role = 'Member' " 
-			+ "AND u.organization.name LIKE :organization")})
+		@NamedQuery(name = "getUserFromEmail", 
+				query = "SELECT u FROM Users u " + "WHERE UPPER(u.email) = :email "),
+		@NamedQuery(name = "listMembers", 
+				query = "SELECT u FROM Users u, IN (u.roles) r " 
+						+ "WHERE r.role = 'Member' "
+						+ "AND u.userprofile.organization.name LIKE :organization"), 
+		@NamedQuery(name = "searchUsers", 
+				query = "SELECT u FROM Users u  "
+						+ "WHERE UPPER(u.userprofile.firstname) LIKE :search "
+						+ "OR UPPER(u.userprofile.lastname) LIKE :search "
+						+ "OR UPPER(u.email) LIKE :search "
+						+ "OR UPPER(u.userprofile.organization.name) LIKE :search "
+						+ "ORDER BY u.userprofile.lastname")
+		})
 
 public class Users implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -45,38 +48,37 @@ public class Users implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userid;
-	private String firstname;
-	private String lastname;
+	@Column(unique = true)
 	private String email;
 	private String password;
-	private Timestamp createddate;
 	private Timestamp lastlogin;
-	
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE} )
+	@PrimaryKeyJoinColumn(name = "userid", referencedColumnName = "userid")
+	private UserProfiles userprofile;
 	@ManyToOne
-	@JoinColumn(name="organization")
-	private Organizations organization;
-	
+	@JoinColumn(name = "logintype", referencedColumnName = "id")
+	private LoginTypes logintype;
 	@ManyToMany
-	@JoinTable(name = "AssignedRoles",
-	joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") ,
-	inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
+	@JoinTable(name = "AssignedRoles", joinColumns = @JoinColumn(name = "userid", referencedColumnName = "userid") , inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleid") )
 	private Collection<Roles> roles;
 
 	public Users() {
 		super();
 	}
-	
+
 	public Users(User user) {
+		super();
 		update(user);
 	}
-	
+
 	public Users update(User user) {
-		this.firstname = user.getFirstname();
-		this.lastname = user.getLastname();
+		this.userid = user.getUserid();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.organization = new Organizations().update(user.getOrganization());
-		this.createddate = new Timestamp(user.getCreateddate().getTimeInMillis());
+		this.userprofile = new UserProfiles();
+		this.userprofile.setUserid(user.getUserid());
+		this.userprofile.setUser(this);
+		this.logintype = new LoginTypes(user.getLogintype());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();
 		for (Role role : user.getRoles()) {
@@ -84,18 +86,14 @@ public class Users implements Serializable {
 		}
 		return this;
 	}
-	
+
 	public User map(User user) {
 		user.setUserid(userid);
-		user.setFirstname(firstname);
-		user.setLastname(lastname);
 		user.setEmail(email);
 		user.setPassword(password);
-		user.setOrganization(organization.map(new Organization()));
-		user.setCreateddate(Calendar.getInstance());
-		user.getCreateddate().setTimeInMillis(createddate.getTime());
 		user.setLastlogin(Calendar.getInstance());
 		user.getLastlogin().setTimeInMillis(lastlogin.getTime());
+		user.setLogintype(logintype.map(new LoginType()));
 		user.setRoles(new ArrayList<>());
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));
@@ -107,20 +105,8 @@ public class Users implements Serializable {
 		return this.userid;
 	}
 
-	public String getFirstname() {
-		return this.firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 
 	public String getEmail() {
@@ -139,22 +125,6 @@ public class Users implements Serializable {
 		this.password = password;
 	}
 
-	public Organizations getOrganization() {
-		return organization;
-	}
-	
-	public void setOrganization(Organizations organization) {
-		this.organization = organization;
-	}
-
-	public Timestamp getCreateddate() {
-		return createddate;
-	}
-
-	public void setCreateddate(Timestamp createddate) {
-		this.createddate = createddate;
-	}
-
 	public Timestamp getLastlogin() {
 		return lastlogin;
 	}
@@ -163,8 +133,28 @@ public class Users implements Serializable {
 		this.lastlogin = lastlogin;
 	}
 
+	public UserProfiles getUserprofile() {
+		return userprofile;
+	}
+
+	public void setUserprofile(UserProfiles userprofile) {
+		this.userprofile = userprofile;
+	}
+
+	public LoginTypes getLogintype() {
+		return logintype;
+	}
+
+	public void setLogintype(LoginTypes logintype) {
+		this.logintype = logintype;
+	}
+
 	public Collection<Roles> getRoles() {
 		return roles;
 	}
-	
+
+	public void setRoles(Collection<Roles> roles) {
+		this.roles = roles;
+	}
+
 }

@@ -1,14 +1,17 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 import domain.UserProfile;
 
@@ -17,15 +20,28 @@ import domain.UserProfile;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "searchUserProfiles", 
+	query = "SELECT p FROM UserProfiles p, Users u  "
+		+ "WHERE UPPER(p.firstname) LIKE :search "
+		+ "OR UPPER(p.lastname) LIKE :search "
+		+ "OR UPPER(u.email) LIKE :search "
+		+ "OR UPPER(p.organization.name) LIKE :search "
+		+ "ORDER BY p.lastname")
+	})
 
 public class UserProfiles implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "userID")
 	private long userid;
+	@MapsId
+	@OneToOne(mappedBy="userprofile")
+	@JoinColumn(name="userid")
+	private Users user;
+	private String firstname;
+	private String lastname;
+	private Timestamp createddate;
 	private char gender;
 	private String job;
 	private String description;
@@ -33,12 +49,18 @@ public class UserProfiles implements Serializable {
 	private int phone;
 	private String education;
 	private String location;
-	private String isocountryid;
+	@ManyToOne
+	@JoinColumn(name="country", referencedColumnName="countrycode")
+	private Countries country;
 	private String city;
 	private String state;
-	private int profilepictureid;
-	private static final long serialVersionUID = 1L;
-
+	@ManyToOne
+	@JoinColumn(name="profilepicture", referencedColumnName="pictureId")
+	private Pictures profilepicture;
+	@ManyToOne
+	@JoinColumn(name="organization", referencedColumnName="orgId")
+	private Organizations organization;
+	
 	public UserProfiles() {
 		super();
 	}
@@ -46,56 +68,104 @@ public class UserProfiles implements Serializable {
 	public UserProfiles(UserProfile userProfile) {
 		getEntityUserProfile(userProfile);
 	}
+	
 	public UserProfiles getEntityUserProfile(UserProfile userProfile){
-		setId(userProfile.getId());
-		setUserid(userProfile.getUserid());
+		
+		this.userid=userProfile.getUserid();
+		setUser(new Users());
+		getUser().setUserid(userProfile.getUserid());
+		setFirstname(userProfile.getFirstname());
+		setLastname(userProfile.getLastname());
+		if (userProfile.getOrgId() > 0) {
+			setOrganization(new Organizations());
+			getOrganization().setOrgId(userProfile.getOrgId());
+		}
+		setCreateddate(new Timestamp(userProfile.getCreateddate().getTimeInMillis()));
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
 		setDescription(userProfile.getDescription());
 		setWebsite(userProfile.getWebsite());
 		setPhone(userProfile.getPhone());
 		setEducation(userProfile.getEducation());
-		setIsocountryid(userProfile.getIsocountryid());
+		if (userProfile.getCountrycode() != null) {
+			setCountry(new Countries());
+			getCountry().setCountrycode(userProfile.getCountrycode());
+		}
 		setCity(userProfile.getCity());
 		setState(userProfile.getState());
-		setProfilepictureid(userProfile.getProfilepictureid());
+		if (userProfile.getProfilepictureId() >0) {
+			setProfilepicture(new Pictures());
+			getProfilepicture().setPictureId(userProfile.getProfilepictureId());
+		}
 		return this;
 	}
+	
 	public UserProfile getDomUserProfile(UserProfile prof) {
-		prof.setId(getId());
-		prof.setUserid(getUserid());
+		prof.setUserid(getUser().getUserid());
+		prof.setFirstname(getFirstname());
+		prof.setLastname(getLastname());
+		prof.setEmail(getUser().getEmail());
+
+		prof.setCreateddate(Calendar.getInstance());
+		prof.getCreateddate().setTimeInMillis(getCreateddate().getTime());
+
+		prof.setOrgId(getOrganization().getOrgId());
+		
 		prof.setGender(getGender());
 		prof.setJob(getJob());
 		prof.setDescription(getDescription());
 		prof.setWebsite(getWebsite());
 		prof.setPhone(getPhone());
 		prof.setEducation(getEducation());
-		prof.setIsocountryid(getIsocountryid());
+		prof.setCountrycode(getCountry().getCountrycode());
 		prof.setCity(getCity());
 		prof.setState(getState());
-		prof.setProfilepictureid(getProfilepictureid());
-
+		prof.setProfilepictureId(getProfilepicture().getPictureId());
 		return prof;
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public long getUserid() {
-		return this.userid;
+		return userid;
 	}
 
 	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public Timestamp getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Timestamp createddate) {
+		this.createddate = createddate;
+	}
+
 	public char getGender() {
-		return this.gender;
+		return gender;
 	}
 
 	public void setGender(char gender) {
@@ -103,7 +173,7 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getJob() {
-		return this.job;
+		return job;
 	}
 
 	public void setJob(String job) {
@@ -111,7 +181,7 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -119,7 +189,7 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getWebsite() {
-		return this.website;
+		return website;
 	}
 
 	public void setWebsite(String website) {
@@ -127,7 +197,7 @@ public class UserProfiles implements Serializable {
 	}
 
 	public int getPhone() {
-		return this.phone;
+		return phone;
 	}
 
 	public void setPhone(int phone) {
@@ -135,7 +205,7 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getEducation() {
-		return this.education;
+		return education;
 	}
 
 	public void setEducation(String education) {
@@ -143,23 +213,23 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getLocation() {
-		return this.location;
+		return location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
-	public String getIsocountryid() {
-		return this.isocountryid;
+	public Countries getCountry() {
+		return country;
 	}
 
-	public void setIsocountryid(String isocountryid) {
-		this.isocountryid = isocountryid;
+	public void setCountry(Countries country) {
+		this.country = country;
 	}
 
 	public String getCity() {
-		return this.city;
+		return city;
 	}
 
 	public void setCity(String city) {
@@ -167,19 +237,27 @@ public class UserProfiles implements Serializable {
 	}
 
 	public String getState() {
-		return this.state;
+		return state;
 	}
 
 	public void setState(String state) {
 		this.state = state;
 	}
 
-	public int getProfilepictureid() {
-		return this.profilepictureid;
+	public Pictures getProfilepicture() {
+		return profilepicture;
 	}
 
-	public void setProfilepictureid(int profilepictureid) {
-		this.profilepictureid = profilepictureid;
+	public void setProfilepicture(Pictures profilepicture) {
+		this.profilepicture = profilepicture;
+	}
+
+	public Organizations getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organizations organization) {
+		this.organization = organization;
 	}
 
 }

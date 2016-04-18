@@ -26,7 +26,7 @@ import domain.UserAlbum;
 @Entity
 @NamedQuery(name = "getPictures",
 query = "SELECT p FROM Pictures p "
-		+ "WHERE p.userProfile.id LIKE :search ")
+		+ "WHERE p.userProfile.lastname LIKE :search ")
 
 public class Pictures implements Serializable {
 	private static final long serialVersionUID = 1L;

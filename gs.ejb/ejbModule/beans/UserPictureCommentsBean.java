@@ -23,12 +23,12 @@ public class UserPictureCommentsBean implements UserPictureCommentsBeanRemote, U
 	}
 
 	@Override
-	public Optional<UserPictureComment> read(int commentId) {
+	public UserPictureComment read(int commentId) {
 		UserPictureComments jpaUpc = em.find(UserPictureComments.class, commentId); 
 		if (jpaUpc != null)
-			return Optional.of(jpaUpc.map(new UserPictureComment()));
+			return jpaUpc.map(new UserPictureComment());
 		else
-			return Optional.empty();
+			return null;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class UserPictureCommentsBean implements UserPictureCommentsBeanRemote, U
 		if (jpaUpc != null)
 			jpaUpc.update(comment);
 		else
-			throw new RuntimeException("Comment with id " + jpaUpc.getId() + " not found");
+			throw new RuntimeException("Comment with id " + comment.getId() + " not found");
 		
 	}
 

@@ -9,17 +9,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.User;
+import entities.UserProfiles;
 import entities.Users;
 
 @Stateless
-public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
+public class UsersBean implements UsersBeanLocal {
 
 	@PersistenceContext EntityManager em;
 
 	@Override
-	public void create(User user) {
+	public long create(User user) {
 		Users jpaUsers = new Users(user);
+		jpaUsers.setUserprofile(new UserProfiles());
+		jpaUsers.getUserprofile().setUser(jpaUsers);
 		em.persist(jpaUsers);
+		return jpaUsers.getUserid();
 	}
 
 	@Override
@@ -57,26 +61,25 @@ public class UsersBean implements UsersBeanRemote, UsersBeanLocal {
 	public void delete(User user) {
 		Users jpaUsers = em.find(Users.class, user.getUserid());
 		em.remove(jpaUsers);
-	}
-	
-	@Override
-	public List<User> searchUsers(String search) {
-		List<User> users = new ArrayList<>();
-		List<Users> temp = em.createNamedQuery("searchUsers", Users.class)
-				.setParameter("search", "%" + search.toUpperCase() + "%")
-				.getResultList();
-		
-		for (Users u : temp)
-			users.add(u.map(new User()));
-		
-		return users;
-	}
+	}	
 	
 	@Override
 	public List<User> listMembers(String organization) {
 		List<User> users = new ArrayList<>();
 		List<Users> userse = em.createNamedQuery("listMembers", Users.class)
 				.setParameter("organization", "%" + organization.toUpperCase() + "%")
+				.getResultList();
+		for (Users u : userse) {
+			users.add(u.map(new User()));
+		}
+		return users;
+	}
+
+	@Override
+	public List<User> searchUsers(String search) {
+		List<User> users = new ArrayList<>();
+		List<Users> userse = em.createNamedQuery("searchUsers", Users.class)
+				.setParameter("search", "%" + search.toUpperCase() + "%")
 				.getResultList();
 		for (Users u : userse) {
 			users.add(u.map(new User()));
