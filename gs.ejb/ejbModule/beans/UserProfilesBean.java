@@ -21,7 +21,7 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	private EntityManager em;
 	
 	@Override
-	public Optional<UserProfile> readUserProfile(int profileID) {
+	public Optional<UserProfile> read(long profileID) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profileID);
 		if (userProfile != null)
 			return Optional.of(userProfile.getDomUserProfile(new UserProfile()));
@@ -29,13 +29,13 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	}
 
 	@Override
-	public void updateUserProfile(UserProfile profile) {
+	public void update(UserProfile profile) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
 		userProfile.getEntityUserProfile(profile);
 	}
 
 	@Override
-	public List<UserProfile> searchUserProfiles(String search) {
+	public List<UserProfile> search(String search) {
 		List<UserProfile> users = new ArrayList<>();
 		List<UserProfiles> temp = em.createNamedQuery("searchUserProfiles", UserProfiles.class)
 				.setParameter("search", "%" + search.toUpperCase() + "%")

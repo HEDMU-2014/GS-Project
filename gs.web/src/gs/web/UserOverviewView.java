@@ -15,6 +15,7 @@ import org.jboss.logging.Logger;
 
 import beans.UsersBeanLocal;
 import domain.User;
+import domain.UserProfile;
 
 @Named
 @SessionScoped
@@ -22,6 +23,7 @@ public class UserOverviewView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal ejb;
 	@Inject UserDetailView detail;
+	@Inject UserProfileView profile;
 	private Logger logger = Logger.getLogger(UserOverviewView.class);
 	private String searchstring;
 	private List<UserWrapper> users;
@@ -79,7 +81,33 @@ public class UserOverviewView implements Serializable {
 			return null;
 		}
 	}
+	public String viewProfile(){
+		logger.info("Selected user : " + selectedUser);
+	if (this.selectedUser != null && detail != null) {
+		profile.setUser(this.selectedUser.getUser());
+		profile.setEdit(false);
+		profile.init();
+		this.selectedUser = null;
+		return "/userprofile.xhtml";
+	} else {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
+		return null;
+	}
+	}
 	
+	public String updateProfile(){
+		logger.info("Selected user : " + selectedUser);
+		if (this.selectedUser != null && detail != null) {
+			profile.setUser(this.selectedUser.getUser());
+			profile.setEdit(true);
+			profile.init();
+			this.selectedUser = null;
+			return "/userprofile.xhtml";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
+			return null;
+		}
+	}
 	public String create() {
 		if (detail != null) {
 			detail.setUser(new User());

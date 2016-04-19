@@ -6,7 +6,7 @@ import java.util.Optional;
 import domain.UserProfile;
 
 public interface UserProfilesBeanSuper {
-public Optional<UserProfile> readUserProfile(int profileID);
-public void updateUserProfile(UserProfile profile);
-public List<UserProfile> searchUserProfiles(String search);
+public Optional<UserProfile> read(long profileID);
+public void update(UserProfile profile);
+public List<UserProfile> search(String search);
 }
