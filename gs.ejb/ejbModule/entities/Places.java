@@ -19,7 +19,7 @@ public class Places implements Serializable {
     private String placeDescription;
     @ManyToOne
     private Countries placeIsoCountry;
-    @ManyToOne
+    @OneToOne
     private Users createdBy;
     private Timestamp createdDate;
 

@@ -5,7 +5,7 @@
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="javax.persistence.schemageneration.create-database-schemas" value="true"/>
+            <property name="javax.persistence.schema-generation.create-database-schemas" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

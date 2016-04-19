@@ -7,7 +7,7 @@
   <module>
     <web>
       <web-uri>gs.web.war</web-uri>
-      <context-root>gs</context-root>
+      <context-root>gs.web</context-root>
     </web>
   </module>
   <module>
