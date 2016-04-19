@@ -72,7 +72,7 @@ public class UserAlbums implements Serializable {
 	public UserAlbums update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
 		this.userProfile = new UserProfiles();
-		this.userProfile.setUserId(ua.getUserId());
+		this.userProfile.setUserid(ua.getUserId());
 		this.name = ua.getName();
 		this.coverPicture = new Pictures(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
@@ -86,7 +86,7 @@ public class UserAlbums implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUserId(this.userProfile.getUserId());
+		ua.setUserId(this.userProfile.getUserid());
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());

@@ -65,7 +65,7 @@ public class Pictures implements Serializable {
 		this.imgUrl = picture.getImgUrl();
 		this.description = picture.getDescription();
 		this.userProfile = new UserProfiles();
-		this.userProfile.setUserId(picture.getUserId());
+		this.userProfile.setUserid(picture.getUserId());
 		this.userAlbums = new ArrayList<>();
 		for (UserAlbum ua : picture.getUserAlbums())
 			this.userAlbums.add(new UserAlbums(ua));
@@ -77,7 +77,7 @@ public class Pictures implements Serializable {
 		picture.setPictureId(this.getPictureId());
 		picture.setImgUrl(this.getImgUrl());
 		picture.setDescription(this.getDescription());
-		picture.setUserId(this.userProfile.getUserId());
+		picture.setUserId(this.userProfile.getUserid());
 		picture.setCreatedDate(this.getCreatedDate());
 		return picture;
 	}
