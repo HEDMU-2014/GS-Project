@@ -1,13 +1,14 @@
 package domain;
 
+import java.sql.Timestamp;
 
 public class Interest {
     private int interestId;
     private String interestDescription;
     private String interestHeader;
-    private int userId;
-    private int createdBy;
-    private int createdDate;
+    private User userId;
+    private User createdBy;
+    private Timestamp createdDate;
 
     public int getInterestId() {
         return interestId;
@@ -33,27 +34,27 @@ public class Interest {
         this.interestHeader = interestHeader;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
-    public int getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    public int getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(int createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 

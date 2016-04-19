@@ -1,23 +1,27 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import domain.Interest;
-
+import domain.User;
 
 @Entity
 public class Interests implements Serializable {
 
     @Id
+    @Column(nullable = false, unique = true)
     private int interestId;
     private String interestDescription;
     private String interestHeader;
-    private int userId;
-    private int createdBy;
-    private int createdDate;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE} )
+    @PrimaryKeyJoinColumn(name = "userId", referencedColumnName = "userId")
+    private Users userId;
+    @OneToOne
+    private Users createdBy;
+    private Timestamp createdDate;
     private static final long serialVersionUID = 1L;
 
     public Interests() {
@@ -32,8 +36,8 @@ public class Interests implements Serializable {
         this.interestId = interest.getInterestId();
         this.interestDescription = interest.getInterestDescription();
         this.interestHeader = interest.getInterestHeader();
-        this.userId = interest.getUserId();
-        this.createdBy = interest.getCreatedBy();
+        this.userId = new Users().update(interest.getUserId());
+        this.createdBy = new Users().update(interest.getCreatedBy());
         this.createdDate = interest.getCreatedDate();
         return this;
     }
@@ -42,8 +46,8 @@ public class Interests implements Serializable {
         interest.setInterestId(this.interestId);
         interest.setInterestDescription(this.interestDescription);
         interest.setInterestHeader(this.interestHeader);
-        interest.setUserId(this.userId);
-        interest.setCreatedBy(this.createdBy);
+        interest.setUserId(userId.map(new User()));
+        interest.setCreatedBy(createdBy.map(new User()));
         interest.setCreatedDate(this.createdDate);
         return interest;
     }
@@ -72,27 +76,27 @@ public class Interests implements Serializable {
         this.interestHeader = interestHeader;
     }
 
-    public int getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 
-    public int getCreatedBy() {
+    public Users getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(Users createdBy) {
         this.createdBy = createdBy;
     }
 
-    public int getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(int createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 }
