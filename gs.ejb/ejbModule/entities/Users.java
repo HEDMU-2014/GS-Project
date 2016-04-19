@@ -100,7 +100,7 @@ public class Users implements Serializable {
 			user.getRoles().add(role.map(new Role()));
 		}
 		user.setUserprofile(new UserProfile());
-		userprofile.getDomUserProfile(user.getUserprofile());
+		userprofile.map(user.getUserprofile());
 		return user;
 	}
 

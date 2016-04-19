@@ -66,10 +66,10 @@ public class UserProfiles implements Serializable {
 	}
 
 	public UserProfiles(UserProfile userProfile) {
-		getEntityUserProfile(userProfile);
+		update(userProfile);
 	}
 	
-	public UserProfiles getEntityUserProfile(UserProfile userProfile){
+	public UserProfiles update(UserProfile userProfile){
 		
 		this.userid=userProfile.getUserid();
 		setUser(new Users());
@@ -100,7 +100,7 @@ public class UserProfiles implements Serializable {
 		return this;
 	}
 	
-	public UserProfile getDomUserProfile(UserProfile prof) {
+	public UserProfile map(UserProfile prof) {
 		prof.setUserid(getUser().getUserid());
 		prof.setFirstname(getFirstname());
 		prof.setLastname(getLastname());
