@@ -108,19 +108,23 @@ public class UserProfiles implements Serializable {
 
 		prof.setCreateddate(Calendar.getInstance());
 		prof.getCreateddate().setTimeInMillis(getCreateddate().getTime());
-
-		prof.setOrgId(getOrganization().getOrgId());
-		
+		if (getOrganization() != null) {
+			prof.setOrgId(getOrganization().getOrgId());
+		}
 		prof.setGender(getGender());
 		prof.setJob(getJob());
 		prof.setDescription(getDescription());
 		prof.setWebsite(getWebsite());
 		prof.setPhone(getPhone());
 		prof.setEducation(getEducation());
-		prof.setCountrycode(getCountry().getCountrycode());
+		if (getCountry() != null) {
+			prof.setCountrycode(getCountry().getCountrycode());
+		}
 		prof.setCity(getCity());
 		prof.setState(getState());
-		prof.setProfilepictureId(getProfilepicture().getPictureId());
+		if (getProfilepicture() != null) {
+			prof.setProfilepictureId(getProfilepicture().getPictureId());
+		}
 		return prof;
 	}
 
