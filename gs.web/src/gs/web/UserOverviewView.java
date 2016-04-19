@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -29,6 +30,7 @@ public class UserOverviewView implements Serializable {
 	private List<UserWrapper> users;
 	private UserWrapper selectedUser;
 	
+	@PostConstruct
 	public void init() {
 //		List<User> users = ejb.searchUsers("");
 //		this.users = new ArrayList<UserWrapper>();

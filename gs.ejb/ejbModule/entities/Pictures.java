@@ -67,7 +67,7 @@ public class Pictures implements Serializable {
 		picture.setPictureId(this.getPictureId());
 		picture.setImgUrl(this.getImgUrl());
 		picture.setDescription(this.getDescription());
-		picture.setUserProfile(this.userProfile.getDomUserProfile(new UserProfile()));
+		picture.setUserProfile(this.userProfile.map(new UserProfile()));
 		picture.setCreatedDate(this.getCreatedDate());
 		return picture;
 	}

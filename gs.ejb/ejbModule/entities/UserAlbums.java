@@ -86,7 +86,7 @@ public class UserAlbums implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUserProfile(userProfile.getDomUserProfile(new UserProfile()));
+		ua.setUserProfile(userProfile.map(new UserProfile()));
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());

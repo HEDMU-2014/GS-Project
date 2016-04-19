@@ -24,14 +24,14 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	public Optional<UserProfile> read(long profileID) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profileID);
 		if (userProfile != null)
-			return Optional.of(userProfile.getDomUserProfile(new UserProfile()));
+			return Optional.of(userProfile.map(new UserProfile()));
 		return Optional.empty();
 	}
 
 	@Override
 	public void update(UserProfile profile) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
-		userProfile.getEntityUserProfile(profile);
+		userProfile.update(profile);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 				.getResultList();
 		
 		for (UserProfiles u : temp)
-			users.add(u.getDomUserProfile(new UserProfile()));
+			users.add(u.map(new UserProfile()));
 		
 		return users;
 	}
