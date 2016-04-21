@@ -1,6 +1,8 @@
 package gs.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +15,7 @@ import javax.inject.Named;
 import org.jboss.logging.Logger;
 
 import beans.UsersBeanLocal;
+import domain.LoginType;
 import domain.User;
 
 @Named()
@@ -32,6 +35,11 @@ public class UserDetailView implements Serializable {
 	public void create() {
 		logger.info("method create entered");
 		try {
+			user.getUserprofile().setCreateddate(Calendar.getInstance());
+			user.setLastlogin(Calendar.getInstance());
+			user.setLogintype(new LoginType());
+			user.getLogintype().setId(1);
+			user.setRoles(new ArrayList<>());
 			ejb.create(user);
 			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User created"));

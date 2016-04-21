@@ -16,6 +16,7 @@ import org.jboss.logging.Logger;
 
 import beans.UsersBeanLocal;
 import domain.User;
+import domain.UserProfile;
 
 @Named
 @SessionScoped
@@ -85,6 +86,7 @@ public class UserOverviewView implements Serializable {
 	public String create() {
 		if (detail != null) {
 			detail.setUser(new User());
+			detail.getUser().setUserprofile(new UserProfile());
 			detail.setEdit(true);
 			detail.init();
 			this.selectedUser = null;

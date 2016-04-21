@@ -70,20 +70,13 @@ public class Users implements Serializable {
 	public Users(User user) {
 		super();
 		this.userid = user.getUserid();
-		this.email = user.getEmail();
-		this.password = user.getPassword();
 		this.userprofile = new UserProfiles(user.getUserprofile());
 		this.userprofile.setUserid(user.getUserid());
 		this.userprofile.setUser(this);
-		this.logintype = new LoginTypes(user.getLogintype());
-		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
-		this.roles = new ArrayList<>();
-		for (Role role : user.getRoles()) {
-			this.roles.add(new Roles(role));
-		}
+		update(user);
 	}
 
-	public Users update(User user) {
+	public void update(User user) {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.logintype = new LoginTypes(user.getLogintype());
@@ -92,7 +85,6 @@ public class Users implements Serializable {
 		for (Role role : user.getRoles()) {
 			this.roles.add(new Roles(role));
 		}
-		return this;
 	}
 
 	public User map(User user) {

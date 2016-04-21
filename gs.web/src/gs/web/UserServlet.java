@@ -38,8 +38,8 @@ public class UserServlet extends HttpServlet {
 		List<User> users = userejb.listMembers("eamv");
 		response.getWriter().append("Users : " + users);
 		User user = userejb.read(1).get();
-		user.setLogintype(new LoginType());
-		user.getLogintype().setId(1);
+//		user.setLogintype(new LoginType());
+		user.getLogintype().setId(3);
 		userejb.update(user);
 //		user.setUserid(0);
 //		user.setEmail("awp@eamv.dk");
