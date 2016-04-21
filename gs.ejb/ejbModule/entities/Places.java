@@ -2,7 +2,11 @@ package entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import domain.Country;
 import domain.Place;
@@ -19,7 +23,7 @@ public class Places implements Serializable {
     private String placeDescription;
     @ManyToOne
     private Countries placeIsoCountry;
-    @OneToOne
+    @ManyToOne
     private Users createdBy;
     private Timestamp createdDate;
 
@@ -35,8 +39,8 @@ public class Places implements Serializable {
         placeId = place.getPlaceId();
         placeCity = place.getPlaceCity();
         placeDescription = place.getPlaceDescription();
-        placeIsoCountry = new Countries().update(place.getPlaceIsoCountry());
-        createdBy = new Users().update(place.getCreatedBy());
+        placeIsoCountry = new Countries(place.getPlaceIsoCountry());
+        createdBy = new Users(place.getCreatedBy());
         createdDate = place.getCreatedDate();
 
         return this;

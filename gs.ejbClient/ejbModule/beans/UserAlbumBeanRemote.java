@@ -17,6 +17,7 @@ public interface UserAlbumBeanRemote {
 	void updateUserAlbum(UserAlbum album);
 
 	void deleteUserAlbum(UserAlbum album);
+	
+	List<UserAlbum> getUserAlbums(long userProfileId);
 
-	List<UserAlbum> searchUserAlbums(String search);
 }

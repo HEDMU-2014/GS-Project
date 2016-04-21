@@ -50,19 +50,21 @@ public class CRUDTest extends HttpServlet {
 		obl.createOrganization(org);
 		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
 
+		org = obl.getOrganization(1).get();
+		
 		User user = new User();
-		user.setFirstname("Tom");
-		user.setLastname("Engelsen");
+//		user.setFirstname("Tom");
+//		user.setLastname("Engelsen");
 		user.setEmail("uninet@live.no");
-		user.setOrganization(org);
+//		user.setOrganization(org);
 		user.setPassword("abcdefg");
-		user.setCreateddate(Calendar.getInstance());
+//		user.setCreateddate(Calendar.getInstance());
 		user.setLastlogin(Calendar.getInstance());
 		user.setRoles(new ArrayList<>());
 		user.getRoles().add(role);
 
 		ubl.create(user);
-		List<User> users = ubl.searchUsers("Tom");
+		List<User> users = ubl.listMembers("EAMV");
 
 		for (User u : users)
 			response.getWriter().append("User: " + u.toString() + "\n");
