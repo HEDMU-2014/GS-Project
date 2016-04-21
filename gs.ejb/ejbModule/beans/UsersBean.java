@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.User;
-import entities.UserProfiles;
 import entities.Users;
 
 @Stateless
@@ -20,8 +19,6 @@ public class UsersBean implements UsersBeanLocal {
 	@Override
 	public long create(User user) {
 		Users jpaUsers = new Users(user);
-		jpaUsers.setUserprofile(new UserProfiles());
-		jpaUsers.getUserprofile().setUser(jpaUsers);
 		em.persist(jpaUsers);
 		return jpaUsers.getUserid();
 	}

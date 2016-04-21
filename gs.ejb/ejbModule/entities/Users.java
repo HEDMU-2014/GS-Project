@@ -24,6 +24,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import domain.LoginType;
 import domain.Role;
 import domain.User;
+import domain.UserProfile;
 
 @Entity
 @NamedQueries({
@@ -75,7 +76,7 @@ public class Users implements Serializable {
 		this.userid = user.getUserid();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.userprofile = new UserProfiles();
+		this.userprofile = new UserProfiles(user.getUserprofile());
 		this.userprofile.setUserid(user.getUserid());
 		this.userprofile.setUser(this);
 		this.logintype = new LoginTypes(user.getLogintype());
@@ -98,6 +99,8 @@ public class Users implements Serializable {
 		for (Roles role : roles) {
 			user.getRoles().add(role.map(new Role()));
 		}
+		user.setUserprofile(new UserProfile());
+		userprofile.map(user.getUserprofile());
 		return user;
 	}
 
