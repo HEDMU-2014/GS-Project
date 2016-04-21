@@ -76,7 +76,7 @@ public class Users implements Serializable {
 		update(user);
 	}
 
-	public Users update(User user) {
+	public void update(User user) {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.logintype = new LoginTypes(user.getLogintype());
@@ -85,7 +85,6 @@ public class Users implements Serializable {
 		for (Role role : user.getRoles()) {
 			this.roles.add(new Roles(role));
 		}
-		return this;
 	}
 
 	public User map(User user) {
