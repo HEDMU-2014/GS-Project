@@ -9,5 +9,6 @@
 	<classpathentry kind="src" path="/gs.ejbClient"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jboss-logging-3.3.0.Final"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javaee-api-7.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PrimeFaces-5.2"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

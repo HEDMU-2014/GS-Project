@@ -9,12 +9,11 @@ import domain.User;
 
 @Local
 public interface UsersBeanLocal {
-
-	public long create(User user);
-	public Optional<User> read(long userId);
-	public Optional<User> read(String email);
-	public void update(User user);
-	public void delete(User user);
-	public List<User> listMembers(String organization);
-	public List<User> searchUsers(String search);
+	long create(User user);
+	Optional<User> read(long userId);
+	Optional<User> read(String email);
+	void update(User user);
+	void delete(User user);
+	List<User> listMembers(String organization);
+	List<User> searchUsers(String search);
 }

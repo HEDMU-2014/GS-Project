@@ -11,9 +11,9 @@ import domain.UserPictureComment;
 @Local
 public interface UserPictureCommentsBeanLocal {
 
-	public void create(UserPictureComment comment);
-	public UserPictureComment read(int commentId);
-	public void update(UserPictureComment comment);
-	public void delete(UserPictureComment comment);
-	public List<UserPictureComment> searchCommentsByUserId(long userId);
+	void create(UserPictureComment comment);
+	UserPictureComment read(int commentId);
+	void update(UserPictureComment comment);
+	void delete(UserPictureComment comment);
+	List<UserPictureComment> searchCommentsByUserId(long userId);
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 import domain.Organization;
 
 public interface OrganizationBeanSuper {
-public void createOrg(Organization org);
-public Optional<Organization> readOrg(int orgID);
-public void updateOrg(Organization org);
-public void deleteOrg(int orgID);
+void createOrg(Organization org);
+Optional<Organization> readOrg(int orgID);
+void updateOrg(Organization org);
+void deleteOrg(int orgID);
 }

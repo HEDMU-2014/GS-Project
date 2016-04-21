@@ -9,8 +9,8 @@ import domain.Role;
 @Local
 public interface RolesBeanLocal {
 
-	public void create(Role role);
-	public Optional<Role> read(int roleId);
-	public void update(Role role);
-	public void delete(Role role);
+	void create(Role role);
+	Optional<Role> read(int roleId);
+	void update(Role role);
+	void delete(Role role);
 }
