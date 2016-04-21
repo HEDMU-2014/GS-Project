@@ -39,8 +39,8 @@ public class Places implements Serializable {
         placeId = place.getPlaceId();
         placeCity = place.getPlaceCity();
         placeDescription = place.getPlaceDescription();
-        placeIsoCountry = new Countries().update(place.getPlaceIsoCountry());
-        createdBy = new Users().update(place.getCreatedBy());
+        placeIsoCountry = new Countries(place.getPlaceIsoCountry());
+        createdBy = new Users(place.getCreatedBy());
         createdDate = place.getCreatedDate();
 
         return this;

@@ -48,9 +48,9 @@ public class UsersBean implements UsersBeanLocal {
 	@Override
 	public void update(User user) {
 		Users jpaUsers = em.find(Users.class, user.getUserid()); 
-		if (jpaUsers != null)
+		if (jpaUsers != null) {
 			jpaUsers.update(user);
-		else
+		} else
 			throw new RuntimeException("User with id " + user.getUserid() + " not found");
 	}
 
