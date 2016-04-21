@@ -5,6 +5,7 @@ import domain.Place;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 
