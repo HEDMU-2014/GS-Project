@@ -38,9 +38,9 @@ public class UserServlet extends HttpServlet {
 		response.getWriter().append("Users : " + users);
 		User user = userejb.read(1).get();
 		user.setUserid(0);
-		user.setEmail("awp@eamv.dk");
-		user.getUserprofile().setFirstname("Anders");
-		user.getUserprofile().setLastname("Petersen");
+		user.setEmail("eamv5061@eamv.dk");
+		user.getUserprofile().setFirstname("Bjørn");
+		user.getUserprofile().setLastname("Røkenes");
 		user.getUserprofile().setOrgId(1);
 		user.setRoles(new ArrayList<>());
 		user.getRoles().add(new Role(2, "?"));

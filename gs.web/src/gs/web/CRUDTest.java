@@ -17,10 +17,12 @@ import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
 import beans.UserPictureCommentsBeanLocal;
 import beans.UsersBeanLocal;
+import domain.LoginType;
 import domain.Organization;
 import domain.Role;
 import domain.User;
 import domain.UserPictureComment;
+import domain.UserProfile;
 
 @WebServlet("/CRUDTest")
 public class CRUDTest extends HttpServlet {
@@ -36,50 +38,55 @@ public class CRUDTest extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Role role = new Role();
-		role.setRole("Moderator");
-		role.setRoleId(1);
-		rbl.create(role);
-		response.getWriter().append("Role: ").append(rbl.read(1).toString() + "\n");
-
-		Organization org = new Organization();
-		org.setName("EAMV");
-		org.setAddress("Gl. Landevej 2");
-		org.setZip(7400);
-		org.setCity("Herning");
-		obl.createOrganization(org);
-		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
-
-		org = obl.getOrganization(1).get();
-		
-		User user = new User();
-//		user.setFirstname("Tom");
-//		user.setLastname("Engelsen");
-		user.setEmail("uninet@live.no");
-//		user.setOrganization(org);
-		user.setPassword("abcdefg");
-//		user.setCreateddate(Calendar.getInstance());
-		user.setLastlogin(Calendar.getInstance());
-		user.setRoles(new ArrayList<>());
-		user.getRoles().add(role);
-
-		ubl.create(user);
-		List<User> users = ubl.listMembers("EAMV");
-
-		for (User u : users)
-			response.getWriter().append("User: " + u.toString() + "\n");
-		// response.getWriter().append("User added:
-		// ").append(ubl.read(1).toString());
-
-		UserPictureComment upc = new UserPictureComment();
-		upc.setUserId(user.getUserid());
-		upc.setMessage("woopdedoo");
-		upc.setPictureId(14245);
-		upc.setCreatedDate(LocalDateTime.now());
-		upcl.create(upc);
-		
-		
-		response.getWriter().append("UserPictureComment: " + upcl.searchCommentsByUserId(0));
+//		Role role = new Role();
+//		role.setRole("Cat");
+//		role.setRoleId(3);
+//		rbl.create(role);
+//		response.getWriter().append("Role: ").append(rbl.read(1).toString() + "\n");
+//
+//		Organization org = new Organization();
+//		org.setName("EAMV1");
+//		org.setAddress("Gl. Landevej 2");
+//		org.setZip(7400);
+//		org.setCity("Herning");
+//		obl.createOrganization(org);
+//		response.getWriter().append("Org: ").append(obl.getOrganization(1).toString() + "\n");
+//
+//		org = obl.getOrganization(1).get();
+//		UserProfile up = new UserProfile();
+//		User user = new User();
+//		user.setUserprofile(up);
+//		up.setUserid(user.getUserid());
+//		up.setFirstname("Tom");
+//		up.setLastname("Engelsen");
+//		user.setEmail("uninet@live.no");
+//		up.setOrgId(org.getOrgId());
+//		user.setPassword("abcdefg");
+//		up.setCreateddate(Calendar.getInstance());
+//		user.setLastlogin(Calendar.getInstance());
+//		user.setRoles(new ArrayList<>());
+//		user.getRoles().add(role);
+//		LoginType lt = new LoginType();
+//		lt.setId(1);
+//		lt.setName("taranui");
+//		user.setLogintype(lt);
+//		ubl.create(user);
+//		List<User> users = ubl.listMembers("EAMV");
+//
+//		for (User u : users)
+//			response.getWriter().append("User: " + u.toString() + "\n");
+//		// response.getWriter().append("User added:
+//		// ").append(ubl.read(1).toString());
+//
+//		UserPictureComment upc = new UserPictureComment();
+//		upc.setUserId(user.getUserid());
+//		upc.setMessage("woopdedoo");
+//		upc.setPictureId(14245);
+//		upc.setCreatedDate(LocalDateTime.now());
+//		upcl.create(upc);
+//		
+//		
+//		response.getWriter().append("UserPictureComment: " + upcl.searchCommentsByUserId(0));
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
