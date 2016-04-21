@@ -66,21 +66,19 @@ public class UserProfiles implements Serializable {
 	}
 
 	public UserProfiles(UserProfile userProfile) {
+		this.userid=userProfile.getUserid();
+		setUser(new Users());
+		getUser().setUserid(userProfile.getUserid());
+		setCreateddate(new Timestamp(userProfile.getCreateddate().getTimeInMillis()));
 		update(userProfile);
 	}
 	
 	public UserProfiles update(UserProfile userProfile){
-		
-		this.userid=userProfile.getUserid();
-		setUser(new Users());
-		getUser().setUserid(userProfile.getUserid());
 		setFirstname(userProfile.getFirstname());
 		setLastname(userProfile.getLastname());
 		if (userProfile.getOrgId() > 0) {
-			setOrganization(new Organizations());
-			getOrganization().setOrgId(userProfile.getOrgId());
+			setOrganization(new Organizations().setOrgId(userProfile.getOrgId()));
 		}
-		setCreateddate(new Timestamp(userProfile.getCreateddate().getTimeInMillis()));
 		setGender(userProfile.getGender());
 		setJob(userProfile.getJob());
 		setDescription(userProfile.getDescription());
@@ -88,14 +86,12 @@ public class UserProfiles implements Serializable {
 		setPhone(userProfile.getPhone());
 		setEducation(userProfile.getEducation());
 		if (userProfile.getCountrycode() != null) {
-			setCountry(new Countries());
-			getCountry().setCountrycode(userProfile.getCountrycode());
+			setCountry(new Countries().setCountrycode(userProfile.getCountrycode()));
 		}
 		setCity(userProfile.getCity());
 		setState(userProfile.getState());
 		if (userProfile.getProfilepictureId() >0) {
-			setProfilepicture(new Pictures());
-			getProfilepicture().setPictureId(userProfile.getProfilepictureId());
+			setProfilepicture(new Pictures().setPictureId(userProfile.getProfilepictureId()));
 		}
 		return this;
 	}

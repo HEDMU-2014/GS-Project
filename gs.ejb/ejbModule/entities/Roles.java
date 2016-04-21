@@ -25,11 +25,11 @@ public class Roles implements Serializable {
 	}
 	
 	public Roles(Role role) {
+		this.roleId = role.getRoleId();
 		update(role);
 	}
 	
 	public Roles update(Role role) {
-		this.roleId = role.getRoleId();
 		this.role = role.getRole();
 		return this;
 	}

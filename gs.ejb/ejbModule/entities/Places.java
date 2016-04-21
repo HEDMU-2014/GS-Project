@@ -32,15 +32,15 @@ public class Places implements Serializable {
     }
 
     public Places(Place place) {
+        placeId = place.getPlaceId();
         update(place);
     }
 
     public Places update(Place place) {
-        placeId = place.getPlaceId();
         placeCity = place.getPlaceCity();
         placeDescription = place.getPlaceDescription();
-        placeIsoCountry = new Countries().update(place.getPlaceIsoCountry());
-        createdBy = new Users().update(place.getCreatedBy());
+        placeIsoCountry = new Countries(place.getPlaceIsoCountry());
+        createdBy = new Users(place.getCreatedBy());
         createdDate = place.getCreatedDate();
 
         return this;

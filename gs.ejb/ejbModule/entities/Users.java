@@ -69,16 +69,16 @@ public class Users implements Serializable {
 
 	public Users(User user) {
 		super();
+		this.userid = user.getUserid();
+		this.userprofile = new UserProfiles(user.getUserprofile());
+		this.userprofile.setUserid(user.getUserid());
+		this.userprofile.setUser(this);
 		update(user);
 	}
 
 	public Users update(User user) {
-		this.userid = user.getUserid();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.userprofile = new UserProfiles(user.getUserprofile());
-		this.userprofile.setUserid(user.getUserid());
-		this.userprofile.setUser(this);
 		this.logintype = new LoginTypes(user.getLogintype());
 		this.lastlogin = new Timestamp(user.getLastlogin().getTimeInMillis());
 		this.roles = new ArrayList<>();

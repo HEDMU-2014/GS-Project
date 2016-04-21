@@ -25,11 +25,11 @@ public class Interests implements Serializable {
     }
 
     public Interests(Interest interest) {
+        this.interestId = interest.getInterestId();
         update(interest);
     }
 
     public Interests update(Interest interest) {
-        this.interestId = interest.getInterestId();
         this.interestDescription = interest.getInterestDescription();
         this.interestHeader = interest.getInterestHeader();
         this.userId = interest.getUserId();

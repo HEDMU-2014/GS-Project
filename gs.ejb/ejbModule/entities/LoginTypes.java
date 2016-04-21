@@ -26,12 +26,12 @@ public class LoginTypes implements Serializable {
 	}  
 	
 	public LoginTypes(LoginType logintype) {
-		super();
+		this();
+		this.id = logintype.getId();
 		update(logintype);
 	}
 	   
 	public LoginTypes update(LoginType logintype) {
-		this.id = logintype.getId();
 		this.name = logintype.getName();
 		return this;
 	}

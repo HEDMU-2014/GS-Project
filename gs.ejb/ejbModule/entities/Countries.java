@@ -48,8 +48,9 @@ public class Countries implements Serializable {
 		return this.countrycode;
 	}
 	
-	public void setCountrycode(String countrycode){
+	public Countries setCountrycode(String countrycode){
 		this.countrycode = countrycode;
+		return this;
 	}
 	
 	public String getCountryname(){

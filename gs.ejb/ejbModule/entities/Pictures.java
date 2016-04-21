@@ -76,8 +76,9 @@ public class Pictures implements Serializable {
 		return pictureId;
 	}
 
-	public void setPictureId(long pictureId) {
+	public Pictures setPictureId(long pictureId) {
 		this.pictureId = pictureId;
+		return this;
 	}
 
 	public String getImgUrl() {

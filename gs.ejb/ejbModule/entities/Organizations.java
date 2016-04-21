@@ -40,11 +40,11 @@ public class Organizations implements Serializable {
 	} 
 	
 	public Organizations(Organization org) {
+		this.orgId = org.getOrgId();
 		update(org);
 	} 
 	
 	public Organizations update(Organization org) {
-		this.orgId = org.getOrgId();
 		this.name = org.getName();
 		this.address = org.getAddress();
 		this.zip = org.getZip();
@@ -64,8 +64,9 @@ public class Organizations implements Serializable {
 		return this.orgId;
 	}
 
-	public void setOrgId(int orgId) {
+	public Organizations setOrgId(int orgId) {
 		this.orgId = orgId;
+		return this;
 	}
 	
 	public String getName() {
