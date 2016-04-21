@@ -90,9 +90,10 @@ public class UserAlbums implements Serializable {
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
-		for (Pictures picture : pictures) {
+		for (Pictures picture : this.getPictures()) {
 			ua.getPictures().add(picture.map(new Picture()));
 		}
+		ua.setPictures(new ArrayList<>());
 		ua.setCreatedDate(this.getCreatedDate());
 		ua.setPublicOA(this.getPublicOA());
 		return ua;

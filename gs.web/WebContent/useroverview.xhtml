@@ -18,16 +18,21 @@
 				actionListener="#{userOverviewView.search}" ajax="false" />
 		</h:panelGrid>
 
-		<p:dataTable id="table" var="user"
+		<p:dataTable id="table" var="userwrapper"
 			selection="#{userOverviewView.selectedUser}"
-			rowKey="#{user.id}" value="#{userOverviewView.users}">
+			rowKey="#{userwrapper.id}" value="#{userOverviewView.users}">
 			<p:column selectionMode="single" style="width:16px;text-align:center" />
-			<p:column headerText="Email">
-				<h:outputText value="#{user.user.email}" />
+			<p:column headerText="Firstname">
+				<h:outputText value="#{userwrapper.user.userprofile.firstname}" />
 			</p:column>
-
+			<p:column headerText="Lastname">
+				<h:outputText value="#{userwrapper.user.userprofile.lastname}" />
+			</p:column>
+			<p:column headerText="Email">
+				<h:outputText value="#{userwrapper.user.email}" />
+			</p:column>
 			<p:column headerText="LoginType">
-				<h:outputText value="#{user.user.logintype.name}" />
+				<h:outputText value="#{userwrapper.user.logintype.name}" />
 			</p:column>
 			<f:facet name="footer">
 				<p:commandButton process="table" icon="ui-icon-search"

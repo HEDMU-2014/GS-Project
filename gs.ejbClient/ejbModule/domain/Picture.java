@@ -11,7 +11,7 @@ public class Picture {
 	
 	private String description;
 	
-	private long userId;
+	private long userProfileId;
 	
 	private List<UserAlbum> userAlbums;
 	
@@ -41,12 +41,12 @@ public class Picture {
 		this.description = description;
 	}
 
-	public long getUserId() {
-		return userId;
+	public long getUserProfileId() {
+		return userProfileId;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUserProfileId(long userId) {
+		this.userProfileId = userId;
 	}
 
 	public List<UserAlbum> getUserAlbums() {
