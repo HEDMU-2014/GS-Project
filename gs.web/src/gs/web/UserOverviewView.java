@@ -45,7 +45,7 @@ public class UserOverviewView implements Serializable {
 	public void search() {
 		logger.info("Search : " + searchstring);
 		List<User> users = ejb.searchUsers(searchstring);
-		this.users = new ArrayList<UserWrapper>();
+		this.users = new ArrayList<>();
 		int i=0;
 		for (User user : users) {
 			UserWrapper uw = new UserWrapper();

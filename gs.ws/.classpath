@@ -8,5 +8,5 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/gs.ejbClient"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javaee-api-7.0"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

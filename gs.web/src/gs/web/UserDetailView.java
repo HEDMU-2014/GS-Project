@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import beans.UsersBeanLocal;
 import org.jboss.logging.Logger;
 
 import beans.UsersBeanRemote;
@@ -22,7 +23,7 @@ import domain.User;
 @SessionScoped
 public class UserDetailView implements Serializable {
 	private static final long serialVersionUID = 3193006383857093L;
-	@EJB private UsersBeanRemote ejb;
+	@EJB private UsersBeanLocal ejb;
 	@Inject UserOverviewView overview;
 	private Logger logger = Logger.getLogger(UserDetailView.class);
 	private User user;

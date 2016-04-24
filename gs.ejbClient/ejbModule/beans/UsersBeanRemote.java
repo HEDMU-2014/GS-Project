@@ -6,10 +6,6 @@ import javax.ejb.Remote;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by jan-h on 21-04-2016.
- */
-
 @Remote
 public interface UsersBeanRemote {
 
