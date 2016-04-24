@@ -2,7 +2,7 @@ package domain;
 
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Place implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,11 +12,11 @@ public class Place implements Serializable {
     private String placeDescription;
     private Country placeIsoCountry;
     private User createdBy;
-    private Timestamp createdDate;
+    private Date createdDate;
 
     public Place() {}
 
-    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, User createdBy, Timestamp createdDate) {
+    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, User createdBy, Date createdDate) {
         this.placeId = placeId;
         this.placeCity = placeCity;
         this.placeDescription = placeDescription;
@@ -65,11 +65,11 @@ public class Place implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Timestamp getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 

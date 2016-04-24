@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Local;
@@ -16,5 +17,7 @@ public interface PlaceBeanLocal {
     void updatePlace(Place place);
 
     void deletePlace(int placeid);
+
+    List<Place> searchPlaces(String searchString);
 
 }

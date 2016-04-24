@@ -1,6 +1,8 @@
 package beans;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -49,4 +51,17 @@ public class PlaceBean implements PlaceBeanRemote, PlaceBeanLocal {
             throw new RuntimeException("Place with id " + placeid + " not found");
         }
     }
+
+    @Override
+    public List<Place> searchPlaces(String searchString) {
+        List<Place> placeList = new ArrayList<>();
+        List<Places> placesList = em.createNamedQuery("searchPlaces", Places.class)
+                .setParameter("search", "%" + searchString.toUpperCase() + "%")
+                .getResultList();
+        for (Places p : placesList) {
+            placeList.add(p.map(new Place()));
+        }
+        return placeList;
+    }
+
 }

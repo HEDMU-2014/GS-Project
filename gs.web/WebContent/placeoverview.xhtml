@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<body>
+    <h:form>
+        <p:messages id="messages" showDetail="false" autoUpdate="true" />
+
+        <h:panelGrid id="grid" columns="4" cellpadding="5">
+            <p:outputLabel for="search" value="Searchstring:" />
+            <p:inputText id="search"
+                         value="#{userOverviewView.searchstring}" />
+            <p:message for="search" />
+            <p:commandButton id="searchbutton" value="Search"
+                             actionListener="#{userOverviewView.search}" ajax="false" />
+        </h:panelGrid>
+
+        <p:dataGrid id="table" var="placewrapper"
+            selection="#{placeOverviewView.selectedPlace}"
+            rowKey="#{placewrapper.id}" value="#{placeOverviewView.places}">
+            <p:column selectionMode="single" style="width: 16px;text-align: center" />
+            <p:column headerText="City">
+                <h:outputText value="#{placewrapper.place.placeCity}" />
+            </p:column>
+            <p:column headerText="Place description">
+                <h:outputText value="#{placewrapper.place.placeDescription}" />
+            </p:column>
+            <p:column headerText="Country">
+                <h:outputText value="#{placewrapper.place.placeIsoCountry.countryname}" />
+            </p:column>
+            <p:column headerText="Created by">
+                <h:outputText value="#{placewrapper.place.createdBy}" />
+            </p:column>
+            <p:column headerText="Creation date">
+                <h:outputText value="#{placewrapper.place.createdDate}" />
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton process="table" icon="ui-icon-search"
+                                 value="View" action="#{userOverviewView.view}" ajax="false" />
+                <p:commandButton process="table" icon="ui-icon-search"
+                                 value="Edit" action="#{userOverviewView.update}" ajax="false" />
+                <p:commandButton process="table" icon="ui-icon-search"
+                                 value="Create new" action="#{userOverviewView.create}" ajax="false" />
+            </f:facet>
+            <p:ajax event="rowSelect" />
+        </p:dataGrid>
+
+    </h:form>
+</body>
+</html>

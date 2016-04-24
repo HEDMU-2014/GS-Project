@@ -1,18 +1,23 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import domain.Country;
 import domain.Place;
 import domain.User;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "searchPlaces",
+                query = "SELECT p FROM Places p  "
+                        + "WHERE UPPER(p.placeCity) LIKE :search "
+                        + "OR UPPER(p.placeIsoCountry.countryname) LIKE :search "
+                        + "ORDER BY p.placeCity")
+})
+
 public class Places implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -25,7 +30,7 @@ public class Places implements Serializable {
     private Countries placeIsoCountry;
     @ManyToOne
     private Users createdBy;
-    private Timestamp createdDate;
+    private Date createdDate;
 
     public Places() {
         super();
@@ -97,11 +102,11 @@ public class Places implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Timestamp getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
