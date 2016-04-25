@@ -9,16 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.InterestSpaceUserPK;
-import domain.InterestContent;
+import domain.Rating;
 
 /**
- * Entity implementation class for Entity: InterestContents
+ * Entity implementation class for Entity: Ratings
  *
  */
 @Entity
 
 @IdClass(InterestSpaceUserPK.class)
-public class InterestContents implements Serializable {
+public class Ratings implements Serializable {
 
 	@ManyToOne()
 	@Id
@@ -35,27 +35,30 @@ public class InterestContents implements Serializable {
 	@PrimaryKeyJoinColumn(name="interestID", referencedColumnName="interestId")
 	private Interests interest;
 	
+	private int rating;
+	
 	private static final long serialVersionUID = 1L;
 
-	public InterestContents() {
+	public Ratings() {
 		super();
 	}   
-	public InterestContents(InterestContent intCon) {
-		update(intCon);
+	public Ratings(Rating rating) {
+		update(rating);
 	}   
    
 
-	public InterestContents update(InterestContent intCon) {
+	public Ratings update(Rating intCon) {
 //		this.interestID = intCon.getInterestID();
 //		this.placeID = intCon.getPlaceID();
 //		this.userID = intCon.getUserID();
 		return this;
 	}
-	public InterestContent map(InterestContent intCon) {
-		intCon.setInterestID(interest.getInterestId());
-		intCon.setPlaceID(place.getPlaceId());
-		intCon.setUserID(user.getUserid());
-		return intCon;
+	public Rating map(Rating rating) {
+		rating.setInterestID(interest.getInterestId());
+		rating.setPlaceID(place.getPlaceId());
+		rating.setUserID(user.getUserid());
+		rating.setRating(this.rating);
+		return rating;
 	}
 	public Users getUser() {
 		return user;
@@ -74,5 +77,11 @@ public class InterestContents implements Serializable {
 	}
 	public void setInterest(Interests interest) {
 		this.interest = interest;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 }

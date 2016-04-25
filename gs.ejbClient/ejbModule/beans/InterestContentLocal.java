@@ -9,7 +9,7 @@ import domain.InterestContent;
 @Local
 public interface InterestContentLocal {
 
-	Optional<InterestContent> getInterestContent(InterestContent key);
+	Optional<InterestContent> readInterestContent(InterestSpaceUserPK key);
 
 	void createInterestContent(InterestContent key);
 
