@@ -26,5 +26,9 @@ public class UserWrapper {
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
+	@Override
+	public String toString() {
+		return "UserWrapper [id=" + id + ", user=" + user + ", userProfile=" + userProfile + "]";
+	}
 	
 }

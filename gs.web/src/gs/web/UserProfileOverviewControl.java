@@ -31,7 +31,7 @@ public class UserProfileOverviewControl implements Serializable {
 	private Logger logger = Logger.getLogger(UserProfileOverviewControl.class);
 	@PostConstruct
 	public void init() {
-		search("");
+		search(model.getSearchstring());
 	}
 	public void search() {
 		search(model.getSearchstring());
