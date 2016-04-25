@@ -13,13 +13,13 @@
 			<p:outputLabel for="user" value="User:" />
 			<p:inputText id="user" required="true"
 				disabled="true"
-				value="#{userDetailView.user.userid}" />
+				value="#{userDetailModel.user.userid}" />
 			<p:message for="user" />
 
 			<p:outputLabel for="email" value="Email:" />
 			<p:inputText id="email" required="true"
-				disabled="#{userDetailView.notEdit}"
-				value="#{userDetailView.user.email}" />
+				disabled="#{userDetailModel.notEdit}"
+				value="#{userDetailModel.user.email}" />
 			<p:message for="email" />
 
 		</h:panelGrid>
@@ -27,14 +27,14 @@
 		<p:commandButton id="back" value="Back" immediate="true"
 			action="/useroverview.xhtml" ajax="false" />
 		<p:commandButton id="create" value="Create" update="grid"
-			rendered="#{userDetailView.showCreate}"
-			actionListener="#{userDetailView.create}" ajax="false" />
+			rendered="#{userDetailModel.showCreate}"
+			actionListener="#{userDetailControl.create}" ajax="false" />
 		<p:commandButton id="update" value="Update" update="grid"
-			rendered="#{userDetailView.showUpdate}"
-			actionListener="#{userDetailView.update}" ajax="false" />
+			rendered="#{userDetailModel.showUpdate}"
+			actionListener="#{userDetailControl.update}" ajax="false" />
 		<p:commandButton id="delete" value="Delete" update="grid"
-			rendered="#{userDetailView.showDelete}"
-			actionListener="#{userDetailView.delete}" ajax="false" />
+			rendered="#{userDetailModel.showDelete}"
+			actionListener="#{userDetailControl.delete}" ajax="false" />
 	</h:form>
 </body>
 </html>

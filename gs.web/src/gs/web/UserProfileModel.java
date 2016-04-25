@@ -1,7 +1,6 @@
 package gs.web;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,7 +24,7 @@ public class UserProfileModel implements Serializable {
 	@EJB private UserProfilesBeanLocal upbl;
 	@EJB private UsersBeanLocal ubl;
 	private Logger logger = Logger.getLogger(UserProfileModel.class);
-	@Inject UserOverviewView overview;
+	@Inject UserOverviewControl overview;
 	private User user;
 	private UserProfile userProfile;
 	private boolean edit = false;
