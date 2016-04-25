@@ -30,15 +30,6 @@ public class UserProfileControl implements Serializable {
 	@PostConstruct
 	public void init() {
 	}
-	public void delete() {
-		logger.info("method delete entered");
-		try {
-			ubl.delete(model.getUser());
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile deleted"));
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist", "User does not exist"));
-		}
-	}
 	public void update() {
 		logger.info("method update entered");
 		try {
@@ -46,7 +37,7 @@ public class UserProfileControl implements Serializable {
 			upbl.update(model.getUserProfile());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile updated"));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist", "User does not exist"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.toString(), e.getMessage()));
 		}
 	}
 	
