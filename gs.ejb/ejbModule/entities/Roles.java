@@ -6,11 +6,18 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import domain.Role;
 
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "allRoles", 
+			query = "SELECT r FROM Roles r ")
+})
+
 public class Roles implements Serializable {
 	private static final long serialVersionUID = 1L;
 
