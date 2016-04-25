@@ -26,13 +26,13 @@ public class UserImpl implements User {
 			domain.User domain = opt.get();
 			user = new dk.eamv.gs.User();
 			user.setUserid(domain.getUserid());
-			user.setFirstname(domain.getFirstname());
-			user.setLastname(domain.getLastname());
-			user.setEmail(domain.getEmail());
+//			user.setFirstname(domain.getUserprofile().getFirstname());
+//			user.setLastname(domain.getUserprofile().getLastname());
+	 		user.setEmail(domain.getEmail());
 			user.setPassword(domain.getPassword());
 			try {
 				GregorianCalendar cal = new GregorianCalendar();
-				cal.setTimeInMillis(domain.getCreateddate().getTimeInMillis());
+//				cal.setTimeInMillis(domain.getUserprofile().getCreateddate().getTimeInMillis());
 				user.setCreateddate(DatatypeFactory.newInstance().newXMLGregorianCalendar(cal));
 				if (domain.getLastlogin() != null) {
 					cal.setTimeInMillis(domain.getLastlogin().getTimeInMillis());
@@ -42,15 +42,15 @@ public class UserImpl implements User {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (domain.getOrganization() != null) {
-				dk.eamv.gs.Organization org = new dk.eamv.gs.Organization();
-				org.setOrgid(domain.getOrganization().getOrgId());
-				org.setName(domain.getOrganization().getName());
-				org.setAddress(domain.getOrganization().getAddress());
-				org.setZip(domain.getOrganization().getZip());
-				org.setCity(domain.getOrganization().getCity());
-				user.setOrganization(org);
-			}
+//			if (domain.getUserprofile().getOrganization() != null) {
+//				dk.eamv.gs.Organization org = new dk.eamv.gs.Organization();
+//				org.setOrgid(domain.getUserprofile().getOrganization().getOrgId());
+//				org.setName(domain.getUserprofile().getOrganization().getName());
+//				org.setAddress(domain.getUserprofile().getOrganization().getAddress());
+//				org.setZip(domain.getUserprofile().getOrganization().getZip());
+//				org.setCity(domain.getUserprofile().getOrganization().getCity());
+//				user.setOrganization(org);
+//			}
 			for (domain.Role drole : domain.getRoles()) {
 				dk.eamv.gs.Role role = new dk.eamv.gs.Role();
 				role.setRoleid(drole.getRoleId());

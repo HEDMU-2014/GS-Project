@@ -9,39 +9,39 @@ import java.io.Serializable;
 public class InterestContentsPK  implements Serializable {   
    
 	         
-	private long userID;         
-	private int placeID;         
-	private int interestID;
+	private long user;         
+	private int place;         
+	private int interest;
 	private static final long serialVersionUID = 1L;
 
 	public InterestContentsPK() {}
 
 	
 
-	public long getUserID() {
-		return this.userID;
+	public long getUser() {
+		return this.user;
 	}
 
-	public void setUserID(long userID) {
-		this.userID = userID;
-	}
-	
-
-	public int getPlaceID() {
-		return this.placeID;
-	}
-
-	public void setPlaceID(int placeID) {
-		this.placeID = placeID;
+	public void setUser(long userID) {
+		this.user = userID;
 	}
 	
 
-	public int getInterestID() {
-		return this.interestID;
+	public int getPlace() {
+		return this.place;
+	}
+
+	public void setPlace(int placeID) {
+		this.place = placeID;
+	}
+	
+
+	public int getInterest() {
+		return this.interest;
 	}
 
 	public void setInterestID(int interestID) {
-		this.interestID = interestID;
+		this.interest = interestID;
 	}
 	
    
@@ -57,9 +57,9 @@ public class InterestContentsPK  implements Serializable {
 		}
 		InterestContentsPK other = (InterestContentsPK) o;
 		return true
-			&& getUserID() == other.getUserID()
-			&& getPlaceID() == other.getPlaceID()
-			&& getInterestID() == other.getInterestID();
+			&& getUser() == other.getUser()
+			&& getPlace() == other.getPlace()
+			&& getInterest() == other.getInterest();
 	}
 	
 	/*	 
@@ -68,9 +68,9 @@ public class InterestContentsPK  implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((int) (getUserID() ^ (getUserID() >>> 32)));
-		result = prime * result + getPlaceID();
-		result = prime * result + getInterestID();
+		result = prime * result + ((int) (getUser() ^ (getUser() >>> 32)));
+		result = prime * result + getPlace();
+		result = prime * result + getInterest();
 		return result;
 	}
    

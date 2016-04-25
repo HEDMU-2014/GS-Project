@@ -14,26 +14,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 import domain.Picture;
-import domain.User;
 import domain.UserAlbum;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: UserAlbums
  *
  */
 @Entity
-//NamedQuery uncommented untill PictureEntity and related classes is added, else the project wont run.
-//@NamedQuery(name = "searchUserAlbums",
-//	query = "SELECT ua FROM UserAlbumEntity ua "
-//			+ "WHERE UPPER(ua.name) LIKE :search "
-//			+ "OR UPPER(ua.user.firstName) LIKE :search "
-//			+ "OR UPPER(ua.user.lastName) LIKE :search "
-//			+ "ORDER BY ua.user.lastName, ua.name") //Order by user last name, then by album name.
+@NamedQuery(name = "getUserAlbums",
+	query = "SELECT ua FROM UserAlbums ua "
+			+ "WHERE ua.userProfile.lastname LIKE :search ")
 
-public class UserAlbumEntity implements Serializable {
+public class UserAlbums implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -41,18 +39,22 @@ public class UserAlbumEntity implements Serializable {
 	private long albumId;
 	
 	@NotNull
-	private Users user;
+	@ManyToOne
+	@JoinColumn(name="userProfileId")
+	private UserProfiles userProfile;
 	
 	@Column(nullable=false, length=50)
 	private String name;
 	
-	private PictureEntity coverPicture;
+	@ManyToOne
+	@JoinColumn(name="coverPictureId")
+	private Pictures coverPicture;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="AlbumPictures",
 			joinColumns=@JoinColumn(name="albumId", referencedColumnName="albumId"),
-			inverseJoinColumns=@JoinColumn(name="pictureId", referencedColumnName="id"))
-	private Collection<PictureEntity> pictures;
+			inverseJoinColumns=@JoinColumn(name="pictureId", referencedColumnName="pictureId"))
+	private Collection<Pictures> pictures;
 
 	@NotNull
 	private Timestamp createdDate;
@@ -60,22 +62,22 @@ public class UserAlbumEntity implements Serializable {
 	@NotNull
 	private Boolean publicOA;
 	
-	public UserAlbumEntity() {
+	public UserAlbums() {
 		super();
 	}
 	
-	public UserAlbumEntity(UserAlbum ua) {
+	public UserAlbums(UserAlbum ua) {
 		update(ua);
 	}
 
-	public UserAlbumEntity update(UserAlbum ua) {
+	public UserAlbums update(UserAlbum ua) {
 		this.albumId = ua.getAlbumId();
-		this.user = new Users().update(ua.getUser());
+		this.userProfile = new UserProfiles(ua.getUserProfile());
 		this.name = ua.getName();
-		this.coverPicture = new PictureEntity().update(ua.getCoverPicture());
+		this.coverPicture = new Pictures().update(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
 		for(Picture picture : ua.getPictures()) {
-			this.pictures.add(new PictureEntity(picture));
+			this.pictures.add(new Pictures(picture));
 		}
 		this.createdDate = ua.getCreatedDate();
 		this.publicOA = ua.getPublicOA();
@@ -84,11 +86,11 @@ public class UserAlbumEntity implements Serializable {
 	
 	public UserAlbum map(UserAlbum ua) {
 		ua.setAlbumId(this.getAlbumId());
-		ua.setUser(user.map(new User()));
+		ua.setUserProfile(userProfile.map(new UserProfile()));
 		ua.setName(this.getName());
 		ua.setCoverPicture(coverPicture.map(new Picture()));
 		ua.setPictures(new ArrayList<>());
-		for (PictureEntity picture : pictures) {
+		for (Pictures picture : pictures) {
 			ua.getPictures().add(picture.map(new Picture()));
 		}
 		ua.setCreatedDate(this.getCreatedDate());
@@ -104,12 +106,12 @@ public class UserAlbumEntity implements Serializable {
 		this.albumId = albumId;
 	}
 
-	public Users getUser() {
-		return user;
+	public UserProfiles getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	public void setUserProfile(UserProfiles userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public String getName() {
@@ -120,19 +122,19 @@ public class UserAlbumEntity implements Serializable {
 		this.name = name;
 	}
 
-	public PictureEntity getCoverPicture() {
+	public Pictures getCoverPicture() {
 		return coverPicture;
 	}
 
-	public void setCoverPicture(PictureEntity coverPicture) {
+	public void setCoverPicture(Pictures coverPicture) {
 		this.coverPicture = coverPicture;
 	}
 
-	public Collection<PictureEntity> getPictures() {
+	public Collection<Pictures> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(Collection<PictureEntity> pictures) {
+	public void setPictures(Collection<Pictures> pictures) {
 		this.pictures = pictures;
 	}
 

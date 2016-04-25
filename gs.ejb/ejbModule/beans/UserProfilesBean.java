@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -18,33 +20,31 @@ public class UserProfilesBean implements UserProfilesBeanRemote, UserProfilesBea
 	@PersistenceContext
 	private EntityManager em;
 	
-    public UserProfilesBean() {
-    }
-
-	@Override
-	public void createUserProfile(UserProfile profile) {
-		UserProfiles profiles = new UserProfiles(profile);
-		em.persist(profiles);
-	}
-
 	@Override
 	public Optional<UserProfile> readUserProfile(int profileID) {
 		UserProfiles userProfile = em.find(UserProfiles.class, profileID);
 		if (userProfile != null)
-			return Optional.of(userProfile.getDomUserProfile(new UserProfile()));
+			return Optional.of(userProfile.map(new UserProfile()));
 		return Optional.empty();
 	}
 
 	@Override
 	public void updateUserProfile(UserProfile profile) {
-		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
-		userProfile.getEntityUserProfile(profile);
+		UserProfiles userProfile = em.find(UserProfiles.class, profile.getUserid());
+		userProfile.update(profile);
 	}
 
 	@Override
-	public void deleteUserProfile(UserProfile profile) {
-		UserProfiles userProfile = em.find(UserProfiles.class, profile.getId());
-		em.remove(userProfile);
+	public List<UserProfile> searchUserProfiles(String search) {
+		List<UserProfile> users = new ArrayList<>();
+		List<UserProfiles> temp = em.createNamedQuery("searchUserProfiles", UserProfiles.class)
+				.setParameter("search", "%" + search.toUpperCase() + "%")
+				.getResultList();
+		
+		for (UserProfiles u : temp)
+			users.add(u.map(new UserProfile()));
+		
+		return users;
 	}
 
 }

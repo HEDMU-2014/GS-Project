@@ -64,9 +64,9 @@ public class Organizations implements Serializable {
 		return this.orgId;
 	}
 
-//	public void setOrgId(int OrgId) {
-//		this.OrgId = OrgId;
-//	}
+	public void setOrgId(int orgId) {
+		this.orgId = orgId;
+	}
 	
 	public String getName() {
 		return this.name;
