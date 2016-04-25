@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<body>
+	<h:form>
+		<p:messages id="messages" showDetail="false" autoUpdate="true" />
+
+		<h:panelGrid id="grid" columns="3" cellpadding="5">
+			<p:outputLabel for="user" value="User:" />
+			<p:inputText id="user" required="true"
+				disabled="true"
+				value="#{userDetailView.user.userid}" />
+			<p:message for="user" />
+
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" required="true"
+				disabled="#{userDetailView.notEdit}"
+				value="#{userDetailView.user.email}" />
+			<p:message for="email" />
+
+		</h:panelGrid>
+
+		<p:commandButton id="back" value="Back" immediate="true"
+			action="/useroverview.xhtml" ajax="false" />
+		<p:commandButton id="create" value="Create" update="grid"
+			rendered="#{userDetailView.showCreate}"
+			actionListener="#{userDetailView.create}" ajax="false" />
+		<p:commandButton id="update" value="Update" update="grid"
+			rendered="#{userDetailView.showUpdate}"
+			actionListener="#{userDetailView.update}" ajax="false" />
+		<p:commandButton id="delete" value="Delete" update="grid"
+			rendered="#{userDetailView.showDelete}"
+			actionListener="#{userDetailView.delete}" ajax="false" />
+	</h:form>
+</body>
+</html>

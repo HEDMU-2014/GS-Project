@@ -8,7 +8,7 @@ public class UserAlbum {
 	
 	private long albumId;
 	
-	private User user;
+	private UserProfile userProfile;
 	
 	private String name;
 	
@@ -28,12 +28,12 @@ public class UserAlbum {
 		this.albumId = albumId;
 	}
 
-	public User getUser() {
-		return user;
+	public UserProfile getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	public String getName() {

@@ -37,7 +37,7 @@ public class UserPictureCommentsBean implements UserPictureCommentsBeanRemote, U
 		if (jpaUpc != null)
 			jpaUpc.update(comment);
 		else
-			throw new RuntimeException("Comment with id " + jpaUpc.getId() + " not found");
+			throw new RuntimeException("Comment with id " + comment.getId() + " not found");
 		
 	}
 

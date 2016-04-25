@@ -1,6 +1,7 @@
 package gs.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.OrganizationBeanLocal;
 import beans.RolesBeanLocal;
+import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
+import domain.LoginType;
+import domain.Organization;
+import domain.Role;
 import domain.User;
 
 /**
@@ -22,6 +27,7 @@ import domain.User;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal userejb;
+	@EJB private UserProfilesBeanLocal profejb;
 	@EJB private RolesBeanLocal roleejb;
 	@EJB private OrganizationBeanLocal orgejb;
 
@@ -31,16 +37,21 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<User> users = userejb.listMembers("eamv");
 		response.getWriter().append("Users : " + users);
-//		User user = userejb.getUser(2).get();
-//		user.setEmail("fkj@eamv.dk");
-//		user.setFirstname("Flemming Koch");
-//		user.setLastname("Jensen");
+		User user = userejb.read(1).get();
+//		user.setLogintype(new LoginType());
+		user.getLogintype().setId(3);
+		userejb.update(user);
+//		user.setUserid(0);
+//		user.setEmail("awp@eamv.dk");
+//		user.getUserprofile().setFirstname("Anders");
+//		user.getUserprofile().setLastname("Petersen");
+//		user.getUserprofile().setOrgId(1);
 //		user.setRoles(new ArrayList<>());
 //		user.getRoles().add(new Role(2, "?"));
-//		userejb.createUser(user);
+//		userejb.create(user);
 //		Organization org = orgejb.getOrganization(1).get();
 //		response.getWriter().append("Org: " + org);
-//		Role role = roleejb.getRole(1).get();
+//		Role role = roleejb.read(1).get();
 //		response.getWriter().append("Role: " + role);
 	}
 
