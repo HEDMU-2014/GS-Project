@@ -5,59 +5,49 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.logging.Logger;
+
 import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
-import domain.User;
-import domain.UserProfile;
 
 @Named
 @SessionScoped
 public class UserProfileControl implements Serializable {
 	
-	@Inject UserProfileModel pModel;
+	@Inject UserProfileModel model;
 
 	private static final long serialVersionUID = 1L;
 
+	@EJB private UsersBeanLocal ubl;
+	@EJB private UserProfilesBeanLocal upbl;
+	private Logger logger = Logger.getLogger(UserProfileControl.class);
+	
 	@PostConstruct
 	public void init() {
-		pModel.init();
 	}
-	
+	public void delete() {
+		logger.info("method delete entered");
+		try {
+			ubl.delete(model.getUser());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile deleted"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist", "User does not exist"));
+		}
+	}
 	public void update() {
-		pModel.update();
+		logger.info("method update entered");
+		try {
+			ubl.update(model.getUser());
+			upbl.update(model.getUserProfile());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile updated"));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User does not exist", "User does not exist"));
+		}
 	}
 	
-	public boolean isEdit() {
-		return pModel.isEdit();
-	}
-	public void setEdit(boolean edit) {
-		pModel.setEdit(edit);
-	}
-	
-	public boolean isNotEdit() {
-		return pModel.isNotEdit();
-	}
-
-	public User getUser() {
-		return pModel.getUser();
-	}
-
-	public void setUser(User user) {
-		pModel.setUser(user);
-	}
-
-	public UserProfile getUserProfile() {
-		return pModel.getUserProfile();
-	}
-
-	public void setUserProfile(UserProfile userProfile) {
-		pModel.setUserProfile(userProfile);
-	}
-
-	public boolean isShowUpdate() {
-		return pModel.isShowUpdate();
-	}
 }

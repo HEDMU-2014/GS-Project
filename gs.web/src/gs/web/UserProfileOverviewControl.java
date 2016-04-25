@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.logging.Logger;
+
+import beans.UserProfilesBeanLocal;
+import beans.UsersBeanLocal;
 import domain.User;
 
 @Named
@@ -18,44 +23,51 @@ import domain.User;
 public class UserProfileOverviewControl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Inject UserProfileOverviewModel pOModel;
+	@Inject UserProfileOverviewModel model;
 
+	@EJB private UsersBeanLocal ubl;
+	@EJB private UserProfilesBeanLocal upbl;
+	@Inject UserProfileModel detail;
+	private Logger logger = Logger.getLogger(UserProfileOverviewControl.class);
 	@PostConstruct
 	public void init() {
-		pOModel.init();
+		search("");
 	}
 	public void search() {
-		pOModel.search();
+		search(model.getSearchstring());
 	}
-	
+	public void search(String s){
+		logger.info("Search : " + model.getSearchstring());
+		List<User> users = ubl.searchUsers(model.getSearchstring());
+		model.setUsers(new ArrayList<UserWrapper>());
+		int i=0;
+		for (User user : users) {
+			UserWrapper uw = new UserWrapper();
+			uw.setId(i++);
+			uw.setUser(user);
+			uw.setUserProfile(upbl.read(user.getUserid()).get());
+			model.getUsers().add(uw);
+		}
+		
+	}
 	public String view() {
-		return pOModel.view();
+		return viewOrUpdate(false);
 	}
 
 	public String update() {
-		return pOModel.update();
+		return viewOrUpdate(true);
 	}
-	public List<UserWrapper> getUsers() {
-		return pOModel.getUsers();
-	}
-
-	public void setUsers(List<UserWrapper> users) {
-		pOModel.setUsers(users);
-	}
-
-	public UserWrapper getSelectedUser() {
-		return pOModel.getSelectedUser();
-	}
-
-	public void setSelectedUser(UserWrapper selectedUser) {
-		pOModel.setSelectedUser(selectedUser);
-	}
-
-	public String getSearchstring() {
-		return pOModel.getSearchstring();
-	}
-
-	public void setSearchstring(String searchstring) {
-		pOModel.setSearchstring(searchstring);
+	public String viewOrUpdate(boolean update){
+		logger.info("Selected user : " + model.getSelectedUser());
+		if (model.getSelectedUser() != null && model != null) {
+			detail.setUser(model.getSelectedUser().getUser());
+			detail.setUserProfile(model.getSelectedUser().getUserProfile());
+			detail.setEdit(update);
+			model.setSelectedUser(null);
+			return "/userprofile.xhtml";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
+			return null;
+		}
 	}
 }

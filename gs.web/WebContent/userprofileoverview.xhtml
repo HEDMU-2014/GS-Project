@@ -12,15 +12,15 @@
 		<h:panelGrid id="grid" columns="4" cellpadding="5">
 			<p:outputLabel for="search" value="Searchstring:" />
 			<p:inputText id="search"
-				value="#{userOverviewView.searchstring}" />
+				value="#{userProfileOverviewModel.searchstring}" />
 			<p:message for="search" />
 			<p:commandButton id="searchbutton" value="Search"
-				actionListener="#{userOverviewView.search}" ajax="false" />
+				actionListener="#{userProfileOverviewControl.search}" ajax="false" />
 		</h:panelGrid>
 
 		<p:dataTable id="table" var="userwrapper"
-			selection="#{userOverviewView.selectedUser}"
-			rowKey="#{userwrapper.id}" value="#{userOverviewView.users}">
+			selection="#{userProfileOverviewModel.selectedUser}"
+			rowKey="#{userwrapper.id}" value="#{userProfileOverviewModel.users}">
 			<p:column selectionMode="single" style="width:16px;text-align:center" />
 			<p:column headerText="Firstname">
 				<h:outputText value="#{userwrapper.user.userprofile.firstname}" />
@@ -36,9 +36,9 @@
 			</p:column>
 			<f:facet name="footer">
 				<p:commandButton process="table" icon="ui-icon-search"
-					value="View" action="#{userOverviewView.view}" ajax="false" />
+					value="View" action="#{userProfileOverviewControl.view}" ajax="false" />
 				<p:commandButton process="table" icon="ui-icon-search"
-					value="Edit" action="#{userOverviewView.update}" ajax="false" />
+					value="Edit" action="#{userProfileOverviewControl.update}" ajax="false" />
 			</f:facet>
 			<p:ajax event="rowSelect" />
 		</p:dataTable>

@@ -13,92 +13,106 @@
 		<h:panelGrid id="grid" columns="3" cellpadding="5">
 			<p:outputLabel for="user" value="User:" />
 			<p:inputText id="user" required="true" disabled="true"
-				value="#{userProfileView.user.userid}" />
+				value="#{userProfileModel.user.userid}" />
 			<p:message for="user" />
 
 			<p:outputLabel for="email" value="Email:" />
 			<p:inputText id="email" required="true"
-				disabled="#{userProfileView.notEdit}"
-				value="#{userProfileView.user.email}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.user.email}" />
 			<p:message for="email" />
 
 			<p:outputLabel for="firstname" value="First name:" />
 			<p:inputText id="firstname"
-				value="#{userProfileView.userProfile.firstname}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.firstname}" />
 			<p:message for="firstname" />
 
 			<p:outputLabel for="lastname" value="Last name:" />
 			<p:inputText id="lastname"
-				value="#{userProfileView.userProfile.lastname}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.lastname}" />
 			<p:message for="lastname" />
 
 			<p:outputLabel for="orgId" value="orgId:" />
 			<p:inputText id="orgId"
-				value="#{userProfileView.userProfile.orgId}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.orgId}" />
 			<p:message for="orgId" />
 			
 			<p:outputLabel for="gender" value="gender:" />
 			<p:inputText id="gender"
-				value="#{userProfileView.userProfile.gender}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.gender}" />
 			<p:message for="gender" />
 			
 			<p:outputLabel for="job" value="job:" />
 			<p:inputText id="job"
-				value="#{userProfileView.userProfile.job}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.job}" />
 			<p:message for="job" />
 			
 			<p:outputLabel for="description" value="description:" />
 			<p:inputText id="description"
-				value="#{userProfileView.userProfile.description}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.description}" />
 			<p:message for="description" />
 			
 			<p:outputLabel for="website" value="website:" />
 			<p:inputText id="website"
-				value="#{userProfileView.userProfile.website}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.website}" />
 			<p:message for="website" />
 			
 			<p:outputLabel for="phone" value="phone:" />
 			<p:inputText id="phone"
-				value="#{userProfileView.userProfile.phone}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.phone}" />
 			<p:message for="phone" />
 			
 			<p:outputLabel for="education" value="education:" />
 			<p:inputText id="education"
-				value="#{userProfileView.userProfile.education}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.education}" />
 			<p:message for="education" />
 			
 			<p:outputLabel for="location" value="location:" />
 			<p:inputText id="location"
-				value="#{userProfileView.userProfile.location}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.location}" />
 			<p:message for="location" />
 			
 			<p:outputLabel for="countrycode" value="countrycode:" />
 			<p:inputText id="countrycode"
-				value="#{userProfileView.userProfile.countrycode}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.countrycode}" />
 			<p:message for="countrycode" />
 			
 			<p:outputLabel for="city" value="city:" />
 			<p:inputText id="city"
-				value="#{userProfileView.userProfile.city}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.city}" />
 			<p:message for="city" />
 			
 			<p:outputLabel for="state" value="state:" />
 			<p:inputText id="state"
-				value="#{userProfileView.userProfile.state}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.state}" />
 			<p:message for="state" />
 			
 			<p:outputLabel for="profilepictureId" value="profilepictureId:" />
 			<p:inputText id="profilepictureId"
-				value="#{userProfileView.userProfile.profilepictureId}" />
+				disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.profilepictureId}" />
 			<p:message for="profilepictureId" />
 			
 		</h:panelGrid>
 
 		<p:commandButton id="back" value="Back" immediate="true"
-			action="/useroverview.xhtml" ajax="false" />
+			action="/userprofileoverview.xhtml" ajax="false" />
 		<p:commandButton id="update" value="Update" update="grid"
-			rendered="#{userProfileView.showUpdate}"
-			actionListener="#{userProfileView.update}" ajax="false" />
+			rendered="#{userProfileModel.showUpdate}"
+			actionListener="#{userProfileControl.update}" ajax="false" />
 
 	</h:form>
 </body>
