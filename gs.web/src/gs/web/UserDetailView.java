@@ -91,11 +91,11 @@ public class UserDetailView implements Serializable {
 		return user.getUserid() > 0;
 	}
 
-	public User getUser() {
+	public User getPlace() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setPlace(User user) {
 		this.user = user;
 	}
 

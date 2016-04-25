@@ -45,6 +45,14 @@ public class PlaceDetailView implements Serializable {
         }
     }
 
+    public void delete() {
+
+    }
+
+    public void update() {
+
+    }
+
     public boolean isEdit() {
         return edit;
     }
@@ -66,11 +74,11 @@ public class PlaceDetailView implements Serializable {
         return place.getPlaceId() > 0;
     }
 
-    public Place getUser() {
+    public Place getPlace() {
         return place;
     }
 
-    public void setUser(Place place) {
+    public void setPlace(Place place) {
         this.place = place;
     }
 }
