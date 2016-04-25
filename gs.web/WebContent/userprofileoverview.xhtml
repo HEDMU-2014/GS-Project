@@ -7,6 +7,7 @@
 <h:head></h:head>
 <body>
 	<h:form>
+	<h1>UserProfile Overview</h1>
 		<p:messages id="messages" showDetail="false" autoUpdate="true" />
 
 		<h:panelGrid id="grid" columns="4" cellpadding="5">
@@ -19,9 +20,9 @@
 		</h:panelGrid>
 
 		<p:dataTable id="table" var="userwrapper"
-			selection="#{userProfileOverviewModel.selectedUser}"
+			selectionMode="single" selection="#{userProfileOverviewModel.selectedUser}"
 			rowKey="#{userwrapper.id}" value="#{userProfileOverviewModel.users}">
-			<p:column selectionMode="single" style="width:16px;text-align:center" />
+<!-- 			<p:column selectionMode="single" style="width:16px;text-align:center" /> -->
 			<p:column headerText="Firstname">
 				<h:outputText value="#{userwrapper.user.userprofile.firstname}" />
 			</p:column>

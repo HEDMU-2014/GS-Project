@@ -29,15 +29,6 @@ public class UserOverviewControl implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-//		List<User> users = ejb.searchUsers("");
-//		this.users = new ArrayList<UserWrapper>();
-//		int i=0;
-//		for (User user : users) {
-//			UserWrapper uw = new UserWrapper();
-//			uw.setId(i++);
-//			uw.setUser(user);
-//			this.users.add(uw);
-//		}
 	}
 
 	public void search() {

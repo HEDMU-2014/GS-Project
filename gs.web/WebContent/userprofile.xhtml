@@ -8,9 +8,10 @@
 <h:head></h:head>
 <body>
 	<h:form>
+	<h1>User Profile</h1>
 		<p:messages id="messages" showDetail="false" autoUpdate="true" />
 
-		<h:panelGrid id="grid" columns="3" cellpadding="5">
+		<h:panelGrid id="grid" columns="6" cellpadding="5">
 			<p:outputLabel for="user" value="User:" />
 			<p:inputText id="user" required="true" disabled="true"
 				value="#{userProfileModel.user.userid}" />

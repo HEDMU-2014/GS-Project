@@ -29,16 +29,17 @@ public class UserProfileOverviewControl implements Serializable {
 	@EJB private UserProfilesBeanLocal upbl;
 	@Inject UserProfileModel detail;
 	private Logger logger = Logger.getLogger(UserProfileOverviewControl.class);
+	
 	@PostConstruct
 	public void init() {
-		search(model.getSearchstring());
+		search("");
 	}
 	public void search() {
 		search(model.getSearchstring());
 	}
 	public void search(String s){
-		logger.info("Search : " + model.getSearchstring());
-		List<User> users = ubl.searchUsers(model.getSearchstring());
+		logger.info("Search : " + s);
+		List<User> users = ubl.searchUsers(s);
 		model.setUsers(new ArrayList<UserWrapper>());
 		int i=0;
 		for (User user : users) {
