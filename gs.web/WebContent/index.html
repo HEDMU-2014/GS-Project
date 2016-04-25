@@ -6,9 +6,9 @@
 <script type="text/javascript" src="jquery-1.4.js"></script>
 <script type="text/javascript">
 $(function() {
-	$('#sub1').load('ajax.html');
+	$('#sub1').load('/bootcloset/phase.1.html');
 	$('#sub1').change(function(event) {
-		$.get('ajax.html',
+		$.get('/bootcloset/phase.1.html',
 			function(response) {
 			$('#sub1').html(response);
 			}
@@ -19,7 +19,6 @@ $(function() {
 </head>
 <body>
 	<div id='other'>
-	<h2>this is from index.html</h2>
 		<div id='sub1'></div>
 	</div>
 </body>

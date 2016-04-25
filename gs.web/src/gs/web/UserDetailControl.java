@@ -20,11 +20,11 @@ import domain.User;
 
 @Named()
 @SessionScoped
-public class UserDetailView implements Serializable {
+public class UserDetailControl implements Serializable {
 	private static final long serialVersionUID = 3193006383857093L;
 	@EJB private UsersBeanLocal ejb;
 	@Inject UserOverviewView overview;
-	private Logger logger = Logger.getLogger(UserDetailView.class);
+	private Logger logger = Logger.getLogger(UserDetailControl.class);
 	private User user;
 	private boolean edit = false;
 	

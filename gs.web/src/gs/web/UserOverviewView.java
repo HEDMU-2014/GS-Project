@@ -23,8 +23,7 @@ import domain.UserProfile;
 public class UserOverviewView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal ejb;
-	@Inject UserDetailView detail;
-	@Inject UserProfileView profile;
+	@Inject UserDetailControl detail;
 	private Logger logger = Logger.getLogger(UserOverviewView.class);
 	private String searchstring;
 	private List<UserWrapper> users;
@@ -32,15 +31,15 @@ public class UserOverviewView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-//		List<User> users = ejb.searchUsers("");
-//		this.users = new ArrayList<UserWrapper>();
-//		int i=0;
-//		for (User user : users) {
-//			UserWrapper uw = new UserWrapper();
-//			uw.setId(i++);
-//			uw.setUser(user);
-//			this.users.add(uw);
-//		}
+		List<User> users = ejb.searchUsers("");
+		this.users = new ArrayList<UserWrapper>();
+		int i=0;
+		for (User user : users) {
+			UserWrapper uw = new UserWrapper();
+			uw.setId(i++);
+			uw.setUser(user);
+			this.users.add(uw);
+		}
 	}
 
 	public void search() {
@@ -78,33 +77,6 @@ public class UserOverviewView implements Serializable {
 			detail.init();
 			this.selectedUser = null;
 			return "/userdetail.xhtml";
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
-			return null;
-		}
-	}
-	public String viewProfile(){
-		logger.info("Selected user : " + selectedUser);
-	if (this.selectedUser != null && detail != null) {
-		profile.setUser(this.selectedUser.getUser());
-		profile.setEdit(false);
-		profile.init();
-		this.selectedUser = null;
-		return "/userprofile.xhtml";
-	} else {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
-		return null;
-	}
-	}
-	
-	public String updateProfile(){
-		logger.info("Selected user : " + selectedUser);
-		if (this.selectedUser != null && detail != null) {
-			profile.setUser(this.selectedUser.getUser());
-			profile.setEdit(true);
-			profile.init();
-			this.selectedUser = null;
-			return "/userprofile.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
 			return null;

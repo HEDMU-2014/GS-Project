@@ -20,11 +20,11 @@ import domain.UserProfile;
 
 @Named
 @SessionScoped
-public class UserProfileView implements Serializable {
+public class UserProfileModel implements Serializable {
 	
 	@EJB private UserProfilesBeanLocal upbl;
 	@EJB private UsersBeanLocal ubl;
-	private Logger logger = Logger.getLogger(UserProfileView.class);
+	private Logger logger = Logger.getLogger(UserProfileModel.class);
 	@Inject UserOverviewView overview;
 	private User user;
 	private UserProfile userProfile;
