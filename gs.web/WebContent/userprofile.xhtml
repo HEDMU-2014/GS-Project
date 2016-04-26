@@ -8,7 +8,7 @@
 <h:head></h:head>
 <body>
 	<h:form>
-	<h1>User Profile</h1>
+		<h1>User Profile</h1>
 		<p:messages id="messages" showDetail="false" autoUpdate="true" />
 
 		<h:panelGrid id="grid" columns="6" cellpadding="5">
@@ -24,89 +24,81 @@
 			<p:message for="email" />
 
 			<p:outputLabel for="firstname" value="First name:" />
-			<p:inputText id="firstname"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="firstname" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.firstname}" />
 			<p:message for="firstname" />
 
 			<p:outputLabel for="lastname" value="Last name:" />
-			<p:inputText id="lastname"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="lastname" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.lastname}" />
 			<p:message for="lastname" />
 
 			<p:outputLabel for="orgId" value="orgId:" />
-			<p:inputText id="orgId"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="orgId" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.orgId}" />
 			<p:message for="orgId" />
-			
+
 			<p:outputLabel for="gender" value="gender:" />
-			<p:inputText id="gender"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="gender" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.gender}" />
 			<p:message for="gender" />
-			
+
 			<p:outputLabel for="job" value="job:" />
-			<p:inputText id="job"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="job" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.job}" />
 			<p:message for="job" />
-			
+
 			<p:outputLabel for="description" value="description:" />
-			<p:inputText id="description"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="description" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.description}" />
 			<p:message for="description" />
-			
+
 			<p:outputLabel for="website" value="website:" />
-			<p:inputText id="website"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="website" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.website}" />
 			<p:message for="website" />
-			
+
 			<p:outputLabel for="phone" value="phone:" />
-			<p:inputText id="phone"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="phone" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.phone}" />
 			<p:message for="phone" />
-			
+
 			<p:outputLabel for="education" value="education:" />
-			<p:inputText id="education"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="education" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.education}" />
 			<p:message for="education" />
-			
+
 			<p:outputLabel for="location" value="location:" />
-			<p:inputText id="location"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="location" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.location}" />
 			<p:message for="location" />
-			
+
 			<p:outputLabel for="countrycode" value="countrycode:" />
-			<p:inputText id="countrycode"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="countrycode" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.countrycode}" />
 			<p:message for="countrycode" />
-			
+
 			<p:outputLabel for="city" value="city:" />
-			<p:inputText id="city"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="city" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.city}" />
 			<p:message for="city" />
-			
+
 			<p:outputLabel for="state" value="state:" />
-			<p:inputText id="state"
-				disabled="#{userProfileModel.notEdit}"
+			<p:inputText id="state" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.state}" />
 			<p:message for="state" />
-			
+
 			<p:outputLabel for="profilepictureId" value="profilepictureId:" />
 			<p:inputText id="profilepictureId"
 				disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.profilepictureId}" />
 			<p:message for="profilepictureId" />
-			
+			<p:selectManyCheckbox id="roles"
+				value="#{userProfileModel.selectedRoles}" layout="grid" columns="1"
+				disabled="#{userProfileModel.notEdit}">
+				<f:selectItems value="#{userProfileControl.roles}" var="role"
+					itemLabel="#{role.role}" itemValue="#{role}" />
+			</p:selectManyCheckbox>
 		</h:panelGrid>
 
 		<p:commandButton id="back" value="Back" immediate="true"
