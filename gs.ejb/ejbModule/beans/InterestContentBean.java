@@ -17,7 +17,7 @@ public class InterestContentBean implements InterestContentRemote, InterestConte
 	@PersistenceContext private EntityManager em;
 
 	@Override
-	public Optional<InterestContent> getInterestContent(InterestContent key) {
+	public Optional<InterestContent> readInterestContent(InterestSpaceUserPK key) {
 		Optional<InterestContent> opt = Optional.empty();
 		InterestContents intCon = em.find(InterestContents.class, key); 
 		if (intCon != null) {
