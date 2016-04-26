@@ -97,7 +97,7 @@
 				value="#{userProfileModel.selectedRoles}" layout="grid" columns="1"
 				disabled="#{userProfileModel.notEdit}">
 				<f:selectItems value="#{userProfileControl.roles}" var="role"
-					itemLabel="#{role.role}" itemValue="#{role}" />
+					itemLabel="#{role.role}" itemValue="#{role.roleId}" />
 			</p:selectManyCheckbox>
 		</h:panelGrid>
 

@@ -1,6 +1,7 @@
 package gs.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -46,11 +47,11 @@ public class UserProfileControl implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		Role[] selectedRoles = new Role[model.getUser().getRoles().size()];
+		int[] selectedRoles = new int[model.getUser().getRoles().size()];
 		Iterator<Role> iter = model.getUser().getRoles().iterator();
 		int i = 0;
 		while (iter.hasNext()) {
-			selectedRoles[i] = iter.next();
+			selectedRoles[i] = iter.next().getRoleId();
 			i++;
 		}
 		model.setSelectedRoles(selectedRoles);
@@ -59,7 +60,11 @@ public class UserProfileControl implements Serializable {
 	public void update() {
 		logger.info("method update entered");
 		try {
-			model.getUser().setRoles(Arrays.asList(model.getSelectedRoles()));
+			List<Role> selected = new ArrayList<Role>();
+			for(int val : model.getSelectedRoles()){
+				selected.add(rbl.read(val).get());
+			}
+			model.getUser().setRoles(selected);
 			ubl.update(model.getUser());
 			upbl.update(model.getUserProfile());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile updated"));

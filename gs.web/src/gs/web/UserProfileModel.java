@@ -21,7 +21,7 @@ public class UserProfileModel implements Serializable {
 	private Organization org;
 	private Picture picture;
 	private boolean edit = false;
-	private Role[] selectedRoles;
+	private int[] selectedRoles;
 
 	private static final long serialVersionUID = 1L;
 
@@ -73,10 +73,10 @@ public class UserProfileModel implements Serializable {
 	public void setPicture(Picture picture) {
 		this.picture = picture;
 	}
-	public Role[] getSelectedRoles() {
+	public int[] getSelectedRoles() {
 		return selectedRoles;
 	}
-	public void setSelectedRoles(Role[] selectedRoles) {
+	public void setSelectedRoles(int[] selectedRoles) {
 		this.selectedRoles = selectedRoles;
 	}
 	
