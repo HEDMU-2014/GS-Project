@@ -73,16 +73,11 @@
 				value="#{userProfileModel.userProfile.location}" />
 			<p:message for="location" />
 
-<!-- 			<p:outputLabel for="countrycode" value="countrycode:" /> -->
-<!-- 			<p:inputText id="countrycode" disabled="#{userProfileModel.notEdit}" -->
-<!-- 				value="#{userProfileModel.userProfile.countrycode}" /> -->
-<!-- 			<p:message for="countrycode" /> -->
-			<p:outputLabel for="countrylist" value="country: " />
-            <p:selectOneMenu id="countrylist" value="#{userProfileModel.userProfile.countrycode}"  disabled="#{userProfileModel.notEdit}">
-                <f:selectItem itemLabel="#{country.countryname}" itemValue="#{country.countrycode}" noSelectionOption="false" />
-                <f:selectItems value="#{userProfileControl.countries}" />
-            </p:selectOneMenu>
-            <p:message for="countrylist"/>
+			<p:outputLabel for="countrycode" value="countrycode:" />
+			<p:inputText id="countrycode" disabled="#{userProfileModel.notEdit}"
+				value="#{userProfileModel.userProfile.countrycode}" />
+			<p:message for="countrycode" />
+
 			<p:outputLabel for="city" value="city:" />
 			<p:inputText id="city" disabled="#{userProfileModel.notEdit}"
 				value="#{userProfileModel.userProfile.city}" />
@@ -104,6 +99,16 @@
 				<f:selectItems value="#{userProfileControl.roles}" var="role"
 					itemLabel="#{role.role}" itemValue="#{role.roleId}" />
 			</p:selectManyCheckbox>
+			
+			<p:outputLabel for="countrylist" value="country: " />
+			<p:selectOneMenu id="countrylist"
+				value="#{userProfileModel.selectedCountry}"
+				disabled="#{userProfileModel.notEdit}">
+				<f:selectItem itemLabel="#{country.countryname}"
+					itemValue="#{country.countrycode}" noSelectionOption="false" />
+				<f:selectItems value="#{userProfileControl.countries}" />
+			</p:selectOneMenu>
+			<p:message for="countrylist" />
 		</h:panelGrid>
 
 		<p:commandButton id="back" value="Back" immediate="true"
