@@ -22,7 +22,7 @@ public class UserProfileModel implements Serializable {
 	private Picture picture;
 	private boolean edit = false;
 	private int[] selectedRoles;
-
+	private String selectedCountry;
 	private static final long serialVersionUID = 1L;
 
 	public boolean isEdit() {
@@ -78,6 +78,12 @@ public class UserProfileModel implements Serializable {
 	}
 	public void setSelectedRoles(int[] selectedRoles) {
 		this.selectedRoles = selectedRoles;
+	}
+	public String getSelectedCountry() {
+		return selectedCountry;
+	}
+	public void setSelectedCountry(String selectedCountry) {
+		this.selectedCountry = selectedCountry;
 	}
 	
 }

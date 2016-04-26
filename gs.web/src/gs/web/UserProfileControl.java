@@ -2,7 +2,6 @@ package gs.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,11 +15,13 @@ import javax.inject.Named;
 
 import org.jboss.logging.Logger;
 
+import beans.CountryLocal;
 import beans.OrganizationBeanLocal;
 import beans.PictureBeanLocal;
 import beans.RolesBeanLocal;
 import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
+import domain.Country;
 import domain.Role;
 
 @Named
@@ -42,7 +43,7 @@ public class UserProfileControl implements Serializable {
 	private OrganizationBeanLocal obl;
 	@EJB
 	private PictureBeanLocal pbl;
-
+	@EJB private CountryLocal cbl;
 	private Logger logger = Logger.getLogger(UserProfileControl.class);
 
 	@PostConstruct
@@ -55,6 +56,7 @@ public class UserProfileControl implements Serializable {
 			i++;
 		}
 		model.setSelectedRoles(selectedRoles);
+		model.setSelectedCountry(model.getUser().getUserprofile().getCountrycode());
 	}
 
 	public void update() {
@@ -65,6 +67,7 @@ public class UserProfileControl implements Serializable {
 				selected.add(rbl.read(val).get());
 			}
 			model.getUser().setRoles(selected);
+			model.getUser().getUserprofile().setCountrycode(model.getSelectedCountry());
 			ubl.update(model.getUser());
 			upbl.update(model.getUserProfile());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User + UserProfile updated"));
@@ -77,8 +80,9 @@ public class UserProfileControl implements Serializable {
 	}
 
 	public List<Role> getRoles() {
-		logger.info("method update entered");
 		return rbl.allRoles();
 	}
-
+	public List<Country> getCountries(){
+		return cbl.allCountries();
+	}
 }

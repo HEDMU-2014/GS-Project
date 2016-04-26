@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import domain.Country;
 
@@ -13,6 +15,10 @@ import domain.Country;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "allCountries", 
+			query = "SELECT c FROM Countries c ")
+})
 
 public class Countries implements Serializable {
 	private static final long serialVersionUID = 1L;

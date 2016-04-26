@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -7,48 +9,47 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Country;
+import domain.Role;
 import entities.Countries;
+import entities.Roles;
 
 /**
  * Session Bean implementation class CountryBean
  */
 @Stateless
 public class CountryBean implements CountryRemote, CountryLocal {
-	@PersistenceContext private EntityManager em;
-	
-	
+	@PersistenceContext
+	private EntityManager em;
 
-	
-	
 	@Override
 	public Optional<Country> getCountry(String countrycode) {
-		Countries country = em.find(Countries.class, countrycode); 
+		Countries country = em.find(Countries.class, countrycode);
 		if (country != null) {
 			return Optional.of(country.map(new Country()));
 		} else {
 			return Optional.empty();
 		}
 	}
-	
+
 	@Override
 	public void createCountry(Country country) {
 		Countries entity = new Countries(country);
 		em.persist(entity);
 	}
-	
+
 	@Override
 	public void updateCountry(Country country) {
-		Countries countries = em.find(Countries.class, country.getCountrycode()); 
+		Countries countries = em.find(Countries.class, country.getCountrycode());
 		if (countries != null) {
 			countries.update(country);
 		} else {
 			throw new RuntimeException("Country with code " + country.getCountrycode() + " not found");
 		}
 	}
-	
+
 	@Override
 	public void deleteCountry(Country country) {
-		Countries countries = em.find(Countries.class, country.getCountrycode()); 
+		Countries countries = em.find(Countries.class, country.getCountrycode());
 		if (countries != null) {
 			em.remove(countries);
 		} else {
@@ -56,6 +57,14 @@ public class CountryBean implements CountryRemote, CountryLocal {
 		}
 	}
 
-
+	@Override
+	public List<Country> allCountries() {
+		List<Country> countries = new ArrayList<>();
+		List<Countries> rolese = em.createNamedQuery("allCountries", Countries.class).getResultList();
+		for (Countries r : rolese) {
+			countries.add(r.map(new Country()));
+		}
+		return countries;
+	}
 
 }
