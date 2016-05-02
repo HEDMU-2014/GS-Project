@@ -1,7 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,74 +10,51 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
-import domain.Picture;
-import domain.UserProfile;
+import domain.HasId;
 
 /**
  * Entity implementation class for Entity: UserAlbums
  *
  */
 @Entity
-@NamedQuery(name = "getPictures",
-query = "SELECT p FROM Pictures p "
-		+ "WHERE p.userProfile.lastname LIKE :search ")
+@NamedQueries({
+		@NamedQuery(name = Pictures.listAll, query = "SELECT p FROM Pictures p")
+})
+public class Pictures implements HasId<Long>, Serializable {
+	public static final String listAll = "Pictures.listAll";
 
-public class Pictures implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long pictureId;
-	
+	@Column(name = "pictureId")
+	private Long id;
+
 	@NotNull
 	private String imgUrl;
-	
+
 	@Column(length=200)
-	private String description;
-	
+	private String caption;
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name="userProfileId")
 	private UserProfiles userProfile;
-	
+
 	@NotNull
-	private Timestamp createdDate;
-	
-	public Pictures() {
-		super();
-	}
-	
-	public Pictures(Picture picture) {
-		update(picture);
+	private Date createdDate;
+
+	@Override
+	public Long getId() {
+		return id;
 	}
 
-	public Pictures update(Picture picture) {
-		this.pictureId = picture.getPictureId();
-		this.imgUrl = picture.getImgUrl();
-		this.description = picture.getDescription();
-		this.userProfile = new UserProfiles(picture.getUserProfile());
-		this.createdDate = picture.getCreatedDate();
-		return this;
-	}
-
-	public Picture map(Picture picture) {
-		picture.setPictureId(this.getPictureId());
-		picture.setImgUrl(this.getImgUrl());
-		picture.setDescription(this.getDescription());
-		picture.setUserProfile(this.userProfile.map(new UserProfile()));
-		picture.setCreatedDate(this.getCreatedDate());
-		return picture;
-	}
-
-	public long getPictureId() {
-		return pictureId;
-	}
-
-	public void setPictureId(long pictureId) {
-		this.pictureId = pictureId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getImgUrl() {
@@ -88,12 +65,12 @@ public class Pictures implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getCaption() {
+		return caption;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
 	public UserProfiles getUserProfile() {
@@ -104,11 +81,11 @@ public class Pictures implements Serializable {
 		this.userProfile = user;
 	}
 
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 

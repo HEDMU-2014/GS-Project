@@ -1,25 +1,26 @@
 package domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class Picture {
-	
-	private long pictureId;
-	
+public class Picture implements HasId<Long> {
+
+	private Long id;
+
 	private String imgUrl;
-	
-	private String description;
-	
-	private UserProfile userProfile;
-	
-	private Timestamp createdDate;
 
-	public long getPictureId() {
-		return pictureId;
+	private String caption;
+
+	private Long userProfileId;
+
+	private Date createdDate;
+
+	@Override
+	public Long getId() {
+		return id;
 	}
 
-	public void setPictureId(long id) {
-		this.pictureId = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getImgUrl() {
@@ -30,27 +31,27 @@ public class Picture {
 		this.imgUrl = imgUrl;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getCaption() {
+		return caption;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
-	public UserProfile getUserProfile() {
-		return userProfile;
+	public Long getUserProfileId() {
+		return userProfileId;
 	}
 
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
+	public void setUserProfileId(Long userProfileId) {
+		this.userProfileId = userProfileId;
 	}
 
-	public Timestamp getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 }

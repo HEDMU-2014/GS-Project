@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
+import beans.PictureBean;
 import domain.Picture;
 import domain.UserAlbum;
 import domain.UserProfile;
@@ -74,10 +75,11 @@ public class UserAlbums implements Serializable {
 		this.albumId = ua.getAlbumId();
 		this.userProfile = new UserProfiles(ua.getUserProfile());
 		this.name = ua.getName();
-		this.coverPicture = new Pictures().update(ua.getCoverPicture());
+		PictureBean picBean = new PictureBean();
+		this.coverPicture = picBean.toEntity(ua.getCoverPicture());
 		this.pictures = new ArrayList<>();
 		for(Picture picture : ua.getPictures()) {
-			this.pictures.add(new Pictures(picture));
+			this.pictures.add(picBean.toEntity(picture));
 		}
 		this.createdDate = ua.getCreatedDate();
 		this.publicOA = ua.getPublicOA();
@@ -88,10 +90,11 @@ public class UserAlbums implements Serializable {
 		ua.setAlbumId(this.getAlbumId());
 		ua.setUserProfile(userProfile.map(new UserProfile()));
 		ua.setName(this.getName());
-		ua.setCoverPicture(coverPicture.map(new Picture()));
+		PictureBean picBean = new PictureBean();
+		ua.setCoverPicture(picBean.toDomain(coverPicture));
 		ua.setPictures(new ArrayList<>());
 		for (Pictures picture : pictures) {
-			ua.getPictures().add(picture.map(new Picture()));
+			ua.getPictures().add(picBean.toDomain(picture));
 		}
 		ua.setCreatedDate(this.getCreatedDate());
 		ua.setPublicOA(this.getPublicOA());

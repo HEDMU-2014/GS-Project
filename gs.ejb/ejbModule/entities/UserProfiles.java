@@ -95,7 +95,7 @@ public class UserProfiles implements Serializable {
 		setState(userProfile.getState());
 		if (userProfile.getProfilepictureId() >0) {
 			setProfilepicture(new Pictures());
-			getProfilepicture().setPictureId(userProfile.getProfilepictureId());
+			getProfilepicture().setId(userProfile.getProfilepictureId());
 		}
 		return this;
 	}
@@ -123,7 +123,7 @@ public class UserProfiles implements Serializable {
 		prof.setCity(getCity());
 		prof.setState(getState());
 		if (getProfilepicture() != null) {
-			prof.setProfilepictureId(getProfilepicture().getPictureId());
+			prof.setProfilepictureId(getProfilepicture().getId());
 		}
 		return prof;
 	}
