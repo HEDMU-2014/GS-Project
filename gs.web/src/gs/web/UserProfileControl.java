@@ -83,6 +83,7 @@ public class UserProfileControl implements Serializable {
 		return rbl.allRoles();
 	}
 	public List<Country> getCountries(){
+		
 		return cbl.allCountries();
 	}
 }
