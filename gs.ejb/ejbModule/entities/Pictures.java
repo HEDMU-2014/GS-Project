@@ -40,7 +40,9 @@ public class Pictures implements HasId<Long>, Serializable {
 	@Column(length=200)
 	private String caption;
 
-	@NotNull
+	// TODO: Restore NotNull constraint
+	// Temporarily allow userProfile to be null
+	//@NotNull
 	@ManyToOne
 	@JoinColumn(name="userProfileId")
 	private UserProfiles userProfile;

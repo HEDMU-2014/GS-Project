@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+   <f:viewAction action="#{picturesOverviewCtrl.listAll}"/>
+</f:metadata>
+
+<h:head>
+   <title>Pictures Overview</title>
+</h:head>
+<body>
+<h:form>
+   <p:messages id="messages" showDetail="false" autoUpdate="true"/>
+
+   <h:panelGrid id="grid" columns="4" cellpadding="5">
+      <p:commandButton id="refresh" value="Refresh"
+                       actionListener="#{picturesOverviewCtrl.listAll}" ajax="false"/>
+   </h:panelGrid>
+
+   <p:dataTable id="table" var="picture"
+                selection="#{picturesOverview.selectedPicture}"
+                rowKey="#{picture.id}" value="#{picturesOverview.pictures}">
+      <p:column selectionMode="single" style="width:16px;text-align:center"/>
+      <p:column headerText="Id">
+         <h:outputText value="#{picture.id}"/>
+      </p:column>
+      <p:column headerText="URL">
+         <h:outputText value="#{picture.imgUrl}"/>
+      </p:column>
+      <p:column headerText="Created">
+         <h:outputText value="#{picture.createdDate}"/>
+      </p:column>
+
+      <f:facet name="footer">
+         <p:commandButton process="table" icon="ui-icon-search"
+                          value="View" action="#{picturesOverviewCtrl.view}" ajax="false"/>
+
+         <p:commandButton process="table" icon="ui-icon-search"
+                          value="Edit" action="#{picturesOverviewCtrl.update}" ajax="false"/>
+
+         <p:commandButton process="table" icon="ui-icon-search"
+                          value="New" action="#{picturesOverviewCtrl.create}" ajax="false"/>
+      </f:facet>
+
+      <p:ajax event="rowSelect"/>
+   </p:dataTable>
+</h:form>
+</body>
+</html>
