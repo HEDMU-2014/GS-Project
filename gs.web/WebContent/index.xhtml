@@ -6,9 +6,12 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>Hello!</h:head>
 <body>
-	<p></p>
-	<p:outputLabel value="Hello, world" />
-	<p></p>
-	<p:link outcome="admin/useroverview.xhtml"	value="Oversigt over brugere" />
+	<h:form>
+		<p:outputLabel value="Hello, world" />
+		<p></p>
+		<p:link outcome="admin/useroverview.xhtml" value="Oversigt over brugere"/>
+		<p></p>
+		<p:commandLink action="#{indexControl.logout}" value="Logout"/>
+	</h:form>
 </body>
 </html>

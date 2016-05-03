@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -20,6 +21,7 @@ import domain.UserProfile;
 
 @Named
 @SessionScoped
+@RolesAllowed("admin")
 public class UserOverviewControl implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal ejb;
@@ -59,7 +61,7 @@ public class UserOverviewControl implements Serializable {
 			detail.setUser(model.getSelectedUser().getUser());
 			detail.setEdit(false);
 			model.setSelectedUser(null);
-			return "/userdetail.xhtml";
+			return "/admin/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
 			return null;
@@ -72,7 +74,7 @@ public class UserOverviewControl implements Serializable {
 			detail.setUser(model.getSelectedUser().getUser());
 			detail.setEdit(true);
 			model.setSelectedUser(null);
-			return "/userdetail.xhtml";
+			return "/admin/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
 			return null;
@@ -85,7 +87,7 @@ public class UserOverviewControl implements Serializable {
 			detail.getUser().setUserprofile(new UserProfile());
 			detail.setEdit(true);
 			model.setSelectedUser(null);
-			return "/userdetail.xhtml";
+			return "/admin/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something very wrong"));
 			return null;
