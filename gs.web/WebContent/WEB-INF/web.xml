@@ -13,7 +13,7 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-    <login-config>
+  <login-config>
     <auth-method>FORM</auth-method>
     <realm-name>ApplicationRealm</realm-name>
     <form-login-config>
@@ -21,7 +21,20 @@
       <form-error-page>/userarea/error.html</form-error-page>
     </form-login-config>
   </login-config>
-  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Public Area</web-resource-name>
+      <url-pattern>/public/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>User Area</web-resource-name>
@@ -35,7 +48,7 @@
       <role-name>Member</role-name>
     </auth-constraint>
     <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
   <security-constraint>
@@ -51,7 +64,7 @@
       <role-name>Moderator</role-name>
     </auth-constraint>
     <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
   <security-constraint>
@@ -67,7 +80,7 @@
       <role-name>Admin</role-name>
     </auth-constraint>
     <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
   <security-role>
