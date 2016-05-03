@@ -9,7 +9,9 @@
 	<h:form>
 		<p:outputLabel value="Hello #{indexControl.user}" />
 		<p></p>
-		<p:link outcome="/member/index.xhtml" value="Login" />
+		<p:link outcome="/admin/useroverview.xhtml" value="Oversigt over brugere" rendered="#{indexControl.admin}"/>
+		<p></p>
+		<p:commandLink action="#{indexControl.logout}" value="Logout" ajax="false" />
 	</h:form>
 </body>
 </html>
