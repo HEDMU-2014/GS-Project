@@ -1,13 +1,13 @@
 package domain;
 
+import java.util.Calendar;
 
 public class Interest {
     private int interestId;
     private String interestDescription;
     private String interestHeader;
-    private int userId;
-    private int createdBy;
-    private int createdDate;
+    private long createdBy;
+    private Calendar createdDate;
 
     public int getInterestId() {
         return interestId;
@@ -33,39 +33,27 @@ public class Interest {
         this.interestHeader = interestHeader;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+	public long getCreatedBy() {
+		return createdBy;
+	}
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+	public void setCreatedBy(long createdBy) {
+		this.createdBy = createdBy;
+	}
 
-    public int getCreatedBy() {
-        return createdBy;
-    }
+	public Calendar getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setCreatedDate(Calendar createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public int getCreatedDate() {
-        return createdDate;
-    }
+	@Override
+	public String toString() {
+		return "Interest [interestId=" + interestId + ", interestDescription=" + interestDescription
+				+ ", interestHeader=" + interestHeader + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ "]";
+	}
 
-    public void setCreatedDate(int createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Interest{" +
-                "interestId=" + interestId +
-                ", interestDescription='" + interestDescription + '\'' +
-                ", interestHeader='" + interestHeader + '\'' +
-                ", userId=" + userId +
-                ", createdBy=" + createdBy +
-                ", createdDate=" + createdDate +
-                '}';
-    }
 }

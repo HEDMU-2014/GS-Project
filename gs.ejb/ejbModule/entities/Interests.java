@@ -1,9 +1,15 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import domain.Interest;
 
@@ -12,12 +18,14 @@ import domain.Interest;
 public class Interests implements Serializable {
 
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int interestId;
     private String interestDescription;
     private String interestHeader;
-    private int userId;
-    private int createdBy;
-    private int createdDate;
+    @ManyToOne
+    @JoinColumn(name="userid", referencedColumnName="userid")
+    private UserProfiles createdBy;
+    private Timestamp createdDate;
     private static final long serialVersionUID = 1L;
 
     public Interests() {
@@ -32,9 +40,9 @@ public class Interests implements Serializable {
         this.interestId = interest.getInterestId();
         this.interestDescription = interest.getInterestDescription();
         this.interestHeader = interest.getInterestHeader();
-        this.userId = interest.getUserId();
-        this.createdBy = interest.getCreatedBy();
-        this.createdDate = interest.getCreatedDate();
+        this.createdBy = new UserProfiles();
+        this.createdBy.setUserid(interest.getCreatedBy());
+        this.createdDate = new Timestamp(interest.getCreatedDate().getTimeInMillis());
         return this;
     }
 
@@ -42,9 +50,9 @@ public class Interests implements Serializable {
         interest.setInterestId(this.interestId);
         interest.setInterestDescription(this.interestDescription);
         interest.setInterestHeader(this.interestHeader);
-        interest.setUserId(this.userId);
-        interest.setCreatedBy(this.createdBy);
-        interest.setCreatedDate(this.createdDate);
+        interest.setCreatedBy(this.createdBy.getUserid());
+        interest.setCreatedDate(Calendar.getInstance());
+        interest.getCreatedDate().setTimeInMillis(getCreatedDate().getTime());
         return interest;
     }
 
@@ -72,27 +80,20 @@ public class Interests implements Serializable {
         this.interestHeader = interestHeader;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+	public UserProfiles getCreatedBy() {
+		return createdBy;
+	}
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+	public void setCreatedBy(UserProfiles createdBy) {
+		this.createdBy = createdBy;
+	}
 
-    public int getCreatedBy() {
-        return createdBy;
-    }
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public int getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(int createdDate) {
-        this.createdDate = createdDate;
-    }
 }

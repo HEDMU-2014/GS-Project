@@ -5,45 +5,29 @@ import java.io.Serializable;
 public class Relation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long userID;
-	private long relationid;
-	private boolean userFollowRelation;
+	private UserProfile user;
+	private UserProfile follower;
 
-
-	public long getUserID() {
-		return userID;
+	public UserProfile getUser() {
+		return user;
 	}
 
-
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public void setUser(UserProfile user) {
+		this.user = user;
 	}
 
-
-	public long getRelationid() {
-		return relationid;
+	public UserProfile getFollower() {
+		return follower;
 	}
 
-
-	public void setRelationid(long relationid) {
-		this.relationid = relationid;
+	public void setFollower(UserProfile follower) {
+		this.follower = follower;
 	}
-
-
-	public boolean isUserFollowRelation() {
-		return userFollowRelation;
-	}
-
-
-	public void setUserFollowRelation(boolean userFollowRelation) {
-		this.userFollowRelation = userFollowRelation;
-	}
-
 
 	@Override
 	public String toString() {
-		return "Relation [userID=" + userID + ", relationid=" + relationid + ", userFollowRelation="
-				+ userFollowRelation + "]";
+		return "Relation [user=" + user + ", follower=" + follower + "]";
 	}
+
 
 }

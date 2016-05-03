@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.InterestSpaceUserPK;
@@ -16,6 +18,11 @@ import domain.Rating;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "listRatingsForUser", 
+	query = "SELECT r FROM Ratings r  "
+		+ "WHERE r.user.userid = :userid ")
+	})
 
 @IdClass(InterestSpaceUserPK.class)
 public class Ratings implements Serializable {
@@ -23,7 +30,7 @@ public class Ratings implements Serializable {
 	@ManyToOne()
 	@Id
 	@PrimaryKeyJoinColumn(name="userID", referencedColumnName="userid")
-	private Users user;
+	private UserProfiles user;
 	
 	@ManyToOne
 	@Id
@@ -60,10 +67,10 @@ public class Ratings implements Serializable {
 		rating.setRating(this.rating);
 		return rating;
 	}
-	public Users getUser() {
+	public UserProfiles getUser() {
 		return user;
 	}
-	public void setUser(Users user) {
+	public void setUser(UserProfiles user) {
 		this.user = user;
 	}
 	public Places getPlace() {

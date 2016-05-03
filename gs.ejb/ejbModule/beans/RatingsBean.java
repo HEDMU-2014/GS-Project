@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -7,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Rating;
+import domain.User;
 import entities.Ratings;
+import entities.Users;
 
 /**
  * Session Bean implementation class RatingsBean
@@ -50,6 +54,18 @@ public class RatingsBean implements RatingsBeanLocal {
 		} else {
 			throw new RuntimeException("Rating with id " + key + " not found");
 		}
+	}
+
+	@Override
+	public List<Rating> listRatingsForUser(long userid) {
+		List<Rating> ratings = new ArrayList<>();
+		List<Ratings> ratingse = em.createNamedQuery("listRatingsForUser", Ratings.class)
+				.setParameter("userid", userid)
+				.getResultList();
+		for (Ratings r : ratingse) {
+			ratings.add(r.map(new Rating()));
+		}
+		return ratings;
 	}
 
 

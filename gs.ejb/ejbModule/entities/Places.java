@@ -3,8 +3,9 @@ package entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -17,7 +18,8 @@ public class Places implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(nullable=false, unique=true)
     private int placeId;
     private String placeCity;
     private String placeDescription;
