@@ -18,5 +18,9 @@ public class UserWrapper {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	@Override
+	public String toString() {
+		return "UserWrapper [id=" + id + ", user=" + user + "]";
+	}
 
 }

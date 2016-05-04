@@ -25,7 +25,7 @@ public class IndexControl implements Serializable {
 	
 	public String login() {
 		logger.info("method login entered");
-		return "/member/index.xhtml";
+		return "/protected/index.xhtml";
 	}
 
 	public String logout() {
@@ -52,6 +52,14 @@ public class IndexControl implements Serializable {
 		this.user = user;
 	}
 	
+	public boolean isMember() {
+		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("member");
+	}
+
+	public boolean isModerator() {
+		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("moderator");
+	}
+
 	public boolean isAdmin() {
 		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("admin");
 	}
