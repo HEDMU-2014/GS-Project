@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,9 +15,11 @@ import domain.User;
 import entities.Users;
 
 @Stateless
+@RolesAllowed({"admin", "moderator", "member"})
 public class UsersBean implements UsersBeanLocal {
 
-	@PersistenceContext EntityManager em;
+	@PersistenceContext private EntityManager em;
+	@Resource private SessionContext ctx;
 
 	@Override
 	public long create(User user) {
@@ -73,7 +78,10 @@ public class UsersBean implements UsersBeanLocal {
 	}
 
 	@Override
+	@RolesAllowed("admin")
 	public List<User> searchUsers(String search) {
+		System.out.println("user = " + ctx.getCallerPrincipal().getName());
+		System.out.println("user in admin role ? = " + ctx.isCallerInRole("admin"));
 		List<User> users = new ArrayList<>();
 		List<Users> userse = em.createNamedQuery("searchUsers", Users.class)
 				.setParameter("search", "%" + search.toUpperCase() + "%")
