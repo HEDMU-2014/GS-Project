@@ -1,0 +1,63 @@
+package dk.eamv.gs.user.ws.impl;
+
+
+import java.util.GregorianCalendar;
+import java.util.Optional;
+
+import javax.ejb.EJB;
+import javax.jws.WebService;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+
+import beans.UsersBeanLocal;
+import dk.eamv.gs.user.ws.User;
+
+@WebService(serviceName = "UserService", endpointInterface = "dk.eamv.gs.user.ws.User", targetNamespace = "http://ws.user.gs.eamv.dk/")
+public class UserImpl implements User {
+	@EJB private UsersBeanLocal ejb;
+	public boolean createUser(dk.eamv.gs.User user) {
+		return false;
+	}
+
+	public dk.eamv.gs.User getUser(java.lang.String email) {
+		dk.eamv.gs.User user = null;
+		Optional<domain.User> opt = ejb.read(email);
+		if (opt.isPresent()) {
+			domain.User domain = opt.get();
+			user = new dk.eamv.gs.User();
+			user.setUserid(domain.getUserid());
+//			user.setFirstname(domain.getUserprofile().getFirstname());
+//			user.setLastname(domain.getUserprofile().getLastname());
+	 		user.setEmail(domain.getEmail());
+			user.setPassword(domain.getPassword());
+			try {
+				GregorianCalendar cal = new GregorianCalendar();
+//				cal.setTimeInMillis(domain.getUserprofile().getCreateddate().getTimeInMillis());
+				user.setCreateddate(DatatypeFactory.newInstance().newXMLGregorianCalendar(cal));
+				if (domain.getLastlogin() != null) {
+					cal.setTimeInMillis(domain.getLastlogin().getTimeInMillis());
+					user.setLastlogin(DatatypeFactory.newInstance().newXMLGregorianCalendar(cal));
+				}
+			} catch (DatatypeConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//			if (domain.getUserprofile().getOrganization() != null) {
+//				dk.eamv.gs.Organization org = new dk.eamv.gs.Organization();
+//				org.setOrgid(domain.getUserprofile().getOrganization().getOrgId());
+//				org.setName(domain.getUserprofile().getOrganization().getName());
+//				org.setAddress(domain.getUserprofile().getOrganization().getAddress());
+//				org.setZip(domain.getUserprofile().getOrganization().getZip());
+//				org.setCity(domain.getUserprofile().getOrganization().getCity());
+//				user.setOrganization(org);
+//			}
+			for (domain.Role drole : domain.getRoles()) {
+				dk.eamv.gs.Role role = new dk.eamv.gs.Role();
+				role.setRoleid(drole.getRoleId());
+				role.setRole(drole.getRole());
+				user.getRole().add(role);
+			}
+		}
+		return user;
+	}
+}
