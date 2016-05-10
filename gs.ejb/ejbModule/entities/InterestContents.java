@@ -23,7 +23,7 @@ public class InterestContents implements Serializable {
 	@ManyToOne()
 	@Id
 	@PrimaryKeyJoinColumn(name="userID", referencedColumnName="userid")
-	private Users user;
+	private UserProfiles user;
 	
 	@ManyToOne
 	@Id
@@ -57,10 +57,10 @@ public class InterestContents implements Serializable {
 		intCon.setUserID(user.getUserid());
 		return intCon;
 	}
-	public Users getUser() {
+	public UserProfiles getUser() {
 		return user;
 	}
-	public void setUser(Users user) {
+	public void setUser(UserProfiles user) {
 		this.user = user;
 	}
 	public Places getPlace() {

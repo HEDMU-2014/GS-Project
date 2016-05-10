@@ -1,10 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<title>Hello!</title>
-<f:view>
-   <h:outputLabel value="Hello, world"/>
-</f:view>
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<body>
+	<h:form>
+		<p:outputLabel value="Hello #{indexControl.user}" />
+		<p/>
+		<h:outputText value="Velkommen til Systemet. Vælg Login for at komme helt ind i systemet." />
+		<p/>
+		<p:link outcome="/protected/index.xhtml" value="Login" />
+	</h:form>
+</body>
 </html>

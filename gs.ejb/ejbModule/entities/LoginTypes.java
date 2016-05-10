@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import domain.LoginType;
 
@@ -12,6 +14,10 @@ import domain.LoginType;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "allLoginTypes", 
+			query = "SELECT r FROM LoginTypes r ")
+})
 
 public class LoginTypes implements Serializable {
 

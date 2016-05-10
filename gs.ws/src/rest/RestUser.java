@@ -45,12 +45,12 @@ public class RestUser {
 		return user;
 	}
 	
-//	@GET
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Path("/search/{search}")
-//	public List<User> searchUsers(@PathParam("search") String search) {
-//		return ejb.searchUsers(search);
-//	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/search/{search}")
+	public List<User> searchUsers(@PathParam("search") String search) {
+		return ejb.searchUsers(search);
+	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

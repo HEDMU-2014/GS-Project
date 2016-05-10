@@ -10,12 +10,10 @@ public class UserRelationPK  implements Serializable {
    
 	         
 	private long user;         
-	private long relation; 
+	private long follower; 
 	private static final long serialVersionUID = 1L;
 
 	public UserRelationPK() {}
-
-	
 
 	public long getUser() {
 		return this.user;
@@ -25,30 +23,22 @@ public class UserRelationPK  implements Serializable {
 		this.user = userID;
 	}
 
-
-
-	public long getRelation() {
-		return relation;
+	public long getFollower() {
+		return follower;
 	}
 
-
-
-	public void setRelation(long relation) {
-		this.relation = relation;
+	public void setFollower(long follower) {
+		this.follower = follower;
 	}
-
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (relation ^ (relation >>> 32));
+		result = prime * result + (int) (follower ^ (follower >>> 32));
 		result = prime * result + (int) (user ^ (user >>> 32));
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -59,14 +49,11 @@ public class UserRelationPK  implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UserRelationPK other = (UserRelationPK) obj;
-		if (relation != other.relation)
+		if (follower != other.follower)
 			return false;
 		if (user != other.user)
 			return false;
 		return true;
 	}
-	
 
-   
-   
 }

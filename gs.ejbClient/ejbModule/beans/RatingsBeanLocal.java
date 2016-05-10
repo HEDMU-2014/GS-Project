@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Local;
@@ -9,12 +10,14 @@ import domain.Rating;
 @Local
 public interface RatingsBeanLocal {
 
-	Optional<Rating> readRating(InterestSpaceUserPK key);
+	public Optional<Rating> readRating(InterestSpaceUserPK key);
 
-	void createRating(Rating key);
+	public void createRating(Rating key);
 
-	void updateRating(Rating key);
+	public void updateRating(Rating key);
 
-	void deleteRating(Rating key);
+	public void deleteRating(Rating key);
+	
+	public List<Rating> listRatingsForUser(long userid);
 
 }

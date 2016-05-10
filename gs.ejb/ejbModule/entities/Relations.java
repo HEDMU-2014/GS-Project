@@ -10,6 +10,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.UserRelationPK;
 import domain.Relation;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: Ratings
@@ -23,14 +24,13 @@ public class Relations implements Serializable {
 	@ManyToOne()
 	@Id
 	@PrimaryKeyJoinColumn(name="userID", referencedColumnName="userid")
-	private Users user;
+	private UserProfiles user;
 	
 	@ManyToOne
 	@Id
-	@PrimaryKeyJoinColumn(name="relationID", referencedColumnName="userid")
-	private Users relation;
+	@PrimaryKeyJoinColumn(name="followerID", referencedColumnName="userid")
+	private UserProfiles follower;
 	
-	private boolean userFollowRelation;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -42,34 +42,27 @@ public class Relations implements Serializable {
 	}   
    
 
-	public Relations update(Relation intCon) {
-//		this.interestID = intCon.getInterestID();
-//		this.placeID = intCon.getPlaceID();
-//		this.userID = intCon.getUserID();
+	public Relations update(Relation relation) {
+		this.user = new UserProfiles(relation.getUser());
+		this.follower = new UserProfiles(relation.getFollower());
 		return this;
 	}
+	
 	public Relation map(Relation domain) {
-		domain.setUserID(user.getUserid());
-		domain.setRelationid(relation.getUserid());
-		domain.setUserFollowRelation(userFollowRelation);
+		domain.setUser(user.map(new UserProfile()));
+		domain.setFollower(follower.map(new UserProfile()));
 		return domain;
 	}
-	public Users getUser() {
+	public UserProfiles getUser() {
 		return user;
 	}
-	public void setUser(Users user) {
+	public void setUser(UserProfiles user) {
 		this.user = user;
 	}
-	public Users getRelation() {
-		return relation;
+	public UserProfiles getFollower() {
+		return follower;
 	}
-	public void setRelation(Users relation) {
-		this.relation = relation;
-	}
-	public boolean isUserFollowRelation() {
-		return userFollowRelation;
-	}
-	public void setUserFollowRelation(boolean userFollowRelation) {
-		this.userFollowRelation = userFollowRelation;
+	public void setFollower(UserProfiles follower) {
+		this.follower = follower;
 	}
 }

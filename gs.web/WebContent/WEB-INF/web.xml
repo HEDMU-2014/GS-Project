@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>gs.web</display-name>
   <welcome-file-list>
-    <welcome-file>useroverview.xhtml</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
@@ -17,36 +17,19 @@
     <auth-method>FORM</auth-method>
     <realm-name>ApplicationRealm</realm-name>
     <form-login-config>
-      <form-login-page>/userarea/login.html</form-login-page>
-      <form-error-page>/userarea/error.html</form-error-page>
+      <form-login-page>/login.html</form-login-page>
+      <form-error-page>/error.html</form-error-page>
     </form-login-config>
   </login-config>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Public Area</web-resource-name>
-      <url-pattern>/public/*</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>*</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>User Area</web-resource-name>
-      <url-pattern>/userarea/*</url-pattern>
+      <url-pattern>/*</url-pattern>
       <http-method>PUT</http-method>
       <http-method>DELETE</http-method>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
     </web-resource-collection>
-    <auth-constraint>
-      <role-name>Member</role-name>
-    </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
@@ -54,14 +37,16 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Protected Area</web-resource-name>
-      <url-pattern>/restricted/*</url-pattern>
+      <url-pattern>/protected/*</url-pattern>
       <http-method>PUT</http-method>
       <http-method>DELETE</http-method>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>Moderator</role-name>
+      <role-name>member</role-name>
+      <role-name>moderator</role-name>
+      <role-name>admin</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
@@ -69,27 +54,59 @@
   </security-constraint>
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>Manager Area</web-resource-name>
-      <url-pattern>/manager/*</url-pattern>
+      <web-resource-name>Member Area</web-resource-name>
+      <url-pattern>/member/*</url-pattern>
       <http-method>PUT</http-method>
       <http-method>DELETE</http-method>
       <http-method>GET</http-method>
       <http-method>POST</http-method>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>Admin</role-name>
+      <role-name>member</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Moderator Area</web-resource-name>
+      <url-pattern>/moderator/*</url-pattern>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>moderator</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Administrator Area</web-resource-name>
+      <url-pattern>/admin/*</url-pattern>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
     </auth-constraint>
     <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
   <security-role>
-    <role-name>Member</role-name>
+    <role-name>member</role-name>
   </security-role>
   <security-role>
-    <role-name>Moderator</role-name>
+    <role-name>moderator</role-name>
   </security-role>
   <security-role>
-    <role-name>Admin</role-name>
+    <role-name>admin</role-name>
   </security-role>
 </web-app>
