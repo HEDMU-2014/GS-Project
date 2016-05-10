@@ -20,14 +20,12 @@ import domain.UserProfile;
 
 @Named
 @SessionScoped
-public class UserOverviewView implements Serializable {
+public class UserOverviewControl implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal ejb;
-	@Inject UserDetailView detail;
-	private Logger logger = Logger.getLogger(UserOverviewView.class);
-	private String searchstring;
-	private List<UserWrapper> users;
-	private UserWrapper selectedUser;
+	@Inject UserOverviewModel model;
+	@Inject UserDetailModel detail;
+	private Logger logger = Logger.getLogger(UserOverviewControl.class);
 	
 	@PostConstruct
 	public void init() {
@@ -43,25 +41,24 @@ public class UserOverviewView implements Serializable {
 	}
 
 	public void search() {
-		logger.info("Search : " + searchstring);
-		List<User> users = ejb.searchUsers(searchstring);
-		this.users = new ArrayList<>();
+		logger.info("Search : " + model.getSearchstring());
+		List<User> users = ejb.searchUsers(model.getSearchstring());
+		model.setUsers(new ArrayList<UserWrapper>());
 		int i=0;
 		for (User user : users) {
 			UserWrapper uw = new UserWrapper();
 			uw.setId(i++);
 			uw.setUser(user);
-			this.users.add(uw);
+			model.getUsers().add(uw);
 		}
 	}
 
 	public String view() {
-		logger.info("Selected user : " + selectedUser);
-		if (this.selectedUser != null && detail != null) {
-			detail.setUser(this.selectedUser.getUser());
+		logger.info("Selected user : " + model.getSelectedUser());
+		if (model.getSelectedUser() != null && detail != null) {
+			detail.setUser(model.getSelectedUser().getUser());
 			detail.setEdit(false);
-			detail.init();
-			this.selectedUser = null;
+			model.setSelectedUser(null);
 			return "/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
@@ -70,12 +67,11 @@ public class UserOverviewView implements Serializable {
 	}
 
 	public String update() {
-		logger.info("Selected user : " + selectedUser);
-		if (this.selectedUser != null && detail != null) {
-			detail.setUser(this.selectedUser.getUser());
+		logger.info("Selected user : " + model.getSelectedUser());
+		if (model.getSelectedUser() != null && detail != null) {
+			detail.setUser(model.getSelectedUser().getUser());
 			detail.setEdit(true);
-			detail.init();
-			this.selectedUser = null;
+			model.setSelectedUser(null);
 			return "/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
@@ -88,8 +84,7 @@ public class UserOverviewView implements Serializable {
 			detail.setUser(new User());
 			detail.getUser().setUserprofile(new UserProfile());
 			detail.setEdit(true);
-			detail.init();
-			this.selectedUser = null;
+			model.setSelectedUser(null);
 			return "/userdetail.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something very wrong"));
@@ -97,29 +92,4 @@ public class UserOverviewView implements Serializable {
 		}
 	}
 
-	public List<UserWrapper> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<UserWrapper> users) {
-		this.users = users;
-	}
-
-	public UserWrapper getSelectedUser() {
-		return selectedUser;
-	}
-
-	public void setSelectedUser(UserWrapper selectedUser) {
-		this.selectedUser = selectedUser;
-	}
-
-	public String getSearchstring() {
-		return searchstring;
-	}
-
-	public void setSearchstring(String searchstring) {
-		this.searchstring = searchstring;
-	}
-
-	
 }

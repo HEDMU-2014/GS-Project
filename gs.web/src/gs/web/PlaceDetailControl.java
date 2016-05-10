@@ -14,13 +14,11 @@ import java.io.Serializable;
 
 @Named()
 @SessionScoped
-public class PlaceDetailView implements Serializable {
+public class PlaceDetailControl implements Serializable {
 
     @EJB
     private PlaceBeanLocal ejb;
     private Logger logger = Logger.getLogger(this.getClass());
-    private Place place;
-    private boolean edit = false;
 
     @PostConstruct
     public void init() {}
@@ -51,34 +49,5 @@ public class PlaceDetailView implements Serializable {
 
     public void update() {
 
-    }
-
-    public boolean isEdit() {
-        return edit;
-    }
-    public void setEdit(boolean edit) {
-        this.edit = edit;
-    }
-
-    public boolean isNotEdit() {
-        return !edit;
-    }
-
-    public boolean isShowCreate() {
-        return edit && place.getPlaceId() == 0;
-    }
-    public boolean isShowUpdate() {
-        return edit && place.getPlaceId() > 0;
-    }
-    public boolean isShowDelete() {
-        return place.getPlaceId() > 0;
-    }
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
     }
 }

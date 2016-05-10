@@ -10,15 +10,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.InterestSpaceUserPK;
 import domain.InterestContent;
+import domain.TravelBucketList;
 
 /**
- * Entity implementation class for Entity: InterestContents
+ * Entity implementation class for Entity: TravelBucketLists
  *
  */
 @Entity
 
 @IdClass(InterestSpaceUserPK.class)
-public class InterestContents implements Serializable {
+public class TravelBucketLists implements Serializable {
 
 	@ManyToOne()
 	@Id
@@ -37,25 +38,25 @@ public class InterestContents implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public InterestContents() {
+	public TravelBucketLists() {
 		super();
 	}   
-	public InterestContents(InterestContent intCon) {
-		update(intCon);
+	public TravelBucketLists(TravelBucketList domain) {
+		update(domain);
 	}   
    
 
-	public InterestContents update(InterestContent intCon) {
+	public TravelBucketLists update(TravelBucketList domain) {
 //		this.interestID = intCon.getInterestID();
 //		this.placeID = intCon.getPlaceID();
 //		this.userID = intCon.getUserID();
 		return this;
 	}
-	public InterestContent map(InterestContent intCon) {
-		intCon.setInterestID(interest.getInterestId());
-		intCon.setPlaceID(place.getPlaceId());
-		intCon.setUserID(user.getUserid());
-		return intCon;
+	public TravelBucketList map(TravelBucketList domain) {
+		domain.setInterestID(interest.getInterestId());
+		domain.setPlaceID(place.getPlaceId());
+		domain.setUserID(user.getUserid());
+		return domain;
 	}
 	public Users getUser() {
 		return user;

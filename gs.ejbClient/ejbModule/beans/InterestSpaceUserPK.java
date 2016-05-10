@@ -1,12 +1,12 @@
-package entities;
+package beans;
 
 import java.io.Serializable;
 
 /**
- * ID class for entity: test
+ * ID class for entities: TravelBucketLists, InterestContents and Ratings
  *
  */ 
-public class InterestContentsPK  implements Serializable {   
+public class InterestSpaceUserPK  implements Serializable {   
    
 	         
 	private long user;         
@@ -14,7 +14,7 @@ public class InterestContentsPK  implements Serializable {
 	private int interest;
 	private static final long serialVersionUID = 1L;
 
-	public InterestContentsPK() {}
+	public InterestSpaceUserPK() {}
 
 	
 
@@ -52,10 +52,10 @@ public class InterestContentsPK  implements Serializable {
 		if (o == this) {
 			return true;
 		}
-		if (!(o instanceof InterestContentsPK)) {
+		if (!(o instanceof InterestSpaceUserPK)) {
 			return false;
 		}
-		InterestContentsPK other = (InterestContentsPK) o;
+		InterestSpaceUserPK other = (InterestSpaceUserPK) o;
 		return true
 			&& getUser() == other.getUser()
 			&& getPlace() == other.getPlace()
