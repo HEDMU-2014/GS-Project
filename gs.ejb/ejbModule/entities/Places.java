@@ -1,7 +1,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.*;
 
@@ -30,7 +30,7 @@ public class Places implements Serializable {
     private Countries placeIsoCountry;
     @ManyToOne
     private Users createdBy;
-    private Date createdDate;
+    private Calendar createdDate;
 
     public Places() {
         super();
@@ -102,11 +102,11 @@ public class Places implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedDate() {
+    public Calendar getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 

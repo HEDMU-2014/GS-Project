@@ -3,6 +3,8 @@ package domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Place implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,11 +14,11 @@ public class Place implements Serializable {
     private String placeDescription;
     private Country placeIsoCountry;
     private User createdBy;
-    private Date createdDate;
+    private Calendar createdDate;
 
     public Place() {}
 
-    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, User createdBy, Date createdDate) {
+    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, User createdBy, Calendar createdDate) {
         this.placeId = placeId;
         this.placeCity = placeCity;
         this.placeDescription = placeDescription;
@@ -65,23 +67,24 @@ public class Place implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedDate() {
+    public Calendar getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
     @Override
     public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
         return "Place{" +
                 "placeId=" + placeId +
                 ", placeCity='" + placeCity + '\'' +
                 ", placeDescription='" + placeDescription + '\'' +
                 ", placeIsoCountry='" + placeIsoCountry + '\'' +
                 ", createdBy=" + createdBy +
-                ", createdDate=" + createdDate +
+                ", createdDate=" + formatter.format(createdDate.getTime()) +
                 '}';
     }
 }

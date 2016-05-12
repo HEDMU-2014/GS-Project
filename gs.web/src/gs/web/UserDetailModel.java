@@ -10,6 +10,7 @@ import domain.User;
 @Named()
 @SessionScoped
 public class UserDetailModel implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private boolean edit = false;

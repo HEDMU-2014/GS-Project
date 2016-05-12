@@ -13,7 +13,6 @@ public class UserOverviewModel implements Serializable {
 	private String searchstring;
 	private List<UserWrapper> users;
 	private UserWrapper selectedUser;
-	
 
 
 	public List<UserWrapper> getUsers() {
