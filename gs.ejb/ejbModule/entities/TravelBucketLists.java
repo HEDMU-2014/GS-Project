@@ -9,7 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.InterestSpaceUserPK;
+import domain.Interest;
+import domain.Place;
 import domain.TravelBucketList;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: TravelBucketLists
@@ -46,15 +49,15 @@ public class TravelBucketLists implements Serializable {
    
 
 	public TravelBucketLists update(TravelBucketList domain) {
-//		this.interestID = intCon.getInterestID();
-//		this.placeID = intCon.getPlaceID();
-//		this.userID = intCon.getUserID();
+		this.interest = new Interests(domain.getInterest());
+		this.place = new Places(domain.getPlace());
+		this.user = new UserProfiles(domain.getUser());
 		return this;
 	}
 	public TravelBucketList map(TravelBucketList domain) {
-		domain.setInterestID(interest.getInterestId());
-		domain.setPlaceID(place.getPlaceId());
-		domain.setUserID(user.getUserid());
+		domain.setInterest(this.interest.map(new Interest()));
+		domain.setPlace(this.place.map(new Place()));
+		domain.setUser(this.user.map(new UserProfile()));
 		return domain;
 	}
 	public UserProfiles getUser() {

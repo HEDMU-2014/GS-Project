@@ -11,12 +11,12 @@ public class Place implements Serializable {
     private String placeCity;
     private String placeDescription;
     private Country placeIsoCountry;
-    private User createdBy;
+    private UserProfile createdBy;
     private Timestamp createdDate;
 
     public Place() {}
 
-    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, User createdBy, Timestamp createdDate) {
+    public Place(int placeId, String placeCity, String placeDescription, Country placeIsoCountry, UserProfile createdBy, Timestamp createdDate) {
         this.placeId = placeId;
         this.placeCity = placeCity;
         this.placeDescription = placeDescription;
@@ -57,11 +57,11 @@ public class Place implements Serializable {
         this.placeIsoCountry = placeIsoCountry;
     }
 
-    public User getCreatedBy() {
+    public UserProfile getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(UserProfile createdBy) {
         this.createdBy = createdBy;
     }
 

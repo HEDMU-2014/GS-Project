@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 public class UserPictureComment {
 
 	private long id;
-	private long userId;
+	private UserProfile user;
 	private String message;
 	private LocalDateTime createdDate;
-	private long pictureId;
+	private Picture picture;
 
 	public long getId() {
 		return id;
@@ -18,12 +18,12 @@ public class UserPictureComment {
 		this.id = id;
 	}
 
-	public long getUserId() {
-		return userId;
+	public UserProfile getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(UserProfile user) {
+		this.user = user;
 	}
 
 	public String getMessage() {
@@ -42,18 +42,18 @@ public class UserPictureComment {
 		this.createdDate = createdDate;
 	}
 
-	public long getPictureId() {
-		return pictureId;
+	public Picture getPicture() {
+		return picture;
 	}
 
-	public void setPictureId(long pictureId) {
-		this.pictureId = pictureId;
+	public void setPicture(Picture picture) {
+		this.picture = picture;
 	}
 
 	@Override
 	public String toString() {
-		return "UserPictureComment [id=" + id + ", userId=" + userId + ", message=" + message + ", createdDate="
-				+ createdDate + ", pictureId=" + pictureId + "]";
+		return "UserPictureComment [id=" + id + ", user=" + user + ", message=" + message + ", createdDate="
+				+ createdDate + ", picture=" + picture + "]";
 	}
 
 }

@@ -65,7 +65,7 @@ public class UserProfileOverviewControl implements Serializable {
 			detail.setUserProfile(model.getSelectedUser().getUserProfile());
 			detail.setEdit(update);
 			model.setSelectedUser(null);
-			return "/userprofile.xhtml";
+			return "/admin/userprofile.xhtml";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No row selected"));
 			return null;

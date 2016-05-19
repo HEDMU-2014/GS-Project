@@ -1,7 +1,6 @@
 package gs.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,14 +15,12 @@ import beans.RolesBeanLocal;
 import beans.UserProfilesBeanLocal;
 import beans.UsersBeanLocal;
 import domain.LoginType;
-import domain.Organization;
-import domain.Role;
 import domain.User;
 
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/UserServlet")
+@WebServlet("/admin/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB private UsersBeanLocal userejb;

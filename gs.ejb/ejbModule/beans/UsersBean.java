@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,7 +14,6 @@ import domain.User;
 import entities.Users;
 
 @Stateless
-@RolesAllowed({"admin", "moderator", "member"})
 public class UsersBean implements UsersBeanLocal {
 
 	@PersistenceContext private EntityManager em;
@@ -78,7 +76,6 @@ public class UsersBean implements UsersBeanLocal {
 	}
 
 	@Override
-	@RolesAllowed("admin")
 	public List<User> searchUsers(String search) {
 		System.out.println("user = " + ctx.getCallerPrincipal().getName());
 		System.out.println("user in admin role ? = " + ctx.isCallerInRole("admin"));

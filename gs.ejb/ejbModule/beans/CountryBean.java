@@ -9,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Country;
-import domain.Role;
 import entities.Countries;
-import entities.Roles;
 
 /**
  * Session Bean implementation class CountryBean

@@ -11,7 +11,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import beans.InterestSpaceUserPK;
+import domain.Interest;
+import domain.Place;
 import domain.Rating;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: Ratings
@@ -54,16 +57,17 @@ public class Ratings implements Serializable {
 	}   
    
 
-	public Ratings update(Rating intCon) {
-//		this.interestID = intCon.getInterestID();
-//		this.placeID = intCon.getPlaceID();
-//		this.userID = intCon.getUserID();
+	public Ratings update(Rating domain) {
+		this.interest = new Interests(domain.getInterest());
+		this.place = new Places(domain.getPlace());
+		this.user = new UserProfiles(domain.getUser());
+		this.rating = domain.getRating();
 		return this;
 	}
 	public Rating map(Rating rating) {
-		rating.setInterestID(interest.getInterestId());
-		rating.setPlaceID(place.getPlaceId());
-		rating.setUserID(user.getUserid());
+		rating.setInterest(interest.map(new Interest()));
+		rating.setPlace(place.map(new Place()));
+		rating.setUser(user.map(new UserProfile()));
 		rating.setRating(this.rating);
 		return rating;
 	}

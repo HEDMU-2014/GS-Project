@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import domain.Country;
 import domain.Place;
-import domain.User;
+import domain.UserProfile;
 
 @Entity
 public class Places implements Serializable {
@@ -19,14 +20,15 @@ public class Places implements Serializable {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(nullable=false, unique=true)
     private int placeId;
     private String placeCity;
     private String placeDescription;
     @ManyToOne
+	@JoinColumn(name="country")
     private Countries placeIsoCountry;
     @ManyToOne
-    private Users createdBy;
+	@JoinColumn(name="createdBy")
+    private UserProfiles createdBy;
     private Timestamp createdDate;
 
     public Places() {
@@ -42,7 +44,7 @@ public class Places implements Serializable {
         placeCity = place.getPlaceCity();
         placeDescription = place.getPlaceDescription();
         placeIsoCountry = new Countries(place.getPlaceIsoCountry());
-        createdBy = new Users(place.getCreatedBy());
+        createdBy = new UserProfiles(place.getCreatedBy());
         createdDate = place.getCreatedDate();
 
         return this;
@@ -53,7 +55,7 @@ public class Places implements Serializable {
         place.setPlaceCity(placeCity);
         place.setPlaceDescription(placeDescription);
         place.setPlaceIsoCountry(placeIsoCountry.map(new Country()));
-        place.setCreatedBy(createdBy.map(new User()));
+        place.setCreatedBy(createdBy.map(new UserProfile()));
         place.setCreatedDate(createdDate);
 
         return place;
@@ -91,11 +93,11 @@ public class Places implements Serializable {
         this.placeIsoCountry = placeIsoCountry;
     }
 
-    public Users getCreatedBy() {
+    public UserProfiles getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Users createdBy) {
+    public void setCreatedBy(UserProfiles createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -107,15 +109,4 @@ public class Places implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public String toString() {
-        return "Places{" +
-                "placeId=" + placeId +
-                ", placeCity='" + placeCity + '\'' +
-                ", placeDescription='" + placeDescription + '\'' +
-                ", placeIsoCountry='" + placeIsoCountry + '\'' +
-                ", createdBy=" + createdBy +
-                ", createdDate=" + createdDate +
-                '}';
-    }
 }

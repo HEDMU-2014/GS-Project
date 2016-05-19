@@ -5,39 +5,39 @@ import java.io.Serializable;
 public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long userID;
-	private int placeID;
-	private int interestID;
+	private UserProfile user;
+	private Place place;
+	private Interest interest;
 	private int rating;
 
 
-	public long getUserID() {
-		return userID;
+	public UserProfile getUser() {
+		return user;
 	}
 
 
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public void setUser(UserProfile user) {
+		this.user = user;
 	}
 
 
-	public int getPlaceID() {
-		return placeID;
+	public Place getPlace() {
+		return place;
 	}
 
 
-	public void setPlaceID(int placeID) {
-		this.placeID = placeID;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
 
-	public int getInterestID() {
-		return interestID;
+	public Interest getInterest() {
+		return interest;
 	}
 
 
-	public void setInterestID(int interestID) {
-		this.interestID = interestID;
+	public void setInterest(Interest interest) {
+		this.interest = interest;
 	}
 
 
@@ -53,7 +53,7 @@ public class Rating implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Rating [userID=" + userID + ", placeID=" + placeID + ", interestID=" + interestID + ", rating=" + rating
+		return "Rating [user=" + user + ", place=" + place + ", interest=" + interest + ", rating=" + rating
 				+ "]";
 	}
 

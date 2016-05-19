@@ -3,23 +3,38 @@ package entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
+import domain.Picture;
 import domain.UserPictureComment;
+import domain.UserProfile;
 
 @Entity
 @NamedQuery(name = "searchUserPictureComments",
-query = "SELECT upc FROM UserPictureComments upc WHERE upc.userId = :search")
+query = "SELECT upc FROM UserPictureComments upc WHERE upc.user.userid = :search")
 public class UserPictureComments implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private long userId;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="userProfileId")
+	private UserProfiles user;
 	private String message;
 	private Timestamp createdDate;
-	private long pictureId;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="pictureId")
+	private Pictures picture;
 	
 	public UserPictureComments() {
 	}
@@ -30,19 +45,19 @@ public class UserPictureComments implements Serializable {
 	
 	public UserPictureComments update(UserPictureComment upc) {
 		this.id = upc.getId();
-		this.userId = upc.getUserId();
+		this.user = new UserProfiles(upc.getUser());
 		this.message = upc.getMessage();
 		this.createdDate = Timestamp.valueOf(upc.getCreatedDate());
-		this.pictureId = upc.getPictureId();
+		this.picture = new Pictures(upc.getPicture());
 		return this;
 	}
 	
 	public UserPictureComment map(UserPictureComment upc) {
 		upc.setId(id);
-		upc.setUserId(userId);
+		upc.setUser(user.map(new UserProfile()));
 		upc.setMessage(message);
 		upc.setCreatedDate(createdDate.toLocalDateTime());
-		upc.setPictureId(pictureId);
+		upc.setPicture(picture.map(new Picture()));
 		return upc;
 	}
 
@@ -54,12 +69,12 @@ public class UserPictureComments implements Serializable {
 		this.id = id;
 	}
 
-	public long getUserId() {
-		return userId;
+	public UserProfiles getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(UserProfiles user) {
+		this.user = user;
 	}
 
 	public String getMessage() {
@@ -78,18 +93,12 @@ public class UserPictureComments implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public long getPictureId() {
-		return pictureId;
+	public Pictures getPicture() {
+		return picture;
 	}
 
-	public void setPictureId(long pictureId) {
-		this.pictureId = pictureId;
-	}
-
-	@Override
-	public String toString() {
-		return "UserPictureComments [id=" + id + ", userId=" + userId + ", message=" + message + ", createdDate="
-				+ createdDate + ", pictureId=" + pictureId + "]";
+	public void setPicture(Pictures picture) {
+		this.picture = picture;
 	}
 
 }
