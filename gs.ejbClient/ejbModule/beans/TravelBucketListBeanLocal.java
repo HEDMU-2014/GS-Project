@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.ejb.Local;
 
+import domain.InterestSpaceUserPK;
 import domain.TravelBucketList;
 
 @Local

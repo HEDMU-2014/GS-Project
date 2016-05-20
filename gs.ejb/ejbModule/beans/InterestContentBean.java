@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.InterestContent;
+import domain.InterestSpaceUserPK;
 import entities.InterestContents;
 
 /**
@@ -27,24 +28,26 @@ public class InterestContentBean implements InterestContentRemote, InterestConte
 	}
 	
 	@Override
-	public void createInterestContent(InterestContent key) {
-		InterestContents entity = new InterestContents(key);
+	public void createInterestContent(InterestContent domain) {
+		InterestContents entity = new InterestContents(domain);
 		em.persist(entity);
 	}
 	
 	@Override
-	public void updateInterestContent(InterestContent key) {
+	public void updateInterestContent(InterestContent domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
 		InterestContents entity = em.find(InterestContents.class, key); 
 		if (entity != null) {
-			entity.update(key);
+			entity.update(domain);
 		} else {
 			throw new RuntimeException("InterestContent with id " + key + " not found");
 		}
 	}
 	
 	@Override
-	public void deleteInterestContent(InterestContent key) {
-		InterestContent entity = em.find(InterestContent.class, key); 
+	public void deleteInterestContent(InterestContent domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
+		InterestContents entity = em.find(InterestContents.class, key); 
 		if (entity != null) {
 			em.remove(entity);
 		} else {

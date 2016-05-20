@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import domain.InterestSpaceUserPK;
 import domain.TravelBucketList;
 import entities.TravelBucketLists;
 
@@ -33,17 +34,19 @@ public class TravelBucketListsBean implements TravelBucketListBeanLocal {
 	}
 	
 	@Override
-	public void updateTravelBucketList(TravelBucketList key) {
+	public void updateTravelBucketList(TravelBucketList domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
 		TravelBucketLists entity = em.find(TravelBucketLists.class, key); 
 		if (entity != null) {
-			entity.update(key);
+			entity.update(domain);
 		} else {
 			throw new RuntimeException("TravelBucketList with id " + key + " not found");
 		}
 	}
 	
 	@Override
-	public void deleteTravelBucketList(TravelBucketList key) {
+	public void deleteTravelBucketList(TravelBucketList domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
 		TravelBucketLists entity = em.find(TravelBucketLists.class, key); 
 		if (entity != null) {
 			em.remove(entity);

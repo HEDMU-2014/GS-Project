@@ -8,10 +8,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import domain.InterestSpaceUserPK;
 import domain.Rating;
-import domain.User;
 import entities.Ratings;
-import entities.Users;
 
 /**
  * Session Bean implementation class RatingsBean
@@ -23,31 +22,33 @@ public class RatingsBean implements RatingsBeanLocal {
 	@Override
 	public Optional<Rating> readRating(InterestSpaceUserPK key) {
 		Optional<Rating> opt = Optional.empty();
-		Ratings intCon = em.find(Ratings.class, key); 
-		if (intCon != null) {
-			opt = Optional.of(intCon.map(new Rating()));
+		Ratings ratings = em.find(Ratings.class, key); 
+		if (ratings != null) {
+			opt = Optional.of(ratings.map(new Rating()));
 		}
 		return opt;
 	}
 	
 	@Override
-	public void createRating(Rating key) {
-		Ratings entity = new Ratings(key);
+	public void createRating(Rating domain) {
+		Ratings entity = new Ratings(domain);
 		em.persist(entity);
 	}
 	
 	@Override
-	public void updateRating(Rating key) {
+	public void updateRating(Rating domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
 		Ratings entity = em.find(Ratings.class, key); 
 		if (entity != null) {
-			entity.update(key);
+			entity.update(domain);
 		} else {
 			throw new RuntimeException("Rating with id " + key + " not found");
 		}
 	}
 	
 	@Override
-	public void deleteRating(Rating key) {
+	public void deleteRating(Rating domain) {
+		InterestSpaceUserPK key = new InterestSpaceUserPK(domain.getUser().getUserid(), domain.getPlace().getPlaceId(), domain.getInterest().getInterestId());
 		Ratings entity = em.find(Ratings.class, key); 
 		if (entity != null) {
 			em.remove(entity);

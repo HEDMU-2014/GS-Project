@@ -10,8 +10,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import beans.InterestSpaceUserPK;
 import domain.Interest;
+import domain.InterestSpaceUserPK;
 import domain.Place;
 import domain.Rating;
 import domain.UserProfile;

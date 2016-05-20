@@ -1,4 +1,4 @@
-package beans;
+package domain;
 
 import java.io.Serializable;
 
@@ -14,9 +14,16 @@ public class InterestSpaceUserPK  implements Serializable {
 	private int interest;
 	private static final long serialVersionUID = 1L;
 
-	public InterestSpaceUserPK() {}
+	public InterestSpaceUserPK() {
+		super();
+	}
 
-	
+	public InterestSpaceUserPK(long user, int place, int interest) {
+		this.user = user;
+		this.place = place;
+		this.interest = interest;
+	}
+		
 
 	public long getUser() {
 		return this.user;

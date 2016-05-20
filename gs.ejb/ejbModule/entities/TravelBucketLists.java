@@ -8,8 +8,8 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import beans.InterestSpaceUserPK;
 import domain.Interest;
+import domain.InterestSpaceUserPK;
 import domain.Place;
 import domain.TravelBucketList;
 import domain.UserProfile;

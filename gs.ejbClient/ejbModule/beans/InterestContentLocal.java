@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.ejb.Local;
 
 import domain.InterestContent;
+import domain.InterestSpaceUserPK;
 
 @Local
 public interface InterestContentLocal {

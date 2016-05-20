@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.Relation;
+import domain.UserRelationPK;
 import entities.Relations;
 
 /**

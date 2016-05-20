@@ -8,8 +8,11 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import beans.InterestSpaceUserPK;
+import domain.Interest;
 import domain.InterestContent;
+import domain.InterestSpaceUserPK;
+import domain.Place;
+import domain.UserProfile;
 
 /**
  * Entity implementation class for Entity: InterestContents
@@ -46,15 +49,15 @@ public class InterestContents implements Serializable {
    
 
 	public InterestContents update(InterestContent intCon) {
-//		this.interestID = intCon.getInterestID();
-//		this.placeID = intCon.getPlaceID();
-//		this.userID = intCon.getUserID();
+		this.interest = new Interests(intCon.getInterest());
+		this.place = new Places(intCon.getPlace());
+		this.user = new UserProfiles(intCon.getUser());
 		return this;
 	}
 	public InterestContent map(InterestContent intCon) {
-		intCon.setInterestID(interest.getInterestId());
-		intCon.setPlaceID(place.getPlaceId());
-		intCon.setUserID(user.getUserid());
+		intCon.setInterest(interest.map(new Interest()));
+		intCon.setPlace(place.map(new Place()));
+		intCon.setUser(user.map(new UserProfile()));
 		return intCon;
 	}
 	public UserProfiles getUser() {

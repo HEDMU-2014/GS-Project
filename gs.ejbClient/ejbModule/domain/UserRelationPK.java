@@ -1,4 +1,4 @@
-package beans;
+package domain;
 
 import java.io.Serializable;
 
@@ -13,7 +13,14 @@ public class UserRelationPK  implements Serializable {
 	private long follower; 
 	private static final long serialVersionUID = 1L;
 
-	public UserRelationPK() {}
+	public UserRelationPK() {
+		super();
+	}
+
+	public UserRelationPK(long user, long follower) {
+		this.user = user;
+		this.follower = follower;
+	}
 
 	public long getUser() {
 		return this.user;

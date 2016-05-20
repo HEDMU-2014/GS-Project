@@ -8,9 +8,9 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import beans.UserRelationPK;
 import domain.Relation;
 import domain.UserProfile;
+import domain.UserRelationPK;
 
 /**
  * Entity implementation class for Entity: Ratings

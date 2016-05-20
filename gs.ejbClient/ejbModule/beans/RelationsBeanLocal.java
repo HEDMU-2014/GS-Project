@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.ejb.Local;
 
 import domain.Relation;
+import domain.UserRelationPK;
 
 @Local
 public interface RelationsBeanLocal {
